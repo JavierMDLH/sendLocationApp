@@ -61,6 +61,15 @@ udpServer.on('message', (message, remote) => {
     }
 
     console.log('Datos insertados en la base de datos correctamente.');
+
+    // Obtén los datos actualizados y envíalos inmediatamente a los clientes Socket.IO
+    obtenerDatosActualizadosDesdeDB((err, data) => {
+      if (err) {
+        console.error('Error al obtener datos desde la base de datos:', err);
+        return;
+      }
+      io.emit('update_data', data);
+    });
   });
 });
 
@@ -68,23 +77,21 @@ udpServer.bind(UDP_PORT);
 
 // Resto de tu código de Socket.IO
 io.on('connection', (socket) => {
-    console.log('Un cliente se ha conectado');
-  
-    // Ejemplo: Obtiene datos actualizados de la base de datos cada 5 segundos
-    setInterval(() => {
-      obtenerDatosActualizadosDesdeDB((err, data) => {
-        if (err) {
-          console.error('Error al obtener datos desde la base de datos:', err);
-          return;
-        }
-        socket.emit('update_data', data);
-      });
-    }, 5000);
-  
-    // Maneja la desconexión del cliente
-    socket.on('disconnect', () => {
-      console.log('Un cliente se ha desconectado');
-    });
+  console.log('Un cliente se ha conectado');
+
+  // Obtén los datos actualizados y envíalos cuando un cliente se conecta
+  obtenerDatosActualizadosDesdeDB((err, data) => {
+    if (err) {
+      console.error('Error al obtener datos desde la base de datos:', err);
+      return;
+    }
+    socket.emit('update_data', data);
+  });
+
+  // Maneja la desconexión del cliente
+  socket.on('disconnect', () => {
+    console.log('Un cliente se ha desconectado');
+  });
 });
 
 const PORT = process.env.PORT || 3000;
