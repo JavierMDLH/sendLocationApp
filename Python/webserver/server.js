@@ -39,6 +39,17 @@ udpServer.on('listening', () => {
   console.log(`Servidor UDP escuchando en ${address.address}:${address.port}`);
 });
 
+// Función para formatear la fecha
+function formatDate(timestamp) {
+    const year = timestamp.substr(0, 4);
+    const month = timestamp.substr(4, 2);
+    const day = timestamp.substr(6, 2);
+    const hour = timestamp.substr(8, 2);
+    const minute = timestamp.substr(10, 2);
+    const second = timestamp.substr(12, 2);
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+
 udpServer.on('message', (message, remote) => {
   // Aquí puedes procesar los datos UDP recibidos y luego insertarlos en la base de datos
   console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}: ${message}`);
@@ -48,7 +59,7 @@ udpServer.on('message', (message, remote) => {
   const latitud = received_data.split('Latitud ')[1].split(',')[0];
   const longitud = received_data.split('Longitud ')[1].split(',')[0];
   const altitud = received_data.split('Altitud ')[1].split(',')[0];
-  const fecha_hora = received_data.split('Hora: ')[1].trim();
+  const fecha_hora = formatDate(received_data.split('Hora: ')[1].trim());
 
   // Ejemplo de inserción en la base de datos
   const consulta = 'INSERT INTO datos (Latitud, Longitud, Altitud, Timestamp) VALUES (?, ?, ?, ?)';
