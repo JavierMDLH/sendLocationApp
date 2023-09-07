@@ -15,10 +15,10 @@ app.get('/', (req, res) => {
 
 // Conéctate a la base de datos
 const db = mysql.createConnection({
-  host: 'database.cydkk4u9vzj2.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'javier3021194',
-  database: 'proyecto2',
+  host: 'datos.cpx6dsnj7ocs.us-east-1.rds.amazonaws.com',
+  user: 'rafael',
+  password: 'rafael1108',
+  database: 'datos',
 });
 
 // Conéctate a la base de datos
