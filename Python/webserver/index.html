@@ -32,11 +32,18 @@
             const year = adjustedDate.getFullYear();
             const month = String(adjustedDate.getMonth() + 1).padStart(2, '0');
             const day = String(adjustedDate.getDate()).padStart(2, '0');
-            const hour = String(adjustedDate.getHours()).padStart(2, '0');
+            let hour = String(adjustedDate.getHours()).padStart(2, '0');
             const minute = String(adjustedDate.getMinutes()).padStart(2, '0');
             const second = String(adjustedDate.getSeconds()).padStart(2, '0');
-            
-            return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+
+            // Convertir la hora a formato de 12 horas si es necesario
+            let ampm = 'AM';
+            if (hour >= 12) {
+                hour = String(hour - 12).padStart(2, '0');
+                ampm = 'PM';
+            }
+
+            return `${year}-${month}-${day} ${hour}:${minute}:${second} ${ampm}`;
         }
     
         socket.on('update_data', function(data) {
