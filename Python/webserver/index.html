@@ -58,14 +58,13 @@
             const latitud = parseFloat(data[0]);
             const longitud = parseFloat(data[1]);
 
-            // Elimina el marcador existente si hay uno
-            if (marker) {
-                map.removeLayer(marker);
+            if (!marker) {
+                // Si no hay un marcador existente, crea uno nuevo
+                marker = L.marker([latitud, longitud]).addTo(map);
+            } else {
+                // Si hay un marcador existente, actualiza su ubicación
+                marker.setLatLng([latitud, longitud]);
             }
-
-            // Crea un nuevo marcador y agrégalo al mapa
-            marker = L.marker([latitud, longitud]).addTo(map);
-
             // Establece la vista del mapa en la nueva ubicación
             map.setView([latitud, longitud], 15);
         });
