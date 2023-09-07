@@ -33,7 +33,7 @@ db.connect((err) => {
 
 // Configura el servidor UDP
 const udpServer = dgram.createSocket('udp4');
-const UDP_PORT = 12345; // Reemplaza con el puerto UDP que deseas utilizar
+const UDP_PORT = 15000; // Reemplaza con el puerto UDP que deseas utilizar
 
 udpServer.on('listening', () => {
   const address = udpServer.address();
