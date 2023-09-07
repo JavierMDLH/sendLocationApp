@@ -61,12 +61,15 @@
             if (!marker) {
                 // Si no hay un marcador existente, crea uno nuevo
                 marker = L.marker([latitud, longitud]).addTo(map);
+                console.log('Marker creado');
             } else {
                 // Si hay un marcador existente, actualiza su ubicación
                 marker.setLatLng([latitud, longitud]);
+                console.log('Marker actualizado');
             }
             // Establece la vista del mapa en la nueva ubicación
             map.setView([latitud, longitud], 15);
+            console.log('Centro actualizado');
         });
 
         socket.on('nuevos_datos', function(data) {
