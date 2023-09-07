@@ -17,7 +17,7 @@ const db = mysql.createConnection({
     host: 'database.cydkk4u9vzj2.us-east-1.rds.amazonaws.com', // Cambia esto con la dirección de tu servidor de base de datos
     user: 'admin', // Cambia esto con tu nombre de usuario de MySQL
     password: 'javier3021194', // Cambia esto con tu contraseña de MySQL
-    database: 'datos', // Cambia esto con el nombre de tu base de datos
+    database: 'proyecto2', // Cambia esto con el nombre de tu base de datos
   });
 
 // Conéctate a la base de datos
