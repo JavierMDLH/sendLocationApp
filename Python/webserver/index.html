@@ -23,11 +23,10 @@
         });
 
 
-        const timeZoneOffsetHours = 5; // Ajusta el offset de la zona horaria según sea necesario
         // Función para formatear la fecha con zona horaria ajustada
-        function formatDateWithTimeZone(timestamp, timeZoneOffsetHours) {
+        function formatDateWithTimeZone(timestamp) {
             const date = new Date(timestamp);
-            const adjustedDate = new Date(date.getTime() + (timeZoneOffsetHours * 60 * 60 * 1000));
+            const adjustedDate = new Date(date.getTime() + (5 * 60 * 60 * 1000));
             
             const year = adjustedDate.getFullYear();
             const month = String(adjustedDate.getMonth() + 1).padStart(2, '0');
