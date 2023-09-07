@@ -59,6 +59,11 @@
             L.marker([latitud, longitud]).addTo(map); // Agrega un marcador en la nueva ubicación
         });
 
+        socket.on('nuevos_datos', function(data) {
+            console.log('Nuevos datos recibidos:', data);
+            updateDataOnPage(data);
+        });
+
         function updateDataOnPage(data) {
             console.log('Actualizando datos en la página:', data);
             document.getElementById('latitud').innerText = data[0];

@@ -1,10 +1,11 @@
-const express = require('express');
+// Importa el módulo http
 const http = require('http');
+// Importa el módulo socket.io
 const socketIo = require('socket.io');
 const mysql = require('mysql');
 const dgram = require('dgram'); // Importa el módulo dgram para UDP
 
-const app = express();
+const app = require('express')(); // Usa require para crear la aplicación express directamente
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -41,9 +42,9 @@ udpServer.on('listening', () => {
 
 // Función para formatear la fecha
 function formatDate(timestamp) {
-    const fechaHora = new Date(timestamp).toISOString();
-    const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
-    return formattedDate;
+  const fechaHora = new Date(timestamp).toISOString();
+  const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
+  return formattedDate;
 }
 
 udpServer.on('message', (message, remote) => {
@@ -69,14 +70,8 @@ udpServer.on('message', (message, remote) => {
 
     console.log('Datos insertados en la base de datos correctamente.');
 
-    // Obtén los datos actualizados y envíalos inmediatamente a los clientes Socket.IO
-    obtenerDatosActualizadosDesdeDB((err, data) => {
-      if (err) {
-        console.error('Error al obtener datos desde la base de datos:', err);
-        return;
-      }
-      io.emit('update_data', data);
-    });
+    // Emitir un evento a todos los clientes cuando haya nuevos datos
+    io.emit('nuevos_datos', valores); // "nuevos_datos" es el nombre del evento personalizado
   });
 });
 
