@@ -136,6 +136,6 @@ function obtenerDatosActualizadosDesdeDB(callback) {
     ];
 
     callback(null, data);
-    console.log(Timestamp);
+    console.log(results[0].Timestamp);
   });
 }
