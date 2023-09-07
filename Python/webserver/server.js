@@ -12,6 +12,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+// Conéctate a la base de datos
+const db = mysql.createConnection({
+    host: 'database.cydkk4u9vzj2.us-east-1.rds.amazonaws.com', // Cambia esto con la dirección de tu servidor de base de datos
+    user: 'admin', // Cambia esto con tu nombre de usuario de MySQL
+    password: 'javier3021194', // Cambia esto con tu contraseña de MySQL
+    database: 'datos', // Cambia esto con el nombre de tu base de datos
+  });
 
 // Conéctate a la base de datos
 db.connect((err) => {
@@ -67,10 +74,10 @@ db.connect((err) => {
   
       // Extrae los datos de la consulta
       const data = [
-        results[0].latitud,
-        results[0].longitud,
-        results[0].altitud,
-        results[0].timestamp,
+        results[0].Latitud,
+        results[0].Longitud,
+        results[0].Altitud,
+        results[0].Timestamp,
       ];
   
       callback(null, data);
