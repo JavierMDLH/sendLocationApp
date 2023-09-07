@@ -6,10 +6,10 @@
 </head>
 <body>
     <h1>Últimos datos recibidos:</h1>
-    <p>Latitud: <span id="latitud">{{ data[0] }}</span></p>
-    <p>Longitud: <span id="longitud">{{ data[1] }}</span></p>
-    <p>Altitud: <span id="altitud">{{ data[2] }}</span></p>
-    <p>Timestamp: <span id="timestamp">{{ data[3] }}</span></p>
+    <p>Latitud: <span id="latitud"></span></p>
+    <p>Longitud: <span id="longitud"></span></p>
+    <p>Altitud: <span id="altitud"></span></p>
+    <p>Timestamp: <span id="timestamp"></span></p>
 
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -24,17 +24,11 @@
 
         // Función para formatear la fecha
         function formatDate(timestamp) {
-            const year = timestamp.substr(0, 4);
-            const month = timestamp.substr(4, 2);
-            const day = timestamp.substr(6, 2);
-            const hour = timestamp.substr(8, 2);
-            const minute = timestamp.substr(10, 2);
-            const second = timestamp.substr(12, 2);
-            return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+            const formattedDate = new Date(timestamp).toLocaleString(); // Formatea la fecha y hora
+            return formattedDate;
         }
     
         socket.on('update_data', function(data) {
-            //socket.emit('update_data', true); // Emitir una señal para obtener nuevos datos
             console.log('Datos actualizados recibidos:', data);
             updateDataOnPage(data);
         });
@@ -47,9 +41,6 @@
             console.log('Timestamp antes de formatear:', data[3]);
             document.getElementById('timestamp').innerText = formatDate(data[3]);
         }
-    
-        
     </script>
 </body>
 </html>
-
