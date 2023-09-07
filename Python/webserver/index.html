@@ -84,6 +84,24 @@
             document.getElementById('altitud').innerText = data[2];
             console.log('Timestamp antes de formatear:', data[3]);
             document.getElementById('timestamp').innerText = formatDate(data[3]);
+
+            // Actualiza la ubicación en el mapa
+            const latitud = parseFloat(data[0]);
+            const longitud = parseFloat(data[1]);
+
+            if (!marker) {
+                // Si no hay un marcador existente, crea uno nuevo
+                marker = L.marker([latitud, longitud]).addTo(map);
+                console.log('Marker creado');
+            } else {
+                // Si hay un marcador existente, actualiza su ubicación
+                marker.setLatLng([latitud, longitud]);
+                console.log('Marker actualizado');
+            }
+            // Establece la vista del mapa en la nueva ubicación
+            map.setView([latitud, longitud], 15);
+            console.log('Centro actualizado');
+
         }
     </script>
 </body>
