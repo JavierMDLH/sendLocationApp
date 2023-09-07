@@ -48,6 +48,8 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+        let marker; // Variable para almacenar el marcador
+
         socket.on('update_data', function(data) {
             console.log('Datos actualizados recibidos:', data);
             updateDataOnPage(data);
@@ -55,8 +57,17 @@
             // Actualiza la ubicación en el mapa
             const latitud = parseFloat(data[0]);
             const longitud = parseFloat(data[1]);
-            map.setView([latitud, longitud], 15); // Establece la vista del mapa en la nueva ubicación
-            L.marker([latitud, longitud]).addTo(map); // Agrega un marcador en la nueva ubicación
+
+            // Elimina el marcador existente si hay uno
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            // Crea un nuevo marcador y agrégalo al mapa
+            marker = L.marker([latitud, longitud]).addTo(map);
+
+            // Establece la vista del mapa en la nueva ubicación
+            map.setView([latitud, longitud], 15);
         });
 
         socket.on('nuevos_datos', function(data) {
