@@ -41,13 +41,9 @@ udpServer.on('listening', () => {
 
 // Función para formatear la fecha
 function formatDate(timestamp) {
-    const year = timestamp.substr(0, 4);
-    const month = timestamp.substr(4, 2);
-    const day = timestamp.substr(6, 2);
-    const hour = timestamp.substr(8, 2);
-    const minute = timestamp.substr(10, 2);
-    const second = timestamp.substr(12, 2);
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    const fechaHora = new Date(timestamp).toISOString();
+    const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
+    return formattedDate;
 }
 
 udpServer.on('message', (message, remote) => {
