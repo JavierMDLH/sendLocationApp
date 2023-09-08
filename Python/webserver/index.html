@@ -72,7 +72,7 @@
         //    console.log('Centro actualizado');
         //});
 
-        socket.on('nuevos_datos', function(data) {
+        socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
             updateDataOnPage(data);
         });
