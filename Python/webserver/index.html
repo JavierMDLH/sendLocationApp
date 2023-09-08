@@ -41,7 +41,7 @@
         }
 
         // Crea un mapa Leaflet
-        const map = L.map('map').setView([0, 0], 16); // Latitud y longitud iniciales y nivel de zoom
+        const map = L.map('map').setView([0, 0], 17); // Latitud y longitud iniciales y nivel de zoom
 
         // Agrega una capa de mapa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -99,7 +99,8 @@
                 console.log('Marker actualizado');
             }
             // Establece la vista del mapa en la nueva ubicación
-            map.setView([latitud, longitud],17);
+            const zoomLevel = map.getZoom();
+            map.setView([latitud, longitud],zoomLevel);
             //map.setZoom(zoomLevel);
             console.log('Centro actualizado');
 
