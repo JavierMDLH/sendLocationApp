@@ -72,7 +72,7 @@ udpServer.on('message', (message, remote) => {
 
     // Emitir un evento a todos los clientes cuando haya nuevos datos
     io.emit('nuevos_datos', valores); // "nuevos_datos" es el nombre del evento personalizado
-    io.emit('update__data',valores)
+    //io.emit('update__data',valores)
   });
 });
 
