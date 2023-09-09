@@ -49,6 +49,8 @@
         }).addTo(map);
 
         let marker; // Variable para almacenar el marcador
+        let polyline = L.polyline([], { color: 'blue' }).addTo(map); // Crea una polyline vacía
+
 
         //socket.on('update_data', function(data) {
         //    console.log('Datos actualizados recibidos:', data);
@@ -98,6 +100,10 @@
                 marker.setLatLng([latitud, longitud]);
                 console.log('Marker actualizado');
             }
+
+            // Agrega el punto a la polyline
+            polyline.addLatLng([latitud, longitud]);
+
             // Establece la vista del mapa en la nueva ubicación
             const zoomLevel = map.getZoom();
             map.setView([latitud, longitud],zoomLevel);
