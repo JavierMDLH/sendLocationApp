@@ -57,7 +57,9 @@ udpServer.on('message', (message, remote) => {
   const longitud = received_data.split('Longitud ')[1].split(',')[0];
   const altitud = received_data.split('Altitud ')[1].split(',')[0];
   //const fecha_hora = formatDate(received_data.split('Hora: ')[1].trim());
-  const fecha_hora = received_data.split('Hora: ')[1].trim();
+  //const fecha_hora = received_data.split('Hora: ')[1].trim();
+  const fecha_hora = received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '');
+
 
   // Ejemplo de inserción en la base de datos
   const consulta = 'INSERT INTO datos (Latitud, Longitud, Altitud, Timestamp) VALUES (?, ?, ?, ?)';
@@ -69,7 +71,8 @@ udpServer.on('message', (message, remote) => {
       return;
     }
 
-    console.log('Datos insertados en la base de datos correctamente.',valores);
+    console.log('Datos insertados en la base de datos correctamente.',fecha_hora);
+
 
     // Emitir un evento a todos los clientes cuando haya nuevos datos
     io.emit('update_data', valores); // "nuevos_datos" es el nombre del evento personalizado
