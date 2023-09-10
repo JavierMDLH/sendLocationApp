@@ -56,7 +56,8 @@ udpServer.on('message', (message, remote) => {
   const latitud = received_data.split('Latitud ')[1].split(',')[0];
   const longitud = received_data.split('Longitud ')[1].split(',')[0];
   const altitud = received_data.split('Altitud ')[1].split(',')[0];
-  const fecha_hora = formatDate(received_data.split('Hora: ')[1].trim());
+  //const fecha_hora = formatDate(received_data.split('Hora: ')[1].trim());
+  const fecha_hora = received_data.split('Hora: ')[1].trim();
 
   // Ejemplo de inserción en la base de datos
   const consulta = 'INSERT INTO datos (Latitud, Longitud, Altitud, Timestamp) VALUES (?, ?, ?, ?)';
