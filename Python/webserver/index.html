@@ -49,7 +49,7 @@
         }).addTo(map);
 
         let marker; // Variable para almacenar el marcador
-        let polylines = []; // Arreglo para almacenar múltiples polylines
+        let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
 
         socket.on('update_data', function(data) {
@@ -79,23 +79,21 @@
                 console.log('Marker actualizado');
             }
 
-            // Crea una nueva polyline con opacidad actual
-            const newPolyline = L.polyline([[latitud, longitud]], { color: 'blue', opacity: 1 }).addTo(map);
-            console.log('Polyline creada');
+            if (previousPoint) {
+                // Crea una nueva polyline desde el punto anterior al punto actual
+                const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity }).addTo(map);
+                console.log('Polyline creada');
+            }
 
-            // Agrega la nueva polyline al arreglo de polylines
-            polylines.push(newPolyline);
+            // Almacena el punto actual como punto anterior para la próxima polyline
+            previousPoint = [latitud, longitud];
 
             // Establece la vista del mapa en la nueva ubicación
             map.setView([latitud, longitud]);
 
-            // Reduce la opacidad de las polylines anteriores
-            for (let i = 0; i < polylines.length - 1; i++) {
-                const polyline = polylines[i];
-                const currentOpacity = polyline.options.opacity;
-                if (currentOpacity > 0) {
-                    polyline.setStyle({ opacity: currentOpacity - 0.1 });
-                }
+            // Reduce la opacidad en un 10%
+            if (opacity > 0) {
+                opacity -= 0.1;
             }
         }
     </script>
