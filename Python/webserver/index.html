@@ -80,7 +80,7 @@
             }
 
             // Crea una nueva polyline con opacidad actual
-            const newPolyline = L.polyline([[latitud, longitud]], { color: 'blue', opacity: opacity }).addTo(map);
+            const newPolyline = L.polyline([[latitud, longitud]], { color: 'blue', opacity: 1 }).addTo(map);
             console.log('Polyline creada');
 
             // Agrega la nueva polyline al arreglo de polylines
@@ -89,7 +89,7 @@
             // Establece la vista del mapa en la nueva ubicación
             map.setView([latitud, longitud]);
 
-            // Reduce la opacidad de los tramos anteriores
+            // Reduce la opacidad de las polylines anteriores
             for (let i = 0; i < polylines.length - 1; i++) {
                 const polyline = polylines[i];
                 const currentOpacity = polyline.options.opacity;
@@ -97,9 +97,6 @@
                     polyline.setStyle({ opacity: currentOpacity - 0.1 });
                 }
             }
-
-            // Reinicia la opacidad para la próxima polyline
-            opacity = 1;
         }
     </script>
 </body>
