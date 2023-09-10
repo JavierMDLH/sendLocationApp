@@ -41,11 +41,11 @@ udpServer.on('listening', () => {
 });
 
 // Función para formatear la fecha
-function formatDate(timestamp) {
-  const fechaHora = new Date(timestamp).toISOString();
-  const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
-  return formattedDate;
-}
+//function formatDate(timestamp) {
+//  const fechaHora = new Date(timestamp).toISOString();
+//  const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
+//  return formattedDate;
+//}
 
 udpServer.on('message', (message, remote) => {
   // Aquí puedes procesar los datos UDP recibidos y luego insertarlos en la base de datos
