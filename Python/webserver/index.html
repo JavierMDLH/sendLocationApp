@@ -49,9 +49,8 @@
         }).addTo(map);
 
         let marker; // Variable para almacenar el marcador
-        let polyline = L.polyline([], { color: 'blue' }).addTo(map); // Crea una polyline vacía
+        let polyline; // Variable para almacenar la polyline
         let opacity = 0.1; // Inicialmente, opacidad al 10%
-
 
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
