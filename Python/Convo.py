@@ -23,6 +23,7 @@ plt.ylim(0,1)
 plt.subplot(1,2,1)
 plt.plot(x,y)
 #ejemplo
+#ejemplo2
 plt.title('Señal triangular original')
 plt.subplot(1,9,2)
 plt.plot(x,y1)
