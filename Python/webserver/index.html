@@ -6,8 +6,36 @@
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        /* Estilos para el cuadro de datos */
+        #data-box {
+            border: 2px solid #007BFF; /* Borde sólido azul */
+            padding: 10px; /* Espaciado interior */
+            font-family: Arial, sans-serif; /* Fuente */
+        }
+
+        /* Estilos para el encabezado */
+        #data-box h1 {
+            background-color: #007BFF; /* Fondo azul para el encabezado */
+            color: white; /* Texto blanco */
+            padding: 10px; /* Espaciado interior */
+            margin: 0; /* Elimina el margen predeterminado */
+        }
+    </style>
+
 </head>
 <body>
+    <div id="data-box">
+        <h1>Últimos datos recibidos:</h1>
+        <p>Latitud: <span id="latitud"></span></p>
+        <p>Longitud: <span id="longitud"></span></p>
+        <p>Altitud: <span id="altitud"></span></p>
+        <p>Timestamp: <span id="timestamp"></span></p>
+
+        <!-- Agrega un contenedor para el mapa -->
+        <div id="map" style="width: 100%; height: 400px;"></div>
+        
+    </div>
     <h1>Últimos datos recibidos:</h1>
     <p>Latitud: <span id="latitud"></span></p>
     <p>Longitud: <span id="longitud"></span></p>
