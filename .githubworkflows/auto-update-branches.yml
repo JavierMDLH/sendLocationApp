@@ -1,1 +1,29 @@
+name: Auto Update Branches
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update branches
+        run: |
+          # Actualizar todos los branches secundarios
+          git fetch --all
+          git checkout main
+          git pull
+          for branch in $(git branch --list | grep -v 'main'); do
+            git checkout $branch
+            git merge main
+          done
+          git checkout main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
