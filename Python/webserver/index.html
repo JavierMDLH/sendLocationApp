@@ -124,26 +124,32 @@
         }
 
         function updateDataTable(data) {
-        // Obtén la tabla y crea una nueva fila de datos
-        const table = document.getElementById('data-table');
-        const newRow = document.createElement('tr');
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
 
-        // Itera a través de los datos y crea celdas para cada valor
-        for (const value of data) {
-            const cell = document.createElement('td');
-            cell.innerText = value;
-            newRow.appendChild(cell);
+            // Crea una nueva fila de datos
+            const newRow = document.createElement('tr');
+
+            // Itera a través de los datos y crea celdas para cada valor
+            for (const value of data) {
+                const cell = document.createElement('td');
+                cell.innerText = value;
+                newRow.appendChild(cell);
+            }
+
+            // Agrega la nueva fila en la parte superior de la tabla
+            if (table.rows.length > 0) {
+                table.insertBefore(newRow, table.rows[0]);
+            } else {
+                table.appendChild(newRow);
+            }
+
+            // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
+            const maxRows = 10; // Cambia este valor según tus preferencias
+            while (table.rows.length > maxRows) {
+                table.deleteRow(maxRows);
+            }
         }
-
-        // Agrega la nueva fila a la tabla
-        table.appendChild(newRow);
-
-        // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-        const maxRows = 50; // Cambia este valor según tus preferencias
-        if (table.rows.length > maxRows) {
-            table.deleteRow(1); // Elimina la segunda fila (la más antigua)
-        }
-    }
     </script>
 </body>
 </html>
