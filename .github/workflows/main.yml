@@ -21,6 +21,7 @@ jobs:
         if: steps.check-merge.outputs.merge == 'true'
         run: |
           pwd
+          pwd
           dir
           git checkout RafaelWB
           pwd
