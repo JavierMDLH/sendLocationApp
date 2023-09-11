@@ -17,6 +17,23 @@
     <!-- Agrega un contenedor para el mapa -->
     <div id="map" style="width: 100%; height: 400px;"></div>
 
+    <!-- Agrega una tabla para mostrar los datos del servidor -->
+    <table>
+        <thead>
+            <tr>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Altitud</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody id="data-table">
+            <!-- Los datos del servidor se agregarán aquí dinámicamente -->
+        </tbody>
+    </table>
+
+
+
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
     
@@ -28,17 +45,7 @@
             console.log('Desconectado del servidor WebSocket');
         });
 
-        // Función para formatear la fecha
-        //function formatDate(timestamp) {
-        //    const date = new Date(timestamp);
-        //    const year = date.getFullYear();
-        //    const month = String(date.getMonth() + 1).padStart(2, '0');
-        //    const day = String(date.getDate()).padStart(2, '0');
-        //    const hours = String(date.getHours()).padStart(2, '0');
-        //    const minutes = String(date.getMinutes()).padStart(2, '0');
-        //    const seconds = String(date.getSeconds()).padStart(2, '0');
-        //    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        //}
+  
         function formatDate(timestamp) {
             const año = timestamp.substring(5, 9);
             const mes = timestamp.substring(3, 5);
@@ -49,9 +56,6 @@
 
             return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
         }
-
-
-
 
         // Crea un mapa Leaflet
         const map = L.map('map').setView([0, 0], 17); // Latitud y longitud iniciales y nivel de zoom
@@ -69,6 +73,7 @@
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
             updateDataOnPage(data);
+            updateDataTable(data);
         });
 
         function updateDataOnPage(data) {
@@ -117,6 +122,28 @@
 
 
         }
+
+        function updateDataTable(data) {
+        // Obtén la tabla y crea una nueva fila de datos
+        const table = document.getElementById('data-table');
+        const newRow = document.createElement('tr');
+
+        // Itera a través de los datos y crea celdas para cada valor
+        for (const value of data) {
+            const cell = document.createElement('td');
+            cell.innerText = value;
+            newRow.appendChild(cell);
+        }
+
+        // Agrega la nueva fila a la tabla
+        table.appendChild(newRow);
+
+        // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
+        const maxRows = 50; // Cambia este valor según tus preferencias
+        if (table.rows.length > maxRows) {
+            table.deleteRow(1); // Elimina la segunda fila (la más antigua)
+        }
+    }
     </script>
 </body>
 </html>
