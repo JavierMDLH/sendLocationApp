@@ -18,6 +18,9 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Cambia fetch-depth a 0 para clonar todas las referencias de branches
+
    
       - name: Actualizar RafaelWB
         if: steps.check-merge.outputs.merge == 'true'
