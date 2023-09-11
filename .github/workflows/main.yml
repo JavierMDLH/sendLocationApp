@@ -1,9 +1,6 @@
 name: Auto Update Branches
 
-on:
-  push:
-    branches-ignore:
-      - '*'
+on:  
   pull_request:
     types:
       - closed
@@ -23,22 +20,34 @@ jobs:
       - name: Actualizar RafaelWB
         if: steps.check-merge.outputs.merge == 'true'
         run: |
+          pwd
           git checkout RafaelWB
+          pwd
           git pull origin main
+          pwd
           git push origin RafaelWB
+          pwd
       
       - name: Actualizar Javier
         if: steps.check-merge.outputs.merge == 'true'
         run: |
+          pwd
           git checkout Javier
+          pwd
           git pull origin main
+          pwd
           git push origin Javier
+          pwd
         
 
       - name: Actualizar Ernesto
         if: steps.check-merge.outputs.merge == 'true'
         run: |
+          pwd
           git checkout Ernesto
+          pwd
           git pull origin main
+          pwd
           git push origin Ernesto
+          pwd
         
