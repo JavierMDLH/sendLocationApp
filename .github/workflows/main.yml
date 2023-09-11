@@ -21,6 +21,7 @@ jobs:
         if: steps.check-merge.outputs.merge == 'true'
         run: |
           pwd
+          dir
           git checkout RafaelWB
           pwd
           git pull origin main
