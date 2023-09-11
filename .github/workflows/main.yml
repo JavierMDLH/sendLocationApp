@@ -20,21 +20,20 @@ jobs:
           echo "::set-output name=merge::true"
         shell: bash
 
-      - name: Actualizar Javier
-        if: steps.check-merge.outputs.merge == 'true'
-        run: |
-          git checkout Javier
-          git pull origin main
-          git push origin Javier
-        shell: bash
-
       - name: Actualizar RafaelWB
         if: steps.check-merge.outputs.merge == 'true'
         run: |
           git checkout RafaelWB
           git pull origin main
           git push origin RafaelWB
-        shell: bash
+      
+      - name: Actualizar Javier
+        if: steps.check-merge.outputs.merge == 'true'
+        run: |
+          git checkout Javier
+          git pull origin main
+          git push origin Javier
+        
 
       - name: Actualizar Ernesto
         if: steps.check-merge.outputs.merge == 'true'
@@ -42,4 +41,4 @@ jobs:
           git checkout Ernesto
           git pull origin main
           git push origin Ernesto
-        shell: bash
+        
