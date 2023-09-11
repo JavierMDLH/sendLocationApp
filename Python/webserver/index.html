@@ -34,7 +34,7 @@
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map" style="width: 100%; height: 400px;"></div>
-        
+
     </div>
     <h1>Últimos datos recibidos:</h1>
     <p>Latitud: <span id="latitud"></span></p>
@@ -173,7 +173,7 @@
             }
 
             // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 10; // Cambia este valor según tus preferencias
+            const maxRows = 50; // Cambia este valor según tus preferencias
             while (table.rows.length > maxRows) {
                 table.deleteRow(maxRows);
             }
