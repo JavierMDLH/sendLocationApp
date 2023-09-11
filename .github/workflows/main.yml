@@ -20,9 +20,8 @@ jobs:
       - name: Actualizar RafaelWB
         if: steps.check-merge.outputs.merge == 'true'
         run: |
+          cd $GITHUB_WORKSPACE
           pwd
-          pwd
-          dir
           git checkout RafaelWB
           pwd
           git pull origin main
@@ -33,6 +32,7 @@ jobs:
       - name: Actualizar Javier
         if: steps.check-merge.outputs.merge == 'true'
         run: |
+          cd $GITHUB_WORKSPACE
           pwd
           git checkout Javier
           pwd
@@ -45,6 +45,7 @@ jobs:
       - name: Actualizar Ernesto
         if: steps.check-merge.outputs.merge == 'true'
         run: |
+          cd $GITHUB_WORKSPACE
           pwd
           git checkout Ernesto
           pwd
