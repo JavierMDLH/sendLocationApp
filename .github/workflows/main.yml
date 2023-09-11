@@ -1,0 +1,61 @@
+name: Auto Update Branches
+
+on:  
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  update-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verificar el evento de merge en main
+        id: check-merge
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+        run: |
+          echo "::set-output name=merge::true"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Cambia fetch-depth a 0 para clonar todas las referencias de branches
+
+   
+      - name: Actualizar RafaelWB
+        if: steps.check-merge.outputs.merge == 'true'
+        run: |
+          cd $GITHUB_WORKSPACE
+          pwd
+          git checkout RafaelWB
+          pwd
+          git pull origin main
+          pwd
+          git push origin RafaelWB
+          pwd
+      
+      - name: Actualizar Javier
+        if: steps.check-merge.outputs.merge == 'true'
+        run: |
+          cd $GITHUB_WORKSPACE
+          pwd
+          git checkout Javier
+          pwd
+          git pull origin main
+          pwd
+          git push origin Javier
+          pwd
+        
+
+      - name: Actualizar Ernesto
+        if: steps.check-merge.outputs.merge == 'true'
+        run: |
+          cd $GITHUB_WORKSPACE
+          pwd
+          git checkout Ernesto
+          pwd
+          git pull origin main
+          pwd
+          git push origin Ernesto
+          pwd
+        
