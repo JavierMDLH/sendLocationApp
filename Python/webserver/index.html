@@ -21,6 +21,26 @@
             padding: 10px; /* Espaciado interior */
             margin: 0; /* Elimina el margen predeterminado */
         }
+
+        /* Estilos para la tabla de datos históricos */
+        table {
+            border: 2px solid #007BFF; /* Borde sólido azul */
+            border-collapse: collapse; /* Colapsar bordes de celda */
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #007BFF; /* Borde de celda azul */
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF; /* Fondo azul para encabezados de columna */
+            color: white;
+        }
+
+        /* Resto de estilos */
     </style>
 
 </head>
@@ -35,32 +55,21 @@
         <!-- Agrega un contenedor para el mapa -->
         <div id="map" style="width: 100%; height: 400px;"></div>
 
+        <!-- Agrega una tabla para mostrar los datos del servidor -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th>Altitud</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
     </div>
-    <h1>Últimos datos recibidos:</h1>
-    <p>Latitud: <span id="latitud"></span></p>
-    <p>Longitud: <span id="longitud"></span></p>
-    <p>Altitud: <span id="altitud"></span></p>
-    <p>Timestamp: <span id="timestamp"></span></p>
-
-    <!-- Agrega un contenedor para el mapa -->
-    <div id="map" style="width: 100%; height: 400px;"></div>
-
-    <!-- Agrega una tabla para mostrar los datos del servidor -->
-    <table>
-        <thead>
-            <tr>
-                <th>Latitud</th>
-                <th>Longitud</th>
-                <th>Altitud</th>
-                <th>Timestamp</th>
-            </tr>
-        </thead>
-        <tbody id="data-table">
-            <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-        </tbody>
-    </table>
-
-
 
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -73,7 +82,7 @@
             console.log('Desconectado del servidor WebSocket');
         });
 
-  
+        // Función para formatear la fecha
         function formatDate(timestamp) {
             const año = timestamp.substring(5, 9);
             const mes = timestamp.substring(3, 5);
@@ -109,7 +118,6 @@
             document.getElementById('latitud').innerText = data[0];
             document.getElementById('longitud').innerText = data[1];
             document.getElementById('altitud').innerText = data[2];
-            console.log('Timestamp antes de formatear:', data[3]);
             document.getElementById('timestamp').innerText = formatDate(data[3]);
 
             // Actualiza la ubicación en el mapa
@@ -119,18 +127,15 @@
             if (!marker) {
                 // Si no hay un marcador existente, crea uno nuevo
                 marker = L.marker([latitud, longitud]).addTo(map);
-                console.log('Marker creado');
             } else {
                 // Si hay un marcador existente, actualiza su ubicación
                 marker.setLatLng([latitud, longitud]);
-                console.log('Marker actualizado');
             }
 
             if (previousPoint) {
                 // Crea una nueva polyline desde el punto anterior al punto actual
                 const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity }).addTo(map);
                 polylines.push(polyline);
-                console.log('Polyline creada');
             }
 
             // Almacena el punto actual como punto anterior para la próxima polyline
@@ -139,16 +144,13 @@
             // Establece la vista del mapa en la nueva ubicación
             map.setView([latitud, longitud]);
 
-        
             for (let i = 0; i < polylines.length - 1; i++) {
                 const polyline = polylines[i];
                 const currentOpacity = polyline.options.opacity;
                 if (currentOpacity > 0) {
                     polyline.setStyle({ opacity: currentOpacity - 0.02 });
                 }
-            }  
-
-
+            }
         }
 
         function updateDataTable(data) {
