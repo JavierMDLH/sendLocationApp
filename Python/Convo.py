@@ -22,6 +22,8 @@ y1=np.array([triangle_wave((t-1)/4,2,1.0) for t in x])
 plt.ylim(0,1)
 plt.subplot(1,2,1)
 plt.plot(x,y)
+#ejemplo
+#ejemplo2
 plt.title('Señal triangular original')
 plt.subplot(1,9,2)
 plt.plot(x,y1)
