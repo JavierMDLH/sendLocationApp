@@ -2,28 +2,46 @@ name: Auto Update Branches
 
 on:
   push:
-    branches:
-      - main
+    branches-ignore:
+      - '*'
+  pull_request:
+    types:
+      - closed
 
 jobs:
   update-branches:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Update branches
+      - name: Verificar el evento de merge en main
+        id: check-merge
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
         run: |
-          # Actualizar todos los branches secundarios
-          git fetch --all
-          git checkout main
-          git pull
-          for branch in $(git branch --list | grep -v 'main'); do
-            git checkout $branch
-            git merge main
-          done
-          git checkout main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "::set-output name=merge::true"
+        shell: bash
+
+      - name: Actualizar Javier
+  if: steps.check-merge.outputs.merge == 'true'
+  run: |
+    git checkout Javier
+    git pull origin main
+    git push origin Javier
+  shell: bash
+
+- name: Actualizar RafaelWB
+  if: steps.check-merge.outputs.merge == 'true'
+  run: |
+    git checkout RafaelWB
+    git pull origin main
+    git push origin RafaelWB
+  shell: bash
+
+- name: Actualizar Ernesto
+  if: steps.check-merge.outputs.merge == 'true'
+  run: |
+    git checkout Ernesto
+    git pull origin main
+    git push origin Ernesto
+  shell: bash
+
 
