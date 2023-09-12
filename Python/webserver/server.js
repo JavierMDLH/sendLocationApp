@@ -19,7 +19,7 @@ const config = JSON.parse(configData);
 const host = "'"+config.HOST+ "'";
 const user = "'"+config.USER+"'";
 const password = "'"+config.PASSWORD+"'";
-const database = "'"+config.DATABASE+"'";
+const database = config.DATABASE.replace(/"/g, "'");;
 console.log(`El valor de host es ${host}`);
 
 
