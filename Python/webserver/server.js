@@ -20,6 +20,8 @@ const host = config.HOST;
 const user = config.USER;
 const password = config.PASSWORD;
 const database = config.DATABASE;
+console.log(`El valor de host es ${host}`);
+
 
 // Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
