@@ -9,6 +9,11 @@ const app = require('express')(); // Usa require para crear la aplicación expre
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const host = process.env.HOST;
+const user = process.env.USER;
+const password = process.env.PASSWORD;
+const database = process.env.DATABASE;
+
 // Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -16,10 +21,10 @@ app.get('/', (req, res) => {
 
 // Conéctate a la base de datos
 const db = mysql.createConnection({
-  host: HOST,
-  user: USER,
-  password: PASSWORD,
-  database: DATABASE,
+  host: host,
+  user: user,
+  password: password,
+  database: database,
 });
 
 // Conéctate a la base de datos
