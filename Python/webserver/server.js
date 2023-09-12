@@ -16,10 +16,10 @@ const configData = fs.readFileSync('var.json', 'utf8');
 const config = JSON.parse(configData);
 
 // Accede a las variables de entorno
-const host = "'"+config.HOST+ "'";
-const user = "'"+config.USER+"'";
-const password = "'"+config.PASSWORD+"'";
-const database = config.DATABASE.replace(/"/g, "'");;
+const host = config.HOST.replace(/"/g, "'");
+const user = config.USER.replace(/"/g, "'");
+const password = config.PASSWORD.replace(/"/g, "'");
+const database = config.DATABASE.replace(/"/g, "'");
 console.log(`El valor de host es ${host}`);
 
 
@@ -30,9 +30,9 @@ app.get('/', (req, res) => {
 
 // Conéctate a la base de datos
 const db = mysql.createConnection({
-  host: 'database.cydkk4u9vzj2.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'javier3021194',
+  host: host,
+  user: user,
+  password: password,
   database: database,
 });
 
