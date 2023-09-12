@@ -13,6 +13,11 @@ const host = process.env.HOST;
 const user = process.env.USER;
 const password = process.env.PASSWORD;
 const database = process.env.DATABASE;
+if (host) {
+  console.log(`El valor de HOST es: ${host}`);
+} else {
+  console.log('HOST no está definido como variable de entorno.');
+}
 
 // Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
