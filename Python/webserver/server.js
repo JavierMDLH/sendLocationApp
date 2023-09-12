@@ -9,10 +9,17 @@ const app = require('express')(); // Usa require para crear la aplicación expre
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const host = process.env.HOST;
-const user = process.env.USER;
-const password = process.env.PASSWORD;
-const database = process.env.DATABASE;
+const fs = require('fs');
+
+// Lee el archivo de configuración
+const configData = fs.readFileSync('var.json', 'utf8');
+const config = JSON.parse(configData);
+
+// Accede a las variables de entorno
+const host = config.HOST;
+const user = config.USER;
+const password = config.PASSWORD;
+const database = config.DATABASE;
 
 // Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
