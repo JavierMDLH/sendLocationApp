@@ -33,7 +33,7 @@ const db = mysql.createConnection({
   host: 'database.cydkk4u9vzj2.us-east-1.rds.amazonaws.com',
   user: 'admin',
   password: 'javier3021194',
-  database: 'proyecto2',
+  database: database,
 });
 
 // Conéctate a la base de datos
