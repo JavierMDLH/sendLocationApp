@@ -6,6 +6,9 @@
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Agrega la biblioteca Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
 
@@ -117,6 +120,16 @@
         <h1>GPS Finder - Webserver</h1>
         <div class="data-columns">
             <div class="data-column">
+                <p>Fecha y Hora Inicial:</p>
+                <input id="start-datetime" class="datepicker" data-timepicker="true">
+            </div>
+            <div class="data-column">
+                <p>Fecha y Hora Final:</p>
+                <input id="end-datetime" class="datepicker" data-timepicker="true">
+            </div>
+        </div>
+        <div class="data-columns">
+            <div class="data-column">
                 <p>Latitud:</p>
                 <span id="latitud"></span>
             </div>
@@ -221,6 +234,7 @@
             if (previousPoint) {
                 // Crea una nueva polyline desde el punto anterior al punto actual
                 const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+                polyline.options.timestamp = new Date(data[3]); // Almacena la marca de tiempo en la polyline
                 polylines.push(polyline);
             }
 
@@ -240,7 +254,7 @@
         }
 
         function updateDataTable(data) {
-            data[3]=formatDate(data[3]);
+            data[3] = formatDate(data[3]);
             // Obtén la tabla
             const table = document.getElementById('data-table');
 
@@ -268,14 +282,51 @@
             }
         }
 
-        // Función para borrar las polilíneas
+        // Función para borrar las polilíneas y filtrar datos por rango de tiempo
         function borrarPolilineas() {
+            const startDatetime = new Date(document.getElementById('start-datetime').value);
+            const endDatetime = new Date(document.getElementById('end-datetime').value);
+
+            // Filtra las polilíneas dentro del rango de tiempo seleccionado
+            polylines = polylines.filter(function(polyline) {
+                const timestamp = polyline.options.timestamp;
+                return timestamp >= startDatetime && timestamp <= endDatetime;
+            });
+
+            // Borra las polilíneas del mapa
             for (let i = 0; i < polylines.length; i++) {
                 const polyline = polylines[i];
                 map.removeLayer(polyline);
             }
-            polylines = [];
+
+            // Actualiza la tabla de datos para mostrar solo los datos dentro del rango de tiempo seleccionado
+            const table = document.getElementById('data-table');
+            const rowsToRemove = [];
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const timestamp = new Date(row.cells[3].innerText);
+                if (timestamp < startDatetime || timestamp > endDatetime) {
+                    rowsToRemove.push(row);
+                }
+            }
+
+            for (const rowToRemove of rowsToRemove) {
+                table.removeChild(rowToRemove);
+            }
         }
+
+        // Inicializa los datepickers
+        document.addEventListener("DOMContentLoaded", function() {
+            const startDatetimePicker = new Datepicker(document.querySelector("#start-datetime"), {
+                autohide: true,
+                format: 'dd-mm-yyyy HH:ii:ss'
+            });
+
+            const endDatetimePicker = new Datepicker(document.querySelector("#end-datetime"), {
+                autohide: true,
+                format: 'dd-mm-yyyy HH:ii:ss'
+            });
+        });
     </script>
 </body>
 </html>
