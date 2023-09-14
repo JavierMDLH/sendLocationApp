@@ -8,6 +8,15 @@ const dgram = require('dgram'); // Importa el módulo dgram para UDP
 const app = require('express')(); // Usa require para crear la aplicación express directamente
 const server = http.createServer(app);
 const io = socketIo(server);
+// Configura Express para servir archivos estáticos desde la carpeta "public"
+app.use(express.static('public'));
+
+
+// Configura una ruta para servir tu página HTML
+app.get('/', (req, res) => {
+  res.sendFile('/index.html');
+});
+
 
 const fs = require('fs');
 
