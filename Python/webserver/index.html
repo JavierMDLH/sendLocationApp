@@ -6,10 +6,6 @@
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <!-- Agrega la biblioteca Tempus Dominus Bootstrap 4 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
 
@@ -159,27 +155,6 @@
                 <!-- Los datos del servidor se agregarán aquí dinámicamente -->
             </tbody>
         </table>
-
-        <!-- Agrega los datepickers como calendarios y relojes -->
-        <div class="form-group">
-            <label for="start-datetime">Fecha y Hora Inicial:</label>
-            <div class="input-group date" id="start-datetime" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#start-datetime" />
-                <div class="input-group-append" data-target="#start-datetime" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="end-datetime">Fecha y Hora Final:</label>
-            <div class="input-group date" id="end-datetime" data-target-input="nearest">
-                <input type="text" class="form-control datetimepicker-input" data-target="#end-datetime" />
-                <div class="input-group-append" data-target="#end-datetime" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -204,29 +179,6 @@
 
             return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
         }
-
-        // Configura los datepickers como calendarios y relojes
-        $(function () {
-            $('#start-datetime').datetimepicker({
-                format: 'DD-MM-YYYY HH:mm:ss'
-            });
-
-            $('#end-datetime').datetimepicker({
-                format: 'DD-MM-YYYY HH:mm:ss'
-            });
-
-            // Maneja el cambio de fechas en el datepicker de inicio
-            $('#start-datetime').on('change.datetimepicker', function (e) {
-                // Aquí puedes manejar la fecha y hora seleccionada
-                console.log('Fecha y hora inicial seleccionada:', e.date.format('DD-MM-YYYY HH:mm:ss'));
-            });
-
-            // Maneja el cambio de fechas en el datepicker de fin
-            $('#end-datetime').on('change.datetimepicker', function (e) {
-                // Aquí puedes manejar la fecha y hora seleccionada
-                console.log('Fecha y hora final seleccionada:', e.date.format('DD-MM-YYYY HH:mm:ss'));
-            });
-        });
 
         // Crea un mapa Leaflet
         const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
@@ -288,7 +240,7 @@
         }
 
         function updateDataTable(data) {
-            data[3] = formatDate(data[3]);
+            data[3]=formatDate(data[3]);
             // Obtén la tabla
             const table = document.getElementById('data-table');
 
