@@ -56,25 +56,21 @@
             border-radius: 5px;
         }
 
-        /* Estilos para los datos */
-        .data-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+        /* Estilos para la tabla de datos históricos */
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
 
-        .data-item p {
-            padding: 5px 10px;
-            border-radius: 5px;
+        th, td {
+            border: 1px solid #dcdcdc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
             background-color: #007BFF;
-            color: white;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .data-item p:hover {
-            background-color: #0056b3;
+            color: #ffffff;
         }
 
         /* Estilos para el mapa */
@@ -98,30 +94,67 @@
             margin-right: auto;
         }
 
+        /* Estilos para los datos en dos columnas */
+        .data-columns {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .data-column {
+            flex-basis: 48%; /* Ancho de las columnas */
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <a href="#">Inicio</a>
-        <a href="#">Acerca de</a>
-        <a href="#">Contacto</a>
+        <a href="http://44.218.79.34:3000/">Javier</a>
+        <a href="http://18.213.141.13:3000/">Rafae</a>
+        <a href="http://52.204.180.204:3000/">Ernesto</a>
     </div>
 
     <div id="data-box">
         <h1>GPS Finder - Webserver</h1>
-        <div class="data-item">
-            <p>Latitud: <span id="latitud"></span></p>
-            <p>Longitud: <span id="longitud"></span></p>
+        <div class="data-columns">
+            <div class="data-column">
+                <p>Latitud:</p>
+                <span id="latitud"></span>
+            </div>
+            <div class="data-column">
+                <p>Altitud:</p>
+                <span id="altitud"></span>
+            </div>
         </div>
-        <div class="data-item">
-            <p>Altitud: <span id="altitud"></span></p>
-            <p>Timestamp: <span id="timestamp"></span></p>
+        <div class="data-columns">
+            <div class="data-column">
+                <p>Longitud:</p>
+                <span id="longitud"></span>
+            </div>
+            <div class="data-column">
+                <p>Timestamp:</p>
+                <span id="timestamp"></span>
+            </div>
         </div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
         <!-- Botón para borrar polilíneas -->
         <button onclick="borrarPolilineas()">Borrar Polilíneas</button>
+
+        <!-- Agrega una tabla para mostrar los datos del servidor -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th>Altitud</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
     </div>
 
     <script>
