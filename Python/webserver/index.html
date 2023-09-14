@@ -93,6 +93,14 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        /* Estilos para los datos en la misma línea */
+        .data-inline {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -104,10 +112,12 @@
 
     <div id="data-box">
         <h1>GPS Finder - Webserver</h1>
-        <p>Latitud: <span id="latitud"></span></p>
-        <p>Longitud: <span id="longitud"></span></p>
-        <p>Altitud: <span id="altitud"></span></p>
-        <p>Timestamp: <span id="timestamp"></span></p>
+        <div class="data-inline">
+            <p>Latitud: <span id="latitud"></span></p>
+            <p>Longitud: <span id="longitud"></span></p>
+            <p>Altitud: <span id="altitud"></span></p>
+            <p>Timestamp: <span id="timestamp"></span></p>
+        </div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
