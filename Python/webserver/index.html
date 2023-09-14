@@ -240,6 +240,7 @@
         }
 
         function updateDataTable(data) {
+            data[3]=formatDate(data[3]);
             // Obtén la tabla
             const table = document.getElementById('data-table');
 
