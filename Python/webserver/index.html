@@ -144,7 +144,7 @@
 
             if (previousPoint) {
                 // Crea una nueva polyline desde el punto anterior al punto actual
-                const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity }).addTo(map);
+                const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
                 polylines.push(polyline);
             }
 
