@@ -195,6 +195,9 @@
         <button id="datePickerButtonF" class="date-button-final">
             <i class="fas fa-calendar"></i> Seleccionar Fecha Final
         </button>
+
+        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
+        <button id="toggleSwitch">Ver ventana de tiempo</button>
         
 
         <!-- Agrega un contenedor para el mapa -->
@@ -223,7 +226,9 @@
 
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
-    
+        
+        let mostrarDatosNuevos = false;
+
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
         });
@@ -252,6 +257,31 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+        
+        // Agregar un evento de clic al botón para cambiar el estado
+        document.getElementById('toggleSwitch').addEventListener('click', () => {
+            // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
+            mostrarDatosNuevos = !mostrarDatosNuevos;
+            if (mostrarDatosNuevos) {
+            // Si se activa, enviar una señal al servidor para mostrar datos nuevos
+            socket.emit('activar_switch');
+            alert('Mostrar datos nuevos activado');
+            } else {
+            // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
+            socket.emit('desactivar_switch');
+            alert('Mostrar datos nuevos desactivado');
+            }
+
+            //Obtener las fechas seleccionadas por el usuario
+            const fechaInicial = document.getElementById('datePickerInput').value;
+            const fechaFinal = document.getElementById('datePickerInputF').value;
+
+            // Enviar las fechas al servidor a través de Socket.IO
+            socket.emit('date_range_selected', { fechaInicial, fechaFinal });
+        });
+        
+    
+        
         let marker; // Variable para almacenar el marcador
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
