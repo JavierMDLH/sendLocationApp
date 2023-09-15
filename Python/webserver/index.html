@@ -102,7 +102,7 @@
         .button-container {
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap
+            flex-wrap: wrap;
         }
 
         .date-input {
@@ -130,16 +130,20 @@
             font-family: 'Merriweather', serif;
         }
 
-
-    </style>
-</head>
-    <title>Seleccionar Fechas y Horas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <style>
-        .button-container {
-             display: flex;
-            justify-content: space-between;
+        /* Estilos para el botón de Fecha Final */
+        .date-button-final {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
         }
+
+
     </style>
 </head>
 <body>
@@ -172,11 +176,25 @@
             </div>
         </div>
 
-        <!-- Elemento de entrada de fecha -->
+        <!-- Elemento de entrada de fecha inicial -->
         <div class="button-container">
             <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
-            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">   
         </div>
+        
+        <!-- Botón para seleccionar fecha inicial -->
+        <button id="datePickerButton" class="date-button">
+            <i class="fas fa-calendar"></i> Seleccionar Fecha Inicial
+        </button>
+
+        <!-- Elemento de entrada de fecha final -->
+        <div class="button-container">
+            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">
+        </div>
+
+        <!-- Botón para seleccionar fecha final -->
+        <button id="datePickerButtonF" class="date-button-final">
+            <i class="fas fa-calendar"></i> Seleccionar Fecha Final
+        </button>
         
 
         <!-- Agrega un contenedor para el mapa -->
@@ -325,7 +343,7 @@
     
         document.addEventListener('DOMContentLoaded', function () {
             const datePickerInput = document.getElementById('datePickerInput');
-            const datePickerInputF = document.getElementById('datePickerInput');
+            const datePickerInputF = document.getElementById('datePickerInputF');
             
             const configInicial = {
                 enableTime: true,
@@ -335,7 +353,7 @@
                 onClose: function(selectedDates, dateStr, instance) {
                     // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
                     const fechaInicial = new Date(dateStr);
-                    datePickerButton._flatpickr.set('minDate', fechaInicial);
+                    datePickerInputF._flatpickr.set('minDate', fechaInicial);
                     datePickerInput.value = dateStr;
                 }
             };
@@ -345,16 +363,19 @@
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-                onClose: function(selectedDates, dateStr, instance) {
-                    // Cuando se selecciona una fecha final, configura la fecha máxima para la fecha inicial
-                    const fechaFinal = new Date(dateStr);
-                    datePickerButton._flatpickr.set('maxDate', fechaFinal);
-                    datePickerInputF.value = dateStr;
-                }
             };
 
+            const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerButtonF = document.getElementById('datePickerButtonF');
+
+            // Inicializa Flatpickr en los elementos de entrada de fecha
             flatpickr(datePickerInput, configInicial);
             flatpickr(datePickerInputF, configFinal);
+
+            // Agrega el evento de clic al botón de Fecha Final
+            datePickerButtonF.addEventListener('click', function () {
+                datePickerInputF._flatpickr.open();
+            });
         });
     </script>
 </body>
