@@ -109,6 +109,15 @@
         }
     </style>
 </head>
+    <title>Seleccionar Fechas y Horas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .button-container {
+             display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
 <body>
     <div class="navbar">
         <a href="http://44.218.79.34:3000/">Javier</a>
@@ -139,8 +148,12 @@
             </div>
         </div>
 
-        <button id="datePickerButton">Fecha y Hora Inicial</button>
-        <button id="datePickerButton1">Fecha y Hora Final</button>
+        <div class="button-container">
+            <button id="datePickerButton">Fecha y Hora Inicial</button>
+            <button id="datePickerButton1">Fecha y Hora Final</button>
+        </div>
+        
+
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
         <!-- Botón para borrar polilíneas -->
@@ -315,7 +328,7 @@
 
             flatpickr(datePickerButton, configInicial);
             flatpickr(datePickerButton1, configFinal);
-        });;
+        });
     </script>
 </body>
 </html>
