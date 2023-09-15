@@ -175,8 +175,7 @@
         <!-- Elemento de entrada de fecha -->
         <div class="button-container">
             <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
-            <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Final">
-            
+            <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Final">   
         </div>
         
 
@@ -350,11 +349,12 @@
                     // Cuando se selecciona una fecha final, configura la fecha máxima para la fecha inicial
                     const fechaFinal = new Date(dateStr);
                     datePickerButton._flatpickr.set('maxDate', fechaFinal);
+                    datePickerInput.value = dateStr
                 }
             };
 
             flatpickr(datePickerInput, configInicial);
-            flatpickr(datePickerButton, configFinal);
+            flatpickr(datePickerInput, configFinal);
         });
     </script>
 </body>
