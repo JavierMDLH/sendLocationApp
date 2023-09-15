@@ -56,12 +56,6 @@ udpServer.on('listening', () => {
   console.log(`Servidor UDP escuchando en ${address.address}:${address.port}`);
 });
 
-// Función para formatear la fecha
-//function formatDate(timestamp) {
-//  const fechaHora = new Date(timestamp).toISOString();
-//  const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
-//  return formattedDate;
-//}
 
 udpServer.on('message', (message, remote) => {
   // Aquí puedes procesar los datos UDP recibidos y luego insertarlos en la base de datos
@@ -72,9 +66,7 @@ udpServer.on('message', (message, remote) => {
   const latitud = received_data.split('Latitud ')[1].split(',')[0];
   const longitud = received_data.split('Longitud ')[1].split(',')[0];
   const altitud = received_data.split('Altitud ')[1].split(',')[0];
-  //const fecha_hora = formatDate(received_data.split('Hora: ')[1].trim());
-  //const fecha_hora = received_data.split('Hora: ')[1].trim().replace(/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/, '$3-$2-$1 $4:$5:$6');
-  //const fecha_hora = received_data.split('Hora: ')[1].trim();
+  
 
   const fecha_hora ="'"+ received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '')+"'";
 
@@ -99,6 +91,10 @@ udpServer.on('message', (message, remote) => {
 });
 
 udpServer.bind(UDP_PORT);
+
+io.on('cambiar_estado', (estado) => {
+  mostrarDatosNuevos = estado;
+});
 
 // Resto de tu código de Socket.IO
 io.on('connection', (socket) => {
