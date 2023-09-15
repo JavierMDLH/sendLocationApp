@@ -150,54 +150,56 @@ server.listen(PORT, () => {
 
 // Función para obtener datos actualizados desde la base de datos
 
-function obtenerDatosActualizadosDesdeDB(fechaInicial, fechaFinal, callback) {
-  if (mostrarDatosNuevos) {
-    // Realiza una consulta SQL para obtener los datos más recientes desde la base de datos
-    const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY iddatos DESC LIMIT 1';
+function obtenerDatosActualizadosDesdeDB(callback) {
+  
+  // Realiza una consulta SQL para obtener los datos más recientes desde la base de datos
+  const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY iddatos DESC LIMIT 1';
 
-    db.query(consulta, (err, results) => {
-      if (err) {
-        callback(err, null);
-        return;
-      }
+  db.query(consulta, (err, results) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
 
-      if (results.length === 0) {
-        // No se encontraron datos
-        callback(null, []);
-        return;
-      }
+    if (results.length === 0) {
+      // No se encontraron datos
+      callback(null, []);
+      return;
+    }
 
-      // Extrae los datos de la consulta
-      const data = [
-        results[0].Latitud,
-        results[0].Longitud,
-        results[0].Altitud,
-        results[0].Timestamp,
-      ];
+     // Extrae los datos de la consulta
+    const data = [
+      results[0].Latitud,
+      results[0].Longitud,
+      results[0].Altitud,
+      results[0].Timestamp,
+    ];
 
-      callback(null, data);
-      console.log(results[0].Timestamp);
-    });
-  } else {
-    // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
-    const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos WHERE Timestamp BETWEEN ? AND ? ORDER BY Timestamp';
-    const valores = [fechaInicial, fechaFinal];
+    callback(null, data);
+    console.log(results[0].Timestamp);
+  });
+}  
 
-    db.query(consulta, valores, (err, results) => {
-      if (err) {
-        callback(err, null);
-        return;
-      }
+function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
+  // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
+  const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos WHERE Timestamp BETWEEN ? AND ? ORDER BY Timestamp';
+  const valores = [fechaInicial, fechaFinal];
 
-      // Extraer los datos de la consulta
-      const data = results.map((row) => ({
-        latitud: row.Latitud,
-        longitud: row.Longitud,
-        altitud: row.Altitud,
-        timestamp: row.Timestamp,
-      }));
+  db.query(consulta, valores, (err, results) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
 
-      callback(null, data);
-    });
-  }
-}
+    // Extraer los datos de la consulta
+    const data = results.map((row) => ({
+      latitud: row.Latitud,
+      longitud: row.Longitud,
+      altitud: row.Altitud,
+      timestamp: row.Timestamp,
+    }));
+
+    callback(null, data);
+  });
+}  
+
