@@ -287,26 +287,35 @@
     
         document.addEventListener('DOMContentLoaded', function () {
             const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerButton1 = document.getElementById('datePickerButton1');
             
-            flatpickr(datePickerButton, {
+            const configInicial = {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-            });
-        });
-
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const datePickerButton = document.getElementById('datePickerButton1');
+                onClose: function(selectedDates, dateStr, instance) {
+                    // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
+                    const fechaInicial = new Date(dateStr);
+                    datePickerButton1._flatpickr.set('minDate', fechaInicial);
+                }
+            };
             
-            flatpickr(datePickerButton1, {
+            const configFinal = {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-            });
-        });
+                onClose: function(selectedDates, dateStr, instance) {
+                    // Cuando se selecciona una fecha final, configura la fecha máxima para la fecha inicial
+                    const fechaFinal = new Date(dateStr);
+                    datePickerButton._flatpickr.set('maxDate', fechaFinal);
+                }
+            };
+
+            flatpickr(datePickerButton, configInicial);
+            flatpickr(datePickerButton1, configFinal);
+        });;
     </script>
 </body>
 </html>
