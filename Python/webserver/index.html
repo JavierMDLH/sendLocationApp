@@ -6,7 +6,9 @@
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/datepicker@1.0.10/dist/datepicker.min.js"></script>
+    <!-- Agrega la biblioteca FLatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
 
@@ -285,15 +287,13 @@
             }
             polylines = [];
         }
-
+    
         // Inicializa el selector de fecha y hora
-        document.addEventListener('DOMContentLoaded', function () {
-            datepicker("#datePicker", {
-                date: new Date(),
-                time: true,
-                autohide: true
-            });
-        });
+        datepicker("#datePicker", {
+            date: new Date(),
+            time: true,
+            autohide: true
+        });;
     </script>
 </body>
 </html>
