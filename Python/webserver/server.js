@@ -190,7 +190,7 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
       callback(err, null);
       return;
     }
-
+    console.log('Extrayendo datos')
     // Extraer los datos de la consulta
     const data = results.map((row) => ({
       latitud: row.Latitud,
