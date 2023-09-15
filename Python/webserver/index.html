@@ -9,6 +9,9 @@
     <!-- Agrega la biblioteca FLatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+IxnI4fZy/uqSk5xSl5u5M5m+2Z2tw5T5E5g5E5f5E5v5E5p5O5F5" crossorigin="anonymous">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
 
@@ -101,7 +104,7 @@
         .data-columns {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .data-column {
@@ -149,8 +152,12 @@
         </div>
 
         <div class="button-container">
-           <button id="datePickerButton">Fecha y Hora Inicial</button>
-            <button id="datePickerButton1">Fecha y Hora Final</button>
+            <button id="datePickerButton">
+                <i class="fas fa-clock"></i> Fecha y Hora Inicial
+            </button>
+            <button id="datePickerButton1">
+                <i class="fas fa-clock"></i> Fecha y Hora Final
+            </button>
         </div>
         
 
