@@ -136,6 +136,14 @@
             </div>
         </div>
 
+        <!-- Agrega un campo de entrada para la fecha y hora utilizando datepicker -->
+        <div class="data-columns">
+            <div class="data-column">
+                <p>Fecha y Hora:</p>
+                <input type="text" id="datePicker" class="datepicker-here" data-date-format="yyyy-mm-dd hh:ii" readonly>
+            </div>
+        </div>
+
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
         <!-- Botón para borrar polilíneas -->
@@ -276,6 +284,13 @@
             }
             polylines = [];
         }
+
+        // Inicializa el selector de fecha y hora
+        datepicker("#datePicker", {
+            date: new Date(),
+            time: true,
+            autohide: true
+        });
     </script>
 </body>
 </html>
