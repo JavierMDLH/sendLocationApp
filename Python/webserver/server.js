@@ -116,7 +116,7 @@ io.on('connection', (socket) => {
         console.error('Error al obtener datos desde la base de datos:', err);
         return;
       }
-      socket.emit('update_data', data);
+      io.emit('update_data', data);
     });
 
   }else{
@@ -130,7 +130,7 @@ io.on('connection', (socket) => {
         }
   
         // Enviar datos al cliente
-        socket.emit('update_data', data);
+        io.emit('update_data', data);
       });
     });
     
