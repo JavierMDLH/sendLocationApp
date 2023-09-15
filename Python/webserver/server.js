@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
       mostrarDatosNuevos = false;
       console.log('Mostrar datos nuevos desactivado');
   });
-
+  console.log(mostrarDatosNuevos);
   if (mostrarDatosNuevos){
     // Obtén los datos actualizados y envíalos cuando un cliente se conecta
     obtenerDatosActualizadosDesdeDB((err, data) => {
