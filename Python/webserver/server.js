@@ -111,6 +111,17 @@ io.on('connection', (socket) => {
       fechaInicial = fechaInicial;
       fechaFinal = fechaFinal;
       console.log('Mostrar datos nuevos desactivado');
+      console.log('Consulta rango de tiempo');
+      // Obtener datos dentro del rango de fechas especificado
+      obtenerDatosEnRangoDesdeDB(fechas.fechaInicial, fechas.fechaFinal, (err, data) => {
+        if (err) {
+          console.error('Error al obtener datos desde la base de datos:', err);
+          return;
+        }
+    
+        // Enviar datos al cliente
+        io.emit('update_data', data);
+      });  
   });
   console.log(mostrarDatosNuevos);
   if (mostrarDatosNuevos){
@@ -123,19 +134,6 @@ io.on('connection', (socket) => {
       io.emit('update_data', data);
     });
 
-  }else{
-    console.log('Consulta rango de tiempo');
-    // Obtener datos dentro del rango de fechas especificado
-    obtenerDatosEnRangoDesdeDB(fechas.fechaInicial, fechas.fechaFinal, (err, data) => {
-      if (err) {
-        console.error('Error al obtener datos desde la base de datos:', err);
-        return;
-      }
-  
-      // Enviar datos al cliente
-      io.emit('update_data', data);
-    });  
-    
   }
   
 
