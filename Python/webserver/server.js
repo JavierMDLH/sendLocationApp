@@ -145,7 +145,7 @@ server.listen(PORT, () => {
 function obtenerDatosActualizadosDesdeDB(fechaInicial, fechaFinal, callback) {
   if (mostrarDatosNuevos) {
     // Realiza una consulta SQL para obtener tus datos desde la base de datos
-    const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY Timestamp DESC LIMIT 1';
+    const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY iddatos DESC LIMIT 1';
 
     db.query(consulta, (err, results) => {
       if (err) {
