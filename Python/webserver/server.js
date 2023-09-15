@@ -59,7 +59,8 @@ udpServer.on('listening', () => {
 
 udpServer.on('message', (message, remote) => {
   // Aquí puedes procesar los datos UDP recibidos y luego insertarlos en la base de datos
-  console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}: ${message}`);
+  //console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}: ${message}`);
+  console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}`);
 
   // Separar los datos en latitud, longitud, altitud y hora
   const received_data = message.toString();
