@@ -92,10 +92,6 @@ udpServer.on('message', (message, remote) => {
 
 udpServer.bind(UDP_PORT);
 
-io.on('cambiar_estado', (estado) => {
-  mostrarDatosNuevos = estado;
-});
-
 // Resto de tu código de Socket.IO
 io.on('connection', (socket) => {
   console.log('Un cliente se ha conectado');
