@@ -124,7 +124,7 @@ io.on('connection', (socket) => {
     });
 
   }else{
-  
+    console.log('Consulta rango de tiempo');
     // Obtener datos dentro del rango de fechas especificado
     obtenerDatosEnRangoDesdeDB(fechas.fechaInicial, fechas.fechaFinal, (err, data) => {
       if (err) {
