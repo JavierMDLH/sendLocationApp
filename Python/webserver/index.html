@@ -318,6 +318,7 @@
                     // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
                     const fechaInicial = new Date(dateStr);
                     datePickerButton1._flatpickr.set('minDate', fechaInicial);
+                    datePickerButton.innerText = `Fecha y Hora Inicial: ${dateStr}`;
                 }
             };
             
@@ -330,6 +331,7 @@
                     // Cuando se selecciona una fecha final, configura la fecha máxima para la fecha inicial
                     const fechaFinal = new Date(dateStr);
                     datePickerButton._flatpickr.set('maxDate', fechaFinal);
+                    datePickerButton1.innerText = `Fecha y Hora Final: ${dateStr}`;
                 }
             };
 
