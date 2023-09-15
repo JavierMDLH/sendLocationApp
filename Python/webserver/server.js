@@ -113,7 +113,7 @@ io.on('connection', (socket) => {
       console.log('Mostrar datos nuevos desactivado');
       console.log('Consulta rango de tiempo');
       // Obtener datos dentro del rango de fechas especificado
-      obtenerDatosEnRangoDesdeDB(fechas.fechaInicial, fechas.fechaFinal, (err, data) => {
+      obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal, (err, data) => {
         if (err) {
           console.error('Error al obtener datos desde la base de datos:', err);
           return;
