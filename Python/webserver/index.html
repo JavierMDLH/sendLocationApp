@@ -325,7 +325,7 @@
     
         document.addEventListener('DOMContentLoaded', function () {
             const datePickerInput = document.getElementById('datePickerInput');
-            const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerInputF = document.getElementById('datePickerInput');
             
             const configInicial = {
                 enableTime: true,
@@ -349,12 +349,12 @@
                     // Cuando se selecciona una fecha final, configura la fecha máxima para la fecha inicial
                     const fechaFinal = new Date(dateStr);
                     datePickerButton._flatpickr.set('maxDate', fechaFinal);
-                    datePickerInput.value = dateStr;
+                    datePickerInputF.value = dateStr;
                 }
             };
 
             flatpickr(datePickerInput, configInicial);
-            flatpickr(datePickerInput, configFinal);
+            flatpickr(datePickerInputF, configFinal);
         });
     </script>
 </body>
