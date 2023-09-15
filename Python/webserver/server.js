@@ -100,6 +100,16 @@ io.on('cambiar_estado', (estado) => {
 io.on('connection', (socket) => {
   console.log('Un cliente se ha conectado');
 
+  socket.on('activar_switch', () => {
+      mostrarDatosNuevos = true;
+      console.log('Mostrar datos nuevos activado');
+  });
+
+  socket.on('desactivar_switch', () => {
+      mostrarDatosNuevos = false;
+      console.log('Mostrar datos nuevos desactivado');
+  });
+
   if (mostrarDatosNuevos){
     // Obtén los datos actualizados y envíalos cuando un cliente se conecta
     obtenerDatosActualizadosDesdeDB((err, data) => {
@@ -140,7 +150,6 @@ server.listen(PORT, () => {
 });
 
 // Función para obtener datos actualizados desde la base de datos
-
 
 function obtenerDatosActualizadosDesdeDB(fechaInicial, fechaFinal, callback) {
   if (mostrarDatosNuevos) {
