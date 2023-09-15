@@ -106,7 +106,7 @@ io.on('connection', (socket) => {
       console.log('Mostrar datos nuevos activado');
   });
 
-  socket.on('desactivar_switch',fechaInicial,fechaFinal, () => {
+  socket.on('desactivar_switch',(fechaInicial, fechaFinal) => {
       mostrarDatosNuevos = false;
       fechaInicial = fechaInicial;
       fechaFinal = fechaFinal;
