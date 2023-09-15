@@ -83,10 +83,12 @@ udpServer.on('message', (message, remote) => {
 
     console.log('Datos insertados en la base de datos correctamente.',fecha_hora);
 
-
-    // Emitir un evento a todos los clientes cuando haya nuevos datos
-    io.emit('update_data', valores); // "nuevos_datos" es el nombre del evento personalizado
-    //io.emit('update__data',valores)
+    if (mostrarDatosNuevos){
+      // Emitir un evento a todos los clientes cuando haya nuevos datos
+      io.emit('update_data', valores); 
+    }
+    
+    
   });
 });
 
