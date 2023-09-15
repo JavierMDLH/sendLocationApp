@@ -263,22 +263,20 @@
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
             if (mostrarDatosNuevos) {
-            // Si se activa, enviar una señal al servidor para mostrar datos nuevos
-            socket.emit('activar_switch');
-            alert('Mostrar datos nuevos activado');
+                // Si se activa, enviar una señal al servidor para mostrar datos nuevos
+                socket.emit('activar_switch');
+                alert('Mostrar datos nuevos activado');
             } else {
-            // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
-            socket.emit('desactivar_switch');
-            alert('Mostrar datos nuevos desactivado');
+                // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
+                socket.emit('desactivar_switch');
+                alert('Mostrar datos nuevos desactivado');
+                // Aquí puedes llamar a la función para obtener datos en el rango seleccionado
+                const fechaInicial = document.getElementById('datePickerInput').value;
+                const fechaFinal = document.getElementById('datePickerInputF').value;
+                socket.emit('date_range_selected', { fechaInicial, fechaFinal });
             }
-
-            //Obtener las fechas seleccionadas por el usuario
-            const fechaInicial = document.getElementById('datePickerInput').value;
-            const fechaFinal = document.getElementById('datePickerInputF').value;
-
-            // Enviar las fechas al servidor a través de Socket.IO
-            socket.emit('date_range_selected', { fechaInicial, fechaFinal });
         });
+
         
     
         
