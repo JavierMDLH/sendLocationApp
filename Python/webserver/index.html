@@ -258,16 +258,18 @@
         }).addTo(map);
 
         
-        // Agregar un evento de clic al botón para cambiar el estado
+    
+
+        // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
-            // Cambiar el estado de mostrarDatosNuevos y enviarlo al servidor
+            // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
-            socket.emit('cambiar_estado', mostrarDatosNuevos);
-            
             if (mostrarDatosNuevos) {
-                alert('Mostrar datos nuevos activado');
+                // Si se activa, enviar una señal al servidor para mostrar datos nuevos
+                socket.emit('activar_switch');
             } else {
-                alert('Mostrar datos nuevos desactivado');
+                // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
+                socket.emit('desactivar_switch');
                 const fechaInicial = document.getElementById('datePickerInput').value;
                 const fechaFinal = document.getElementById('datePickerInputF').value;
                 socket.emit('date_range_selected', { fechaInicial, fechaFinal });
