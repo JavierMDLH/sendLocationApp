@@ -140,7 +140,7 @@
         </div>
 
         <button id="datePickerButton">Fecha y Hora Inicial</button>
-        <button id="datePickerButton">Fecha y Hora Final</button>
+        <button id="datePickerButton1">Fecha y Hora Final</button>
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
         <!-- Botón para borrar polilíneas -->
@@ -289,6 +289,18 @@
             const datePickerButton = document.getElementById('datePickerButton');
             
             flatpickr(datePickerButton, {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const datePickerButton = document.getElementById('datePickerButton1');
+            
+            flatpickr(datePickerButton1, {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
