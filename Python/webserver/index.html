@@ -227,7 +227,7 @@
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
         
-        let mostrarDatosNuevos = false;
+        let mostrarDatosNuevos = true;
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
