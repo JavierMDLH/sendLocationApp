@@ -149,7 +149,7 @@ server.listen(PORT, () => {
 
 function obtenerDatosActualizadosDesdeDB(fechaInicial, fechaFinal, callback) {
   if (mostrarDatosNuevos) {
-    // Realiza una consulta SQL para obtener tus datos desde la base de datos
+    // Realiza una consulta SQL para obtener los datos más recientes desde la base de datos
     const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY iddatos DESC LIMIT 1';
 
     db.query(consulta, (err, results) => {
@@ -176,16 +176,16 @@ function obtenerDatosActualizadosDesdeDB(fechaInicial, fechaFinal, callback) {
       console.log(results[0].Timestamp);
     });
   } else {
-    
+    // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
     const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos WHERE Timestamp BETWEEN ? AND ? ORDER BY Timestamp';
     const valores = [fechaInicial, fechaFinal];
-    
+
     db.query(consulta, valores, (err, results) => {
       if (err) {
         callback(err, null);
         return;
       }
-    
+
       // Extraer los datos de la consulta
       const data = results.map((row) => ({
         latitud: row.Latitud,
@@ -193,8 +193,8 @@ function obtenerDatosActualizadosDesdeDB(fechaInicial, fechaFinal, callback) {
         altitud: row.Altitud,
         timestamp: row.Timestamp,
       }));
-    
-       callback(null, data);
-    });   
+
+      callback(null, data);
+    });
   }
 }
