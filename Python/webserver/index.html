@@ -139,18 +139,15 @@
             </div>
         </div>
 
-        <!-- Agrega un campo de entrada para la fecha y hora utilizando datepicker -->
-        <div class="data-columns">
-            <div class="data-column">
-                <p>Fecha y Hora:</p>
-                <input type="text" id="datePicker" class="datepicker-here" data-date-format="yyyy-mm-dd hh:ii" readonly>
-            </div>
-        </div>
+       
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
         <!-- Botón para borrar polilíneas -->
         <button onclick="borrarPolilineas()">Borrar Polilíneas</button>
+
+
+        <button id="datePickerButton">Seleccionar Fecha y Hora</button>
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
         <table>
@@ -288,12 +285,16 @@
             polylines = [];
         }
     
-        // Inicializa el selector de fecha y hora
-        datepicker("#datePicker", {
-            date: new Date(),
-            time: true,
-            autohide: true
-        });;
+        document.addEventListener('DOMContentLoaded', function () {
+            const datePickerButton = document.getElementById('datePickerButton');
+            
+            flatpickr(datePickerButton, {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+            });
+        });
     </script>
 </body>
 </html>
