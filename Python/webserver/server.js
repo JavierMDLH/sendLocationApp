@@ -5,7 +5,7 @@ const socketIo = require('socket.io');
 const mysql = require('mysql');
 const dgram = require('dgram'); // Importa el módulo dgram para UDP
 
-let mostrarDatosNuevos = false; // Variable para rastrear el estado del interruptor
+let mostrarDatosNuevos = true; // Variable para rastrear el estado del interruptor
 
 const app = require('express')(); // Usa require para crear la aplicación express directamente
 const server = http.createServer(app);
