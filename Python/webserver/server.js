@@ -183,7 +183,8 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
   // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
   const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos WHERE Timestamp BETWEEN ? AND ? ORDER BY Timestamp';
   const valores = [fechaInicial, fechaFinal];
-
+  console.log('Fecha inicial: ',fechaInicial);
+  console.log('Fecha final: ',fechaFinal);
   db.query(consulta, valores, (err, results) => {
     if (err) {
       callback(err, null);
