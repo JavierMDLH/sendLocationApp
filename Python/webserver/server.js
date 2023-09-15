@@ -104,8 +104,10 @@ io.on('connection', (socket) => {
       console.log('Mostrar datos nuevos activado');
   });
 
-  socket.on('desactivar_switch', () => {
+  socket.on('desactivar_switch',fechaInicial,fechaFinal, () => {
       mostrarDatosNuevos = false;
+      fechaInicial = fechaInicial;
+      fechaFinal = fechaFinal;
       console.log('Mostrar datos nuevos desactivado');
   });
   console.log(mostrarDatosNuevos);
@@ -120,19 +122,17 @@ io.on('connection', (socket) => {
     });
 
   }else{
-
-    socket.on('date_range_selected', (fechas) => {
-      // Obtener datos dentro del rango de fechas especificado
-      obtenerDatosEnRangoDesdeDB(fechas.fechaInicial, fechas.fechaFinal, (err, data) => {
-        if (err) {
-          console.error('Error al obtener datos desde la base de datos:', err);
-          return;
-        }
   
-        // Enviar datos al cliente
-        io.emit('update_data', data);
-      });
-    });
+    // Obtener datos dentro del rango de fechas especificado
+    obtenerDatosEnRangoDesdeDB(fechas.fechaInicial, fechas.fechaFinal, (err, data) => {
+      if (err) {
+        console.error('Error al obtener datos desde la base de datos:', err);
+        return;
+      }
+  
+      // Enviar datos al cliente
+      io.emit('update_data', data);
+    });  
     
   }
   

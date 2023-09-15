@@ -269,10 +269,10 @@
                 socket.emit('activar_switch');
             } else {
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
-                socket.emit('desactivar_switch');
+                
                 const fechaInicial = document.getElementById('datePickerInput').value;
                 const fechaFinal = document.getElementById('datePickerInputF').value;
-                socket.emit('date_range_selected', { fechaInicial, fechaFinal });
+                socket.emit('desactivar_switch', fechaInicial, fechaFinal ); 
             }
         });
 
