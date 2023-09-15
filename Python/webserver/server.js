@@ -85,7 +85,7 @@ udpServer.on('message', (message, remote) => {
 
     if (mostrarDatosNuevos){
       // Emitir un evento a todos los clientes cuando haya nuevos datos
-      io.emit('update_data', valores); 
+      //io.emit('update_data', valores); 
     }
     
     
