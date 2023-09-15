@@ -286,10 +286,12 @@
         }
 
         // Inicializa el selector de fecha y hora
-        datepicker("#datePicker", {
-            date: new Date(),
-            time: true,
-            autohide: true
+        document.addEventListener('DOMContentLoaded', function () {
+            datepicker("#datePicker", {
+                date: new Date(),
+                time: true,
+                autohide: true
+            });
         });
     </script>
 </body>
