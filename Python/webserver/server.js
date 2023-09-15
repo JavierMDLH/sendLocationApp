@@ -6,6 +6,8 @@ const mysql = require('mysql');
 const dgram = require('dgram'); // Importa el módulo dgram para UDP
 
 let mostrarDatosNuevos = true; // Variable para rastrear el estado del interruptor
+fechaInicial = 0;
+fechaFinal = 0;
 
 const app = require('express')(); // Usa require para crear la aplicación express directamente
 const server = http.createServer(app);
