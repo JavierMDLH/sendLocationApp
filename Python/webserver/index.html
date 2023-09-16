@@ -554,6 +554,9 @@
 
             }else{
                 console.log('Borrando polilíneas 2...');  
+                for (let i=1 ; i < polylines.length; i++){
+                    polyline = polylines[i];
+                }
                 for (let i = 1; i < polylines.length; i++) {
                 map.removeLayer(polyline);
                 //polyline = polylines[i];
