@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GPS Finder - Webserver</title>
+    <title>Javier</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -243,6 +243,7 @@
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
+            mostrarDatosNuevos = true;
         });
     
         socket.on('disconnect', function() {
