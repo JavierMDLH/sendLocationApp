@@ -427,10 +427,7 @@
                     // Programa la siguiente llamada después de un segundo
                     if (currentIndex < polylines.length) {
                         setTimeout(moveMarker, delayBetweenMarkers);
-                    } else {
-                        // Detiene la animación cuando llega al final de la polilínea
-                        clearInterval(markerAnimation);
-                    }
+                    } 
                 }
             }
 
