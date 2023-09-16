@@ -323,7 +323,7 @@
                     alert('Ha establecido mal la ventana de Tiempo')
                     mostrarDatosNuevos =true;
                 }else{
-                    borrarPolilineas();
+                    //borrarPolilineas();
                     alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal );
                     but.innerText = 'Datos en tiempo real'; 
