@@ -322,19 +322,12 @@
             }
 
             // Itera a través de los datos y crea celdas para cada valor
-            for (const rowData of data) {
+            for (const rowData of data) { // Cambiar 'value' a 'rowData'
                 const newRow = document.createElement('tr');
 
-                for (let i = 0; i < rowData.length; i++) {
+                for (const value of rowData) {
                     const cell = document.createElement('td');
-                    
-                    if (i === 3) { // Si es el índice del timestamp
-                        const timestamp = new Date(rowData[i]); // Convierte el timestamp a un objeto de fecha
-                        cell.innerText = formatTimestamp(timestamp); // Llama a una función para formatear el timestamp
-                    } else {
-                        cell.innerText = rowData[i]; // Muestra otros valores tal como están
-                    }
-
+                    cell.innerText = value;
                     newRow.appendChild(cell);
                 }
 
@@ -345,12 +338,6 @@
                     table.appendChild(newRow);
                 }
             }
-        }
-
-        function formatTimestamp(timestamp) {
-            // Formatea el objeto de fecha y hora como una cadena legible
-            const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-            return timestamp.toLocaleDateString('es-ES', options);
         }
 
 
