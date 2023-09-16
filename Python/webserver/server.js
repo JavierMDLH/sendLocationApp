@@ -196,23 +196,11 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
       latitud: row.Latitud,
       longitud: row.Longitud,
       altitud: row.Altitud,
-      timestamp: formatDate(row.Timestamp).toLocaleString(),
+      timestamp: row.Timestamp,
     }));
     console.log(data[0].timestamp)
 
     callback(null, data);
   });
 }  
-
-//Función para formatear la fecha
-function formatDate(timestamp) {
-  const año = timestamp.substring(4, 8);
-  const mes = timestamp.substring(2, 4);
-  const dia = timestamp.substring(0, 2);
-  const hora = timestamp.substring(8, 10);
-  const minutos = timestamp.substring(10, 12);
-  const segundos = timestamp.substring(12, 14);
-
-  return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
-}
 
