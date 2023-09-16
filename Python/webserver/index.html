@@ -519,7 +519,7 @@
             }
 
             // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 50; // Cambia este valor según tus preferencias
+            const maxRows = 100; // Cambia este valor según tus preferencias
             while (table.rows.length > maxRows) {
                 table.deleteRow(maxRows);
             }
@@ -527,6 +527,7 @@
 
         // Función para borrar las polilíneas
         function borrarPolilineas() {
+            console.log('Borrando polilíneas...');
             for (let i = 0; i < polylines.length; i++) {
                 const polyline = polylines[i];
                 map.removeLayer(polyline);
