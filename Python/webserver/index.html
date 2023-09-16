@@ -301,7 +301,7 @@
             updateDataTable(data);
         });
 
-        socket.on('update_tabla', function(data) {
+        socket.on('update_table', function(data) {
             console.log('Nueva Tabla Recibida');
             const formattedData = data.map((item) => [
                 item.latitud,
