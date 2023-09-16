@@ -533,9 +533,9 @@
         function borrarPolilineas() {
             console.log('Borrando polilíneas...');
             for (let i = 0; i < polylines.length; i++) {
-                map.removeLayer(polyline);
-                //polyline = polylines[i];
                 //map.removeLayer(polyline);
+                polyline = polylines[i];
+                map.removeLayer(polyline);
             }
             //polylines = [];
             //polyline = null;
