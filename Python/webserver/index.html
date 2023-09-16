@@ -409,6 +409,7 @@
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
                     marker.setLatLng([latitud, longitud]);
+                    map.setView([latitud, longitud]);
                     if (currentIndex > 0) {
                         // Agrega el segmento de la polilínea
                         const segment = [polylines[currentIndex - 1], [latitud, longitud]];
