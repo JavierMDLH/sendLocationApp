@@ -348,7 +348,7 @@
         });
 
         let currentIndex = 0;
-        let currentPolyline = null;
+        //let marker = null;
 
         function updateDataTablereg(data) {
             // Obtén la tabla
@@ -396,41 +396,32 @@
                 polylinePoints.push([latitud, longitud]);
             }
 
-            // Coloca el marcador en el punto más antiguo
-            if (polylinePoints.length > 0) {
-                const [latitud, longitud] = polylinePoints[0];
-                if (!marker) {
-                    // Si no hay un marcador existente, crea uno nuevo
-                    marker = L.marker([latitud, longitud]).addTo(map);
-                } else {
-                    // Si hay un marcador existente, actualiza su ubicación
-                    marker.setLatLng([latitud, longitud]);
-                }
-            }
-
-            // Dibuja la polilínea gradualmente a medida que se mueve el marcador
+            // Dibuja la polilínea en el mapa
             if (polylinePoints.length > 1) {
-                const drawPolyline = () => {
-                    if (currentIndex < polylinePoints.length - 1) {
+                const polyline = L.polyline(polylinePoints, { color: 'blue' }).addTo(map);
+                map.fitBounds(polyline.getBounds());
+
+                // Mueve el marcador a lo largo de la polilínea
+                if (marker) {
+                    clearInterval(marker.animation); // Detiene cualquier animación previa
+                    map.removeLayer(marker);
+                }
+                currentIndex = 0;
+                const moveMarker = () => {
+                    const [latitud, longitud] = polylinePoints[currentIndex];
+                    if (marker) {
+                        marker.setLatLng([latitud, longitud]);
                         currentIndex++;
-                        if (currentPolyline) {
-                            map.removeLayer(currentPolyline);
+                        if (currentIndex >= polylinePoints.length) {
+                            clearInterval(marker.animation); // Detiene la animación cuando llega al final de la polilínea
                         }
-                        const pointsToDraw = polylinePoints.slice(0, currentIndex + 1);
-                        currentPolyline = L.polyline(pointsToDraw, { color: 'blue' }).addTo(map);
-                        setTimeout(drawPolyline, 1000); // Dibuja la siguiente parte de la polilínea después de 1 segundo
                     }
                 };
-                drawPolyline();
-            }
-
-            // Limita la cantidad de polilíneas en el mapa, eliminando las más antiguas si es necesario
-            const maxPolylines = 100; // Cambia este valor según tus preferencias
-            while (polylines.length > maxPolylines) {
-                const polylineToRemove = polylines.shift();
-                map.removeLayer(polylineToRemove);
+                marker = L.marker(polylinePoints[0]).addTo(map);
+                marker.animation = setInterval(moveMarker, 1000); // Mueve el marcador cada segundo
             }
         }
+
 
 
 
