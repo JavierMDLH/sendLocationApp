@@ -431,10 +431,6 @@
 
 
 
-
-
-
-
         function formatTimestamp(timestamp) {
             const day = timestamp.slice(0, 2);
             const month = timestamp.slice(2, 4);
@@ -537,6 +533,7 @@
                 //polyline = polylines[i];
                 //map.removeLayer(polyline);
             }
+            map.removeLayer(polyline);
             //polylines = [];
             //polyline = null;
         }
