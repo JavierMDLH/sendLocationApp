@@ -322,12 +322,19 @@
             }
 
             // Itera a través de los datos y crea celdas para cada valor
-            for (const rowData of data) { // Cambiar 'value' a 'rowData'
+            for (const rowData of data) {
                 const newRow = document.createElement('tr');
 
-                for (const value of rowData) {
+                for (let i = 0; i < rowData.length; i++) {
                     const cell = document.createElement('td');
-                    cell.innerText = value;
+                    
+                    if (i === 3) { // Si es el índice del timestamp
+                        const timestamp = new Date(rowData[i]); // Convierte el timestamp a un objeto de fecha
+                        cell.innerText = formatDate(timestamp); // Llama a una función para formatear el timestamp
+                    } else {
+                        cell.innerText = rowData[i]; // Muestra otros valores tal como están
+                    }
+
                     newRow.appendChild(cell);
                 }
 
