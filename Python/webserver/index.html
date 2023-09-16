@@ -240,6 +240,14 @@
         const socket = io.connect('http://' + document.domain + ':' + location.port);
         
         let mostrarDatosNuevos = true;
+        let marker; // Variable para almacenar el marcador
+        let previousPoint; // Variable para almacenar el punto anterior
+        let opacity = 1; // Inicialmente, opacidad al 100%
+        let polylines =[];
+        let currentIndex = 0;
+        let polyline = null;
+
+
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
@@ -307,7 +315,7 @@
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
                 const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
-                console.log('Feccha iniccial',fechaInicial);
+                console.log('Fecha inicial',fechaInicial);
                 if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
                     alert('Ha establecido mal la ventana de Tiempo')
                     mostrarDatosNuevos =true;
@@ -321,12 +329,6 @@
         });
 
         
-    
-        
-        let marker; // Variable para almacenar el marcador
-        let previousPoint; // Variable para almacenar el punto anterior
-        let opacity = 1; // Inicialmente, opacidad al 100%
-        let polylines =[];
 
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
@@ -349,9 +351,7 @@
             updateDataTablereg(formattedData);
         });
 
-        let currentIndex = 0;
-        //let marker = null;
-        let polyline = null;
+        
 
         function updateDataTablereg(data) {
             // Obtén la tabla
@@ -363,7 +363,7 @@
             }
 
             // Crea un array de puntos para trazar la polilínea
-             const polylines = [];
+             //const polylines = [];
 
             // Itera a través de los datos y crea filas y celdas para cada valor
             for (const item of data) {
@@ -417,7 +417,7 @@
                 }
             };
             if (!polyline) {
-                const polyline = L.polyline([], { color: 'blue' , dashArray: '10, 10'}).addTo(map);
+                polyline = L.polyline([], { color: 'blue' , dashArray: '10, 10'}).addTo(map);
             }
             const markerAnimation = setInterval(moveMarker, 1000); // Mueve el marcador cada segundo
 
@@ -479,7 +479,7 @@
 
             if (previousPoint) {
                 // Crea una nueva polyline desde el punto anterior al punto actual
-                const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+                polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
                 polylines.push(polyline);
             }
 
@@ -490,7 +490,7 @@
             map.setView([latitud, longitud]);
 
             for (let i = 0; i < polylines.length - 1; i++) {
-                const polyline = polylines[i];
+                polyline = polylines[i];
                 const currentOpacity = polyline.options.opacity;
                 if (currentOpacity > 0) {
                     polyline.setStyle({ opacity: currentOpacity - 0.02 });
