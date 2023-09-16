@@ -356,6 +356,9 @@
                 table.deleteRow(0);
             }
 
+            // Crea un array de puntos para trazar la polilínea
+            const polylinePoints = [];
+
             // Itera a través de los datos y crea filas y celdas para cada valor
             for (const item of data) {
                 const newRow = document.createElement('tr');
@@ -383,8 +386,39 @@
                 } else {
                     table.appendChild(newRow);
                 }
+
+                // Agrega el punto a la polilínea
+                const latitud = parseFloat(item.latitud);
+                const longitud = parseFloat(item.longitud);
+                polylinePoints.push([latitud, longitud]);
+            }
+
+            // Dibuja la polilínea en el mapa
+            if (polylinePoints.length > 1) {
+                const polyline = L.polyline(polylinePoints, { color: 'blue' }).addTo(map);
+                polylines.push(polyline);
+            }
+
+            // Coloca el marcador en el punto más reciente
+            if (polylinePoints.length > 0) {
+                const [latitud, longitud] = polylinePoints[polylinePoints.length - 1];
+                if (!marker) {
+                    // Si no hay un marcador existente, crea uno nuevo
+                    marker = L.marker([latitud, longitud]).addTo(map);
+                } else {
+                    // Si hay un marcador existente, actualiza su ubicación
+                    marker.setLatLng([latitud, longitud]);
+                }
+            }
+
+            // Limita la cantidad de polilíneas en el mapa, eliminando las más antiguas si es necesario
+            const maxPolylines = 100; // Cambia este valor según tus preferencias
+            while (polylines.length > maxPolylines) {
+                const polylineToRemove = polylines.shift();
+                map.removeLayer(polylineToRemove);
             }
         }
+
 
         function formatTimestamp(timestamp) {
             const day = timestamp.slice(0, 2);
