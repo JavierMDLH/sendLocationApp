@@ -408,6 +408,7 @@
 
             function startMarkerAnimation() {
                 currentIndex = 0;
+                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10' }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
