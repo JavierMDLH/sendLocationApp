@@ -394,11 +394,30 @@
             }
 
             // Dibuja la polilínea en el mapa
-            if (polylinePoints.length > 1) {
-                opacity =1;
-                const polyline = L.polyline(polylinePoints, { color: 'blue' }).addTo(map);
-                polylines.push(polyline);
-            }
+            
+            // Define el rango de opacidad que deseas aplicar a los puntos (por ejemplo, de 0.2 a 1.0).
+            const minOpacity = 0.01;
+            const maxOpacity = 1.0;
+
+            // Calcula el número total de puntos.
+            const totalPoints =  polylinePoints.length;
+
+            // Itera a través de los puntos y establece la opacidad en función de su posición en la lista ordenada.
+            points.forEach((polylinePoints, index) => {
+                // Calcula la opacidad en función de la posición del punto en la lista.
+                const opacity = minOpacity + (maxOpacity - minOpacity) * (index / (totalPoints - 1));
+
+                // Crea un marcador con la opacidad calculada y agrégalo al mapa.
+                const marker = L.marker([point.latitud, point.longitud], { opacity }).addTo(map);
+            });
+
+            //for (let i = 0; i < polylinePoints.length - 1; i++) {
+            //    const polyline = polylinePoints[i];
+            //    const currentOpacity = polyline.options.opacity;
+            //    if (currentOpacity > 0) {
+            //        polyline.setStyle({ opacity: currentOpacity - 0.02 });
+            //    }
+            //}
 
             // Coloca el marcador en el punto más reciente
             if (polylinePoints.length > 0) {
