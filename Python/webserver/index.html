@@ -302,46 +302,60 @@
         });
 
         socket.on('update_table', function(data) {
-        console.log('Nueva Tabla Recibida');
-        
-        // Crear un array solo con los valores de timestamp
-        const timestamps = data.map(item => item.timestamp);
-        
-        // Llamar a la función para formatear los timestamps
-        const formattedTimestamps = timestamps.map(formatTimestamp);
-        
-        // Actualizar la tabla con los timestamps formateados
-        updateDataTablereg(formattedTimestamps);
+            console.log('Nueva Tabla Recibida');
+            
+            // Crear un array con objetos que contienen todos los valores
+            const formattedData = data.map(item => ({
+                latitud: item.latitud,
+                longitud: item.longitud,
+                altitud: item.altitud,
+                timestamp: formatTimestamp(item.timestamp),
+            }));
+
+            // Actualizar la tabla con los datos formateados
+            updateDataTablereg(formattedData);
         });
 
-        function updateDataTablereg(timestamps) {
-        // Obtén la tabla
-        const table = document.getElementById('data-table');
+        function updateDataTablereg(data) {
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
 
-        // Borra todas las filas existentes en la tabla
-        while (table.rows.length > 0) {
-            table.deleteRow(0);
-        }
-
-        // Itera a través de los timestamps formateados y crea celdas para cada valor
-        for (const formattedTimestamp of timestamps) {
-            const newRow = document.createElement('tr');
-            const cell = document.createElement('td');
-            cell.innerText = formattedTimestamp;
-            newRow.appendChild(cell);
-
-            // Agrega la nueva fila en la parte superior de la tabla
-            if (table.rows.length > 0) {
-            table.insertBefore(newRow, table.rows[0]);
-            } else {
-            table.appendChild(newRow);
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
             }
-        }
+
+            // Itera a través de los datos y crea filas y celdas para cada valor
+            for (const item of data) {
+                const newRow = document.createElement('tr');
+
+                // Crear celdas para latitud, longitud, altitud y timestamp
+                const latitudCell = document.createElement('td');
+                latitudCell.innerText = item.latitud;
+                newRow.appendChild(latitudCell);
+
+                const longitudCell = document.createElement('td');
+                longitudCell.innerText = item.longitud;
+                newRow.appendChild(longitudCell);
+
+                const altitudCell = document.createElement('td');
+                altitudCell.innerText = item.altitud;
+                newRow.appendChild(altitudCell);
+
+                const timestampCell = document.createElement('td');
+                timestampCell.innerText = item.timestamp;
+                newRow.appendChild(timestampCell);
+
+                // Agrega la nueva fila en la parte superior de la tabla
+                if (table.rows.length > 0) {
+                    table.insertBefore(newRow, table.rows[0]);
+                } else {
+                    table.appendChild(newRow);
+                }
+            }
         }
 
         function formatTimestamp(timestamp) {
-            
-
             const day = timestamp.slice(0, 2);
             const month = timestamp.slice(2, 4);
             const year = timestamp.slice(4, 8);
@@ -364,7 +378,6 @@
 
             return date.toLocaleString(undefined, options);
         }
-
 
 
         function updateDataOnPage(data) {
