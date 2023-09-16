@@ -409,10 +409,10 @@
 
             let currentIndex = 0;
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacityStep = 0.02;
+            const opacity = 0.5;
             function startMarkerAnimation() {
                 currentIndex = 0;
-                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity: 1 }).addTo(map); // Inicializa la polilínea
+                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity:opacity+0.01 }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
@@ -421,29 +421,20 @@
                     const [latitud, longitud] = polylines[currentIndex];
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
-
-                    if (previousSegment !== null) {
-                        // Reduce la opacidad del segmento anterior
-                        previousSegment.setStyle({ opacity: previousSegment.options.opacity - opacityStep });
+                    if (currentIndex >= 0) {
+                        // Agrega el segmento de la polilínea
+                        const segment = [polylines[currentIndex - 1], [latitud, longitud]];
+                        polyline.addLatLng(segment[1]);
                     }
-
-                    // Crea un nuevo segmento con opacidad completa
-                    const currentSegment = L.polyline([previousSegment ? previousSegment.getLatLngs()[1] : [latitud, longitud], [latitud, longitud]], {
-                        color: 'blue',
-                        dashArray: '10, 10',
-                        opacity: 1
-                    });
-
-                    // Agrega el nuevo segmento a la polilínea
-                    polyline.addLayer(currentSegment);
-                    previousSegment = currentSegment;
-
                     currentIndex++;
 
                     // Programa la siguiente llamada después de un segundo
-                    setTimeout(moveMarker, delayBetweenMarkers);
+                    if (currentIndex < polylines.length) {
+                        setTimeout(moveMarker, delayBetweenMarkers);
+                    } 
                 }
             }
+
             // Inicia la animación
             startMarkerAnimation();
         }
