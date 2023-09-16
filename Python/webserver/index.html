@@ -393,14 +393,6 @@
                 polylinePoints.push([latitud, longitud]);
             }
 
-            // Dibuja la polilínea en el mapa
-            if (polylinePoints.length > 1) {
-                opacity = 1;
-
-                const polyline = L.polyline(polylinePoints, { color: 'blue' }).addTo(map);
-                polylines.push(polyline);
-            }
-
             // Coloca el marcador en el punto más antiguo
             if (polylinePoints.length > 0) {
                 const [latitud, longitud] = polylinePoints[0];
@@ -413,13 +405,22 @@
                 }
             }
 
-            // Programa la actualización del marcador cada 1 segundo
+            // Programa la actualización del marcador y la polilínea
             let currentIndex = 0;
             const updateInterval = setInterval(() => {
                 currentIndex++;
                 if (currentIndex < polylinePoints.length) {
                     const [latitud, longitud] = polylinePoints[currentIndex];
                     marker.setLatLng([latitud, longitud]);
+
+                    // Dibuja la polilínea a medida que se mueve el marcador
+                    if (currentIndex > 1) {
+                        const pointsToDraw = polylinePoints.slice(0, currentIndex + 1);
+                        if (currentPolyline) {
+                            map.removeLayer(currentPolyline);
+                        }
+                        currentPolyline = L.polyline(pointsToDraw, { color: 'blue' }).addTo(map);
+                    }
                 } else {
                     // Detiene la actualización cuando se alcanza el último punto
                     clearInterval(updateInterval);
@@ -433,6 +434,7 @@
                 map.removeLayer(polylineToRemove);
             }
         }
+
 
 
 
