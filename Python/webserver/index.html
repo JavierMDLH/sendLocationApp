@@ -365,18 +365,9 @@
 
             const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
-            const date = new Date(formattedDate);
+            
 
-            const options = {
-                year: "numeric",
-                month: "numeric",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-            };
-
-            return date.toLocaleString(undefined, options);
+            return formattedDate.toLocaleString(undefined, options);
         }
 
 
