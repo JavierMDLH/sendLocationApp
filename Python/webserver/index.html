@@ -297,6 +297,13 @@
 
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
+
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
+            }
             updateDataOnPage(data);
             updateDataTable(data);
         });
