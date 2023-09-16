@@ -302,7 +302,7 @@
                 
                 alert('Ahora verá los datos en tiempo real')
             } else {
-                but.innerText = 'Datos en tiempo real';
+                
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 
                 if ((fechaFinal.length =! 14) || (fechaInicial =! 14)){
@@ -312,7 +312,8 @@
                     alert('Ahora sólo verá los datos en la ventana de tiempo establecida')
                     const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
                     const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
-                    socket.emit('desactivar_switch', fechaInicial, fechaFinal ); 
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal );
+                    but.innerText = 'Datos en tiempo real'; 
                 }      
             }
         });
