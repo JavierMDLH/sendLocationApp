@@ -490,8 +490,8 @@
         }
     
         document.addEventListener('DOMContentLoaded', function () {
-            const datePickerInput = document.getElementById('datePickerInput');
-            const datePickerInputF = document.getElementById('datePickerInputF');
+            const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerButton1 = document.getElementById('datePickerButton1');
             
             const configInicial = {
                 enableTime: true,
@@ -501,8 +501,7 @@
                 onClose: function(selectedDates, dateStr, instance) {
                     // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
                     const fechaInicial = new Date(dateStr);
-                    datePickerInputF._flatpickr.set('minDate', (fechaInicial+(5/(24*60))));
-                    datePickerInput.value = dateStr;
+                    datePickerButton1._flatpickr.set('minDate', fechaInicial);
                 }
             };
             
@@ -511,22 +510,15 @@
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                onClose: function(selectedDates, dateStr, instance) {
+                    // Cuando se selecciona una fecha final, configura la fecha máxima para la fecha inicial
+                    const fechaFinal = new Date(dateStr);
+                    datePickerButton._flatpickr.set('maxDate', fechaFinal);
+                }
             };
 
-            const datePickerButton = document.getElementById('datePickerButton');
-            const datePickerButtonF = document.getElementById('datePickerButtonF');
-
-            // Inicializa Flatpickr en los elementos de entrada de fecha
-            flatpickr(datePickerInput, configInicial);
-            flatpickr(datePickerInputF, configFinal);
-
-            // Agrega el evento de clic al botón de Fecha Final
-            datePickerButtonF.addEventListener('click', function () {
-                datePickerInputF._flatpickr.open();
-            });
-            datePickerButton.addEventListener('click', function () {
-                datePickerInput._flatpickr.open();
-            });
+            flatpickr(datePickerButton, configInicial);
+            flatpickr(datePickerButton1, configFinal);
         });
     </script>
 </body>
