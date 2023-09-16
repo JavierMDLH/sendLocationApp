@@ -197,6 +197,7 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
       altitud: row.Altitud,
       timestamp: row.Timestamp,
     }));
+    console.log(latitud)
 
     callback(null, data);
   });
