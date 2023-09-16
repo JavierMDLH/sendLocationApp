@@ -393,15 +393,6 @@
                 polylinePoints.push([latitud, longitud]);
             }
 
-            // Ajusta la opacidad de las polilíneas existentes
-            for (let i = 0; i < polylines.length - 1; i++) {
-                const polyline = polylines[i];
-                const currentOpacity = polyline.options.opacity;
-                if (currentOpacity > 0) {
-                    polyline.setStyle({ opacity: currentOpacity - 0.01 }); // Reduce la opacidad en un 1%
-                }
-            }
-
             // Dibuja la polilínea en el mapa
             if (polylinePoints.length > 1) {
                 const polyline = L.polyline(polylinePoints, { color: 'blue' }).addTo(map);
@@ -421,7 +412,7 @@
             }
 
             // Limita la cantidad de polilíneas en el mapa, eliminando las más antiguas si es necesario
-            const maxPolylines = 50; // Cambia este valor según tus preferencias
+            const maxPolylines = 100; // Cambia este valor según tus preferencias
             while (polylines.length > maxPolylines) {
                 const polylineToRemove = polylines.shift();
                 map.removeLayer(polylineToRemove);
