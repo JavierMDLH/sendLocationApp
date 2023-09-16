@@ -347,6 +347,9 @@
             updateDataTablereg(formattedData);
         });
 
+        let currentIndex = 0;
+        let currentPolyline = null;
+
         function updateDataTablereg(data) {
             // Obtén la tabla
             const table = document.getElementById('data-table');
@@ -405,27 +408,21 @@
                 }
             }
 
-            // Programa la actualización del marcador y la polilínea
-            let currentIndex = 0;
-            const updateInterval = setInterval(() => {
-                currentIndex++;
-                if (currentIndex < polylinePoints.length) {
-                    const [latitud, longitud] = polylinePoints[currentIndex];
-                    marker.setLatLng([latitud, longitud]);
-
-                    // Dibuja la polilínea a medida que se mueve el marcador
-                    if (currentIndex > 1) {
-                        const pointsToDraw = polylinePoints.slice(0, currentIndex + 1);
+            // Dibuja la polilínea gradualmente a medida que se mueve el marcador
+            if (polylinePoints.length > 1) {
+                const drawPolyline = () => {
+                    if (currentIndex < polylinePoints.length - 1) {
+                        currentIndex++;
                         if (currentPolyline) {
                             map.removeLayer(currentPolyline);
                         }
+                        const pointsToDraw = polylinePoints.slice(0, currentIndex + 1);
                         currentPolyline = L.polyline(pointsToDraw, { color: 'blue' }).addTo(map);
+                        setTimeout(drawPolyline, 1000); // Dibuja la siguiente parte de la polilínea después de 1 segundo
                     }
-                } else {
-                    // Detiene la actualización cuando se alcanza el último punto
-                    clearInterval(updateInterval);
-                }
-            }, 1000);
+                };
+                drawPolyline();
+            }
 
             // Limita la cantidad de polilíneas en el mapa, eliminando las más antiguas si es necesario
             const maxPolylines = 100; // Cambia este valor según tus preferencias
@@ -434,6 +431,7 @@
                 map.removeLayer(polylineToRemove);
             }
         }
+
 
 
 
