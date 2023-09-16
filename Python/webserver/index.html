@@ -408,32 +408,41 @@
             }
 
             let currentIndex = 0;
+            let previousSegment = null;
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacity = 0.5;
+            const opacityStep = 0.1;
             function startMarkerAnimation() {
                 currentIndex = 0;
-                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity:opacity }).addTo(map); // Inicializa la polilínea
+                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity:1 }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
             function moveMarker() {
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
-            
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
-                    if (currentIndex >= 0) {
-                        // Agrega el segmento de la polilínea
-                        const segment = [polylines[currentIndex - 1], [latitud, longitud]];
-                        polyline.setStyle({ opacity: opacity + 0.1 })
-                        polyline.addLatLng(segment[1]);
+
+                    if (previousSegment !== null) {
+                        // Reduce la opacidad del segmento anterior
+                        previousSegment.setStyle({ opacity: previousSegment.options.opacity - opacityStep });
                     }
+
+                    // Crea un nuevo segmento con opacidad completa
+                    const currentSegment = L.polyline([previousSegment ? previousSegment.getLatLngs()[1] : [latitud, longitud], [latitud, longitud]], {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: 1
+                    });
+
+                    // Agrega el nuevo segmento a la polilínea
+                    polyline.addLayer(currentSegment);
+                    previousSegment = currentSegment;
+
                     currentIndex++;
-                    
+
                     // Programa la siguiente llamada después de un segundo
-                    if (currentIndex < polylines.length) {
-                        setTimeout(moveMarker, delayBetweenMarkers);
-                    } 
+                    setTimeout(moveMarker, delayBetweenMarkers);
                 }
             }
 
