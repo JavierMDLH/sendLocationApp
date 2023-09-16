@@ -522,7 +522,7 @@
             }
 
             // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 100; // Cambia este valor según tus preferencias
+            const maxRows = 100;
             while (table.rows.length > maxRows) {
                 table.deleteRow(maxRows);
             }
@@ -536,6 +536,7 @@
                 map.removeLayer(polyline);
             }
             polylines = [];
+            polyline = null;
         }
     
         document.addEventListener('DOMContentLoaded', function () {
