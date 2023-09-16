@@ -425,7 +425,7 @@
                     if (currentIndex >= 0) {
                         // Agrega el segmento de la polilínea
                         const segment = [polylines[currentIndex - 1], [latitud, longitud]];
-                        polyline.setStyle({ opacity: opacity + 0.05 })
+                        polyline.setStyle({ opacity: opacity + 0.1 })
                         polyline.addLatLng(segment[1]);
                     }
                     currentIndex++;
