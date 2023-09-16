@@ -421,26 +421,25 @@
                     const [latitud, longitud] = polylines[currentIndex];
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
-                    
+
                     if (currentIndex > 0) {
-                        // Agrega el segmento de la polilínea
-                        const segment = [polylines[currentIndex - 1], [latitud, longitud]];
-                        polyline.addLatLng(segment[1]);
-                        
-                        // Reduce la opacidad del segmento anterior
-                        const previousSegment = polyline.getLatLngs()[currentIndex - 1];
-                        previousSegment.setStyle({ opacity: opacity });
+                        // Elimina el segmento anterior
+                        polyline.spliceLatLngs(currentIndex - 1, 1);
                     }
-                    
+
+                    // Agrega el nuevo segmento de la polilínea con opacidad reducida
+                    const segment = [polylines[currentIndex - 1], [latitud, longitud]];
+                    polyline.addLatLng(segment[1]);
+                    polyline.setStyle({ opacity: opacity });
+
                     currentIndex++;
 
                     // Programa la siguiente llamada después de un segundo
                     if (currentIndex < polylines.length) {
                         setTimeout(moveMarker, delayBetweenMarkers);
-                    } 
+                    }
                 }
             }
-
             // Inicia la animación
             startMarkerAnimation();
         }
