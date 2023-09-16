@@ -408,7 +408,7 @@
                 const opacity = minOpacity + (maxOpacity - minOpacity) * (index / (totalPoints - 1));
 
                 // Crea un marcador con la opacidad calculada y agrégalo al mapa.
-                const marker = L.marker([point.latitud, point.longitud], { opacity }).addTo(map);
+                const marker = L.marker([polylinePoints.latitud, polylinePoints.longitud], { opacity }).addTo(map);
             });
 
             //for (let i = 0; i < polylinePoints.length - 1; i++) {
