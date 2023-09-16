@@ -99,7 +99,7 @@ udpServer.bind(UDP_PORT);
 // Resto de tu código de Socket.IO
 io.on('connection', (socket) => {
   console.log('Un cliente se ha conectado');
-
+  mostrarDatosNuevos = true;
   socket.on('activar_switch', () => {
       mostrarDatosNuevos = true;
       console.log('Mostrar datos nuevos activado');
