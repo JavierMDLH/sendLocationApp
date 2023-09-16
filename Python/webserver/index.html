@@ -289,7 +289,7 @@
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
             if (mostrarDatosNuevos) {
-                polylines =[];
+                borrarPolilineas();
                 but.innerText = 'Datos en ventana de tiempo';
                 // Obtén la tabla
                 const table = document.getElementById('data-table');
@@ -315,7 +315,7 @@
                     alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal );
                     but.innerText = 'Datos en tiempo real'; 
-                    polylines =[];
+                    borrarPolilineas();
                 }      
             }
         });
