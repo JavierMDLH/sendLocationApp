@@ -425,19 +425,12 @@
 
                     if (previousSegment !== null) {
                         // Reduce la opacidad del segmento anterior
-                        previousSegment.setStyle({ opacity: previousSegment.options.opacity - opacityStep });
+                        const previousOpacity = previousSegment.options.opacity;
+                        previousSegment.setStyle({ opacity: previousOpacity - opacityStep });
                     }
 
-                    // Crea un nuevo segmento con opacidad completa
-                    const currentSegment = L.polyline([previousSegment ? previousSegment.getLatLngs()[1] : [latitud, longitud], [latitud, longitud]], {
-                        color: 'blue',
-                        dashArray: '10, 10',
-                        opacity: 1
-                    });
-
-                    // Agrega el nuevo segmento a la polilínea
-                    polyline.addLayer(currentSegment);
-                    previousSegment = currentSegment;
+                    // Agrega la nueva coordenada a la polilínea
+                    polyline.addLatLng([latitud, longitud]);
 
                     currentIndex++;
 
