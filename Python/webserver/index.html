@@ -260,12 +260,12 @@
         // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
         function convertirFecha(fecha) {
             const partes = fecha.split(/[- :]/);
-            const anio = partes[0].substring(2); // Obtiene los últimos dos dígitos del año
+            const anio = partes[0]; 
             const mes = partes[1];
             const dia = partes[2];
             const hora = partes[3];
             const minuto = partes[4];
-            const segundo = '00'; // Supongo que no tienes segundos en el formato original
+            const segundo = '00'; 
 
             return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
         }
