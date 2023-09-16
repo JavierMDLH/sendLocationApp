@@ -397,7 +397,7 @@
             if (polylinePoints.length > 1) {
                 opacity =1;
                 for (let i = 0; i < polylinePoints.length - 1; i++) {
-                    const polyline = polylines[i];
+                    const polyline = polylinePoints[i];
                     const currentOpacity = polyline.options.opacity;
                     if (currentOpacity > 0) {
                         polyline.setStyle({ opacity: currentOpacity - 0.02 });
