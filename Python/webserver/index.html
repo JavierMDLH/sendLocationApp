@@ -306,6 +306,7 @@
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
                 const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
+                console.log('Feccha iniccial',fechaInicial);
                 if ((fechaFinal.length =! 14) || (fechaInicial.length =! 14)){
                     alert('Ha establecido mal la ventana de Tiempo')
                     mostrarDatosNuevos =true;
