@@ -302,43 +302,67 @@
         });
 
         socket.on('update_table', function(data) {
-            console.log('Nueva Tabla Recibida');
-            const formattedData = data.map((item) => [
-                item.latitud,
-                item.longitud,
-                item.altitud,
-                item.timestamp,
-            ]);
-            updateDataTablereg(formattedData); // Corregir la llamada a la función aquí
+        console.log('Nueva Tabla Recibida');
+        
+        // Crear un array solo con los valores de timestamp
+        const timestamps = data.map(item => item.timestamp);
+        
+        // Llamar a la función para formatear los timestamps
+        const formattedTimestamps = timestamps.map(formatTimestamp);
+        
+        // Actualizar la tabla con los timestamps formateados
+        updateDataTablereg(formattedTimestamps);
         });
 
-        function updateDataTablereg(data) {
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
+        function updateDataTablereg(timestamps) {
+        // Obtén la tabla
+        const table = document.getElementById('data-table');
 
-            // Borra todas las filas existentes en la tabla
-            while (table.rows.length > 0) {
-                table.deleteRow(0);
+        // Borra todas las filas existentes en la tabla
+        while (table.rows.length > 0) {
+            table.deleteRow(0);
+        }
+
+        // Itera a través de los timestamps formateados y crea celdas para cada valor
+        for (const formattedTimestamp of timestamps) {
+            const newRow = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.innerText = formattedTimestamp;
+            newRow.appendChild(cell);
+
+            // Agrega la nueva fila en la parte superior de la tabla
+            if (table.rows.length > 0) {
+            table.insertBefore(newRow, table.rows[0]);
+            } else {
+            table.appendChild(newRow);
             }
+        }
+        }
 
-            // Itera a través de los datos y crea celdas para cada valor
-            for (const rowData of data) { // Cambiar 'value' a 'rowData'
-                
-                const newRow = document.createElement('tr');
+        function formatTimestamp(timestamp) {
+            
 
-                for (const value of rowData) {
-                    const cell = document.createElement('td');
-                    cell.innerText = value;
-                    newRow.appendChild(cell);
-                }
+            const day = timestamp.slice(0, 2);
+            const month = timestamp.slice(2, 4);
+            const year = timestamp.slice(4, 8);
+            const hours = timestamp.slice(8, 10);
+            const minutes = timestamp.slice(10, 12);
+            const seconds = timestamp.slice(12, 14);
 
-                // Agrega la nueva fila en la parte superior de la tabla
-                if (table.rows.length > 0) {
-                    table.insertBefore(newRow, table.rows[0]);
-                } else {
-                    table.appendChild(newRow);
-                }
-            }
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            const date = new Date(formattedDate);
+
+            const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+            };
+
+            return date.toLocaleString(undefined, options);
         }
 
 
