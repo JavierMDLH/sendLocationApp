@@ -120,6 +120,7 @@ io.on('connection', (socket) => {
     
         // Enviar datos al cliente
         io.emit('update_data', data);
+        console.log('Tabla enviada');
       });  
   });
   console.log(mostrarDatosNuevos);
