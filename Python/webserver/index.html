@@ -276,6 +276,13 @@
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
             if (mostrarDatosNuevos) {
+                // Obtén la tabla
+                const table = document.getElementById('data-table');
+
+                // Borra todas las filas existentes en la tabla
+                while (table.rows.length > 0) {
+                    table.deleteRow(0);
+}
                 // Si se activa, enviar una señal al servidor para mostrar datos nuevos
                 socket.emit('activar_switch');
             } else {
