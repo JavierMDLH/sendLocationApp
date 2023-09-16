@@ -403,12 +403,15 @@
                 polylines.push([latitud, longitud]);
             }
 
-            // Mueve el marcador a lo largo de la polilínea
-            if (!marker) {
-                marker = L.marker(polylines[0]).addTo(map);
+            let currentIndex = 0;
+            const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
+
+            function startMarkerAnimation() {
+                currentIndex = 0;
+                moveMarker();
             }
-            currentIndex = 0;
-            const moveMarker = () => {
+
+            function moveMarker() {
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
                     marker.setLatLng([latitud, longitud]);
@@ -419,18 +422,19 @@
                         polyline.addLatLng(segment[1]);
                     }
                     currentIndex++;
-                }
-            };
-            if (!polyline) {
-                polyline = L.polyline([], { color: 'blue' , dashArray: '10, 10'}).addTo(map);
-            }
-            
-            const markerAnimation = setInterval(moveMarker, 500); // Mueve el marcador cada segundo
 
-            // Detiene la animación cuando llega al final de la polilínea
-            if (currentIndex >= polylines.length) {
-                clearInterval(markerAnimation);
+                    // Programa la siguiente llamada después de un segundo
+                    if (currentIndex < polylines.length) {
+                        setTimeout(moveMarker, delayBetweenMarkers);
+                    } else {
+                        // Detiene la animación cuando llega al final de la polilínea
+                        clearInterval(markerAnimation);
+                    }
+                }
             }
+
+            // Inicia la animación
+            startMarkerAnimation();
         }
 
 
