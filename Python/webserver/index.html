@@ -308,7 +308,7 @@
                 const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
                 const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
                 socket.emit('desactivar_switch', fechaInicial, fechaFinal ); 
-                if (fechaFinal == undefined || fechaInicial==undefined){
+                if ((fechaFinal.length =! 14) || (fechaInicial =! 14)){
                     alert('Ha establecido mal la ventana de Tiempo')
                     mostrarDatosNuevos =true;
                 }else{
