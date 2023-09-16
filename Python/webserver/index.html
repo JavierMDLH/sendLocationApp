@@ -425,16 +425,11 @@
                     if (currentIndex >= 0) {
                         // Agrega el segmento de la polilínea
                         const segment = [polylines[currentIndex - 1], [latitud, longitud]];
+                        polyline.setStyle({ opacity: opacity + 0.05 })
                         polyline.addLatLng(segment[1]);
                     }
                     currentIndex++;
-                    for (let i = 0; i < polylines.length - 1; i++) {
-                        polyline = polylines[i];
-                        const currentOpacity = polyline.options.opacity;
-                        if (currentOpacity > 0) {
-                            polyline.setStyle({ opacity: currentOpacity - 0.02 });
-                        }
-                    }
+                    
                     // Programa la siguiente llamada después de un segundo
                     if (currentIndex < polylines.length) {
                         setTimeout(moveMarker, delayBetweenMarkers);
