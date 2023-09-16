@@ -421,6 +421,7 @@
             if (!polyline) {
                 polyline = L.polyline([], { color: 'blue' , dashArray: '10, 10'}).addTo(map);
             }
+            
             const markerAnimation = setInterval(moveMarker, 500); // Mueve el marcador cada segundo
 
             // Detiene la animación cuando llega al final de la polilínea
@@ -528,13 +529,30 @@
         // Función para borrar las polilíneas
         function borrarPolilineas() {
             console.log('Borrando polilíneas...');
-            for (let i = 0; i < polylines.length; i++) {
+            if (mostrarDatosNuevos){
+
+                for (let i = 0; i < polylines.length; i++) {
                 map.removeLayer(polyline);
                 //polyline = polylines[i];
                 //map.removeLayer(polyline);
+                }
+                polylines = [];
+                polyline = null;
+
+            }else{
+
+                for (let i = 1; i < polylines.length; i++) {
+                map.removeLayer(polyline);
+                //polyline = polylines[i];
+                //map.removeLayer(polyline);
+                }
+                polylines = [];
+                polyline = null;
+
+
             }
-            polylines = [];
-            polyline = null;
+
+            
         }
     
         document.addEventListener('DOMContentLoaded', function () {
