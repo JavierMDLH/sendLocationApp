@@ -361,7 +361,7 @@
             }
 
             // Crea un array de puntos para trazar la polilínea
-            const polylinePoints = [];
+            const polyline = [];
 
             // Itera a través de los datos y crea filas y celdas para cada valor
             for (const item of data) {
@@ -394,21 +394,21 @@
                 // Agrega el punto a la polilínea
                 const latitud = parseFloat(item.latitud);
                 const longitud = parseFloat(item.longitud);
-                polylinePoints.push([latitud, longitud]);
+                polyline.push([latitud, longitud]);
             }
 
             // Mueve el marcador a lo largo de la polilínea
             if (!marker) {
-                marker = L.marker(polylinePoints[0]).addTo(map);
+                marker = L.marker(polyline[0]).addTo(map);
             }
             currentIndex = 0;
             const moveMarker = () => {
-                if (currentIndex < polylinePoints.length) {
-                    const [latitud, longitud] = polylinePoints[currentIndex];
+                if (currentIndex < polyline.length) {
+                    const [latitud, longitud] = polyline[currentIndex];
                     marker.setLatLng([latitud, longitud]);
                     if (currentIndex > 0) {
                         // Agrega el segmento de la polilínea
-                        const segment = [polylinePoints[currentIndex - 1], [latitud, longitud]];
+                        const segment = [polyline[currentIndex - 1], [latitud, longitud]];
                         polyline.addLatLng(segment[1]);
                     }
                     currentIndex++;
@@ -420,7 +420,7 @@
             const markerAnimation = setInterval(moveMarker, 1000); // Mueve el marcador cada segundo
 
             // Detiene la animación cuando llega al final de la polilínea
-            if (currentIndex >= polylinePoints.length) {
+            if (currentIndex >= polyline.length) {
                 clearInterval(markerAnimation);
             }
         }
