@@ -511,6 +511,12 @@
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                onClose: function(selectedDates, dateStr, instance) {
+                    // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
+                    const fechaFinal = new Date(dateStr);
+                    datePickerInput._flatpickr.set('maxDate', fechaFinal);
+                    datePickerInputF.value = dateStr;
+                }
             };
 
             const datePickerButton = document.getElementById('datePickerButton');
