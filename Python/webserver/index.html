@@ -415,7 +415,7 @@
                 }
             };
             if (!polyline) {
-                polyline = L.polyline([], { color: 'blue' }).addTo(map);
+                polyline = L.polyline([], { color: 'blue' , dashArray: '10, 10'}).addTo(map);
             }
             const markerAnimation = setInterval(moveMarker, 1000); // Mueve el marcador cada segundo
 
