@@ -499,8 +499,17 @@
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
                 onClose: function(selectedDates, dateStr, instance) {
-                    // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
                     const fechaInicial = new Date(dateStr);
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
+
+                    // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
+                    if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
+                        fechaInicial.setMinutes(fechaInicial.getMinutes() + 5);
+                        datePickerInputF._flatpickr.setDate(fechaInicial);
+                    }
+
+                    // Configura la fecha mínima para la fecha final
                     datePickerInputF._flatpickr.set('minDate', fechaInicial);
                     datePickerInput.value = dateStr;
                 }
@@ -512,8 +521,17 @@
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
                 onClose: function(selectedDates, dateStr, instance) {
-                    // Cuando se selecciona una fecha inicial, configura la fecha mínima para la fecha final
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
                     const fechaFinal = new Date(dateStr);
+
+                    // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
+                    if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha inicial
+                        fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
+                        datePickerInput._flatpickr.setDate(fechaFinal);
+                    }
+
+                    // Configura la fecha máxima para la fecha inicial
                     datePickerInput._flatpickr.set('maxDate', fechaFinal);
                     datePickerInputF.value = dateStr;
                 }
