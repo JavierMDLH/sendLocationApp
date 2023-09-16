@@ -296,13 +296,7 @@
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
             if (mostrarDatosNuevos) {
-                // Código para mostrar el botón en la condición if
-                const botonBorrarPolilineas = document.createElement('button');
-                botonBorrarPolilineas.textContent = 'Borrar Polilíneas';
-                botonBorrarPolilineas.onclick = borrarPolilineas;
-                // Agregar el botón al DOM
-                document.body.appendChild(botonBorrarPolilineas);
-
+              
 
                 borrarPolilineas();
                 but.innerText = 'Datos en ventana de tiempo';
@@ -319,11 +313,7 @@
                 alert('Ahora verá los datos en tiempo real')
             } else {
 
-                // Código para eliminar el botón en la condición else
-                const botonExistente = document.querySelector('button'); // Selecciona el primer botón encontrado en el DOM
-                if (botonExistente) {
-                    botonExistente.remove(); // Elimina el botón del DOM si existe
-                }
+                
                 
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
@@ -553,18 +543,15 @@
                 polyline = null;
 
             }else{
-                console.log('Borrando polilíneas 2...');  
-                for (let i=1 ; i < polylines.length; i++){
-                    polyline = polylines[i];
+                console.log('Borrando polilínea anterior...');
+                // Verifica si hay una polilínea anterior
+                if (polyline) {
+                    map.removeLayer(polyline);
                 }
-                for (let i = 1; i < polylines.length; i++) {
-                map.removeLayer(polyline);
-                //polyline = polylines[i];
-                //map.removeLayer(polyline);
-                }
-                //polylines = [];
-                //polyline = null;
-
+                // Conserva solo la polilínea 0 en el array
+                polylines = [polylines[0]];
+                // Restablece la variable `polyline` como null
+                polyline = null;
 
             }
 
