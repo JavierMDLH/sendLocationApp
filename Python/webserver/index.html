@@ -409,10 +409,10 @@
 
             let currentIndex = 0;
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacity = 0.5;
+            const opacityStep = 0.02;
             function startMarkerAnimation() {
                 currentIndex = 0;
-                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity:opacity+0.01 }).addTo(map); // Inicializa la polilínea
+                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity: 1 }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
@@ -422,22 +422,26 @@
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
 
-                    if (currentIndex > 0) {
-                        // Obtiene el último segmento de la polilínea
-                        const lastSegment = polyline.getLatLngs()[polyline.getLatLngs().length - 1];
-                        // Elimina el último segmento de la polilínea
-                        polyline.getLatLngs().pop();
-                        // Agrega el último segmento con opacidad reducida
-                        lastSegment.options.opacity = opacity;
-                        polyline.addLatLng(lastSegment);
+                    if (previousSegment !== null) {
+                        // Reduce la opacidad del segmento anterior
+                        previousSegment.setStyle({ opacity: previousSegment.options.opacity - opacityStep });
                     }
+
+                    // Crea un nuevo segmento con opacidad completa
+                    const currentSegment = L.polyline([previousSegment ? previousSegment.getLatLngs()[1] : [latitud, longitud], [latitud, longitud]], {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: 1
+                    });
+
+                    // Agrega el nuevo segmento a la polilínea
+                    polyline.addLayer(currentSegment);
+                    previousSegment = currentSegment;
 
                     currentIndex++;
 
                     // Programa la siguiente llamada después de un segundo
-                    if (currentIndex < polylines.length) {
-                        setTimeout(moveMarker, delayBetweenMarkers);
-                    }
+                    setTimeout(moveMarker, delayBetweenMarkers);
                 }
             }
             // Inicia la animación
