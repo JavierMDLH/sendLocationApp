@@ -419,6 +419,7 @@
             function moveMarker() {
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
+                    previousPoint = [latitud, longitud];
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
                     if (currentIndex >= 0) {
@@ -427,6 +428,14 @@
                         polyline.addLatLng(segment[1]);
                     }
                     currentIndex++;
+
+                    for (let i = 0; i < polylines.length - 1; i++) {
+                        polyline = polylines[i];
+                        const currentOpacity = polyline.options.opacity;
+                        if (currentOpacity > 0) {
+                            polyline.setStyle({ opacity: currentOpacity - 0.02 });
+                        }
+                    }
 
                     // Programa la siguiente llamada después de un segundo
                     if (currentIndex < polylines.length) {
@@ -439,6 +448,8 @@
             startMarkerAnimation();
         }
 
+
+        
 
 
         function formatTimestamp(timestamp) {
