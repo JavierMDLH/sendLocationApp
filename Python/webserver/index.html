@@ -305,14 +305,14 @@
                 but.innerText = 'Datos en tiempo real';
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 
-                const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
-                const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
-                socket.emit('desactivar_switch', fechaInicial, fechaFinal ); 
                 if ((fechaFinal.length =! 14) || (fechaInicial =! 14)){
                     alert('Ha establecido mal la ventana de Tiempo')
                     mostrarDatosNuevos =true;
                 }else{
                     alert('Ahora sólo verá los datos en la ventana de tiempo establecida')
+                    const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
+                    const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal ); 
                 }      
             }
         });
