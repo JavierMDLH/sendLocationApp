@@ -301,6 +301,47 @@
             updateDataTable(data);
         });
 
+        socket.on('update_tabla', function(data) {
+            console.log('Nueva Tabla Recibida');
+            const formattedData = data.map((item) => [
+                item.latitud,
+                item.longitud,
+                item.altitud,
+                item.timestamp,
+            ]);
+            updateDataTablereg(formattedData); // Corregir la llamada a la función aquí
+        });
+
+        function updateDataTablereg(data) {
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
+
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
+            }
+
+            // Itera a través de los datos y crea celdas para cada valor
+            for (const rowData of data) { // Cambiar 'value' a 'rowData'
+                const newRow = document.createElement('tr');
+
+                for (const value of rowData) {
+                    const cell = document.createElement('td');
+                    cell.innerText = value;
+                    newRow.appendChild(cell);
+                }
+
+                // Agrega la nueva fila en la parte superior de la tabla
+                if (table.rows.length > 0) {
+                    table.insertBefore(newRow, table.rows[0]);
+                } else {
+                    table.appendChild(newRow);
+                }
+            }
+        }
+
+
+
         function updateDataOnPage(data) {
             console.log('Actualizando datos en la página:', data);
             document.getElementById('latitud').innerText = data[0];

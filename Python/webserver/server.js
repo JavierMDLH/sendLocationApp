@@ -119,7 +119,7 @@ io.on('connection', (socket) => {
         }
     
         // Enviar datos al cliente
-        io.emit('update_data', data);
+        io.emit('update_table', data);
         console.log('Tabla enviada');
       });  
   });
