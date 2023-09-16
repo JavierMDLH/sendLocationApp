@@ -257,7 +257,18 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        
+        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
+        function convertirFecha(fecha) {
+            const partes = fecha.split(/[- :]/);
+            const anio = partes[0].substring(2); // Obtiene los últimos dos dígitos del año
+            const mes = partes[1];
+            const dia = partes[2];
+            const hora = partes[3];
+            const minuto = partes[4];
+            const segundo = '00'; // Supongo que no tienes segundos en el formato original
+
+            return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
+        }
     
 
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
@@ -270,8 +281,8 @@
             } else {
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 
-                const fechaInicial = document.getElementById('datePickerInput').value;
-                const fechaFinal = document.getElementById('datePickerInputF').value;
+                const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
+                const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
                 socket.emit('desactivar_switch', fechaInicial, fechaFinal ); 
             }
         });
