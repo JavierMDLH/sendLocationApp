@@ -216,7 +216,7 @@
         <div id="map"></div>
     
         <!-- Botón para borrar polilíneas -->
-        <button onclick="borrarPolilineas()">Borrar Polilíneas</button>
+        <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
 
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
@@ -291,6 +291,8 @@
         }
         
         const but = document.getElementById('toggleSwitch');
+        const pol = document.getElementById('erasePolyline')
+
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
@@ -300,6 +302,7 @@
 
                 borrarPolilineas();
                 but.innerText = 'Datos en ventana de tiempo';
+                pol.innerText = 'Borrar Polilinea';
                 // Obtén la tabla
                 const table = document.getElementById('data-table');
 
@@ -327,6 +330,7 @@
                     alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal );
                     but.innerText = 'Datos en tiempo real'; 
+                    pol.innerText = 'Pausar Simulación';
                 }      
             }
         });
