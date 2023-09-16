@@ -214,11 +214,10 @@
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
+    
         <!-- Botón para borrar polilíneas -->
         <button onclick="borrarPolilineas()">Borrar Polilíneas</button>
 
-
-        
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
         <table>
@@ -297,6 +296,14 @@
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
             if (mostrarDatosNuevos) {
+                // Código para mostrar el botón en la condición if
+                const botonBorrarPolilineas = document.createElement('button');
+                botonBorrarPolilineas.textContent = 'Borrar Polilíneas';
+                botonBorrarPolilineas.onclick = borrarPolilineas;
+                // Agregar el botón al DOM
+                document.body.appendChild(botonBorrarPolilineas);
+
+
                 borrarPolilineas();
                 but.innerText = 'Datos en ventana de tiempo';
                 // Obtén la tabla
@@ -311,6 +318,12 @@
                 
                 alert('Ahora verá los datos en tiempo real')
             } else {
+
+                // Código para eliminar el botón en la condición else
+                const botonExistente = document.querySelector('button'); // Selecciona el primer botón encontrado en el DOM
+                if (botonExistente) {
+                    botonExistente.remove(); // Elimina el botón del DOM si existe
+                }
                 
                 // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
                 const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
