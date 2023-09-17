@@ -422,87 +422,31 @@
             function moveMarker() {
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
-                    // Almacena el punto actual como punto anterior para la próxima polyline
-                    previousPoint = [latitud, longitud];
 
                     if (currentIndex === 0) {
-                        // Crea la polilínea inicial
+                        // Crea la polilínea inicial si es el primer punto
                         polyline = L.polyline([[latitud, longitud]], {
                             color: 'blue',
                             dashArray: '10, 10',
-                            opacity: opacity
+                            opacity: maxOpacity
                         }).addTo(map);
-                        console.log('polilínea inicial');
-                        polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
-                        console.log('polylineSegments ', polylineSegments);
                     } else {
-                        console.log('polilínea secunadaria');
-                        // Reduce la opacidad de los segmentos más antiguos
-                        const numSegments = polylineSegments.length;
+                        // Reduzca la opacidad de la polilínea principal
+                        const currentOpacity = polyline.options.opacity;
+                        polyline.setStyle({ opacity: currentOpacity - opacityStep });
 
-                        // Asegúrate de que haya suficientes segmentos para aplicar la reducción de opacidad
-                        console.log('numSegments', numSegments);
-                        if (numSegments > 1) {
-
-                            //const currentSegment = polylineSegments[0];
-
-                            // Actualiza la opacidad del segmento
-                            //currentSegment.setStyle({ opacity: maxOpacity });
-
-
-                            for (let i = 0; i < numSegments - 1; i++) {
-                                //console.log('i ', i);
-                                //const currentSegment = polylineSegments[i];
-                               // const currentOpacity = currentSegment.options.opacity;
-
-                                //const newOpacity = currentOpacity - opacityStep;
-
-                                // Actualiza la opacidad del segmento
-                                //currentSegment.setStyle({ opacity: newOpacity });
-
-                                //console.log(`Reducing opacity of previous segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
-                                
-                                if (previousPoint) {
-                                    // Crea una nueva polyline desde el punto anterior al punto actual
-                                    polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
-                                    //polylineSegments.push(polyline);
-                                }
-                                
-                                // Almacena el punto actual como punto anterior para la próxima polyline
-                                previousPoint = [latitud, longitud];
-                                
-                                
-                                polyline = polylineSegments[i];
-                                const currentOpacity = polyline.options.opacity;
-                                if (currentOpacity > 0) {
-                                    polyline.setStyle({ opacity: currentOpacity - 0.02 });
-                                }
-
-                            } 
-                            
+                        // Crea una nueva línea desde el punto anterior al punto actual
+                        if (previousPoint) {
+                            polyline.addLatLng([latitud, longitud]);
                         }
                     }
 
                     // Mueve el marcador
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
-                    console.log('moviendo marcador');
 
-
-                    // Crea una nueva polilínea y agrégala a polylineSegments
-                    //const newPolyline = L.polyline([[latitud, longitud]], {
-                    //    color: 'red',
-                    //    dashArray: '10, 10',
-                    //    opacity: 1
-                    //}).addTo(map);
-                    //polylineSegments.push(newPolyline);
-                    //console.log('polylineSegments ', polylineSegments);
-
-
-                    // Agrega la nueva coordenada a la polilínea
-                    polyline.addLatLng([latitud, longitud]);
-                    polylineSegments.push(polyline);
-
+                    // Almacena el punto actual como punto anterior para la próxima polyline
+                    previousPoint = [latitud, longitud];
 
                     currentIndex++;
 
