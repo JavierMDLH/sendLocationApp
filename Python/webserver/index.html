@@ -428,7 +428,7 @@
                         polyline = L.polyline([[latitud, longitud]], {
                             color: 'blue',
                             dashArray: '10, 10',
-                            opacity: maxOpacity
+                            opacity: opacity
                         }).addTo(map);
                     } else {
                         // Reduzca la opacidad de los segmentos más antiguos
@@ -449,7 +449,7 @@
                             polyline = L.polyline([previousPoint, [latitud, longitud]], {
                                 color: 'blue',
                                 dashArray: '10, 10',
-                                opacity: maxOpacity
+                                opacity: opacity
                             }).addTo(map);
                             polylineSegments.push(polyline);
                         }
