@@ -433,6 +433,9 @@
                     // Agrega la nueva coordenada a la polilínea
                     polyline.addLatLng([latitud, longitud]);
 
+                    // Actualiza el segmento anterior con el segmento actual
+                    previousSegment = polyline.getSegments()[currentIndex - 1];
+
                     currentIndex++;
 
                     // Programa la siguiente llamada después de un segundo
