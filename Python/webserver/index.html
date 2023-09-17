@@ -408,7 +408,6 @@
             }
 
             let currentIndex = 0;
-            let previousSegment = null;
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
             const opacityStep = 0.05;
             const polylineSegments = [];
@@ -434,13 +433,24 @@
                             }).addTo(map)
                         );
                     } else {
-                        // Reduce la opacidad de todos los segmentos existentes
-                        for (let i = 0; i < polylineSegments.length; i++) {
-                            const segment = polylineSegments[i];
-                            const currentOpacity = segment.options.opacity;
-                            const newOpacity = currentOpacity - opacityStep;
-                            segment.setStyle({ opacity: newOpacity });
-                        }
+                        // Elimina el segmento más antiguo
+                        map.removeLayer(polylineSegments[0]);
+                        polylineSegments.shift();
+
+                        // Crea un nuevo segmento con la opacidad actualizada
+                        const lastSegment = polylineSegments[polylineSegments.length - 1];
+                        const currentOpacity = lastSegment.options.opacity;
+                        const newOpacity = currentOpacity - opacityStep;
+                        const newSegment = L.polyline(
+                            lastSegment.getLatLngs(),
+                            {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: newOpacity
+                            }
+                        ).addTo(map);
+
+                        polylineSegments.push(newSegment);
 
                         console.log(`Reducing opacity of previous segments.`);
                     }
@@ -456,6 +466,7 @@
 
             // Inicia la animación
             startMarkerAnimation();
+
         }
 
 
