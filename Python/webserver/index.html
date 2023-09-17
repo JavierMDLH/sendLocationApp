@@ -611,12 +611,14 @@
                 if (polyline) {
                     map.removeLayer(polyline);
                 }
+
                 map.removeLayer(polyline);
                 polylineSegments=[];
                 // Conserva solo la polilínea 0 en el array
                 polylines = [polylines[0]];
                 // Restablece la variable `polyline` como null
-                ///polyline = null;
+                polylines = [];
+                polyline = null;
 
                 // Borra la polilínea principal
                 if (polyline) {
