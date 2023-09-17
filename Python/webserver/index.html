@@ -612,6 +612,14 @@
                     map.removeLayer(polyline);
                 }
 
+                for (let i = 0; i < polylines.length; i++) {
+                map.removeLayer(polyline);
+                polyline = polylines[i];
+                map.removeLayer(polyline);
+                //polyline = polylineSegments[i];
+                map.removeLayer(polyline);
+                }
+
                 map.removeLayer(polyline);
                 polylineSegments=[];
                 // Conserva solo la polilínea 0 en el array
