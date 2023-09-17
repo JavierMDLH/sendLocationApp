@@ -450,15 +450,25 @@
 
                             for (let i = 1; i < numSegments - 1; i++) {
                                 console.log('i ', i);
-                                const currentSegment = polylineSegments[i];
-                                const currentOpacity = currentSegment.options.opacity;
+                                //const currentSegment = polylineSegments[i];
+                               // const currentOpacity = currentSegment.options.opacity;
 
-                                const newOpacity = currentOpacity - opacityStep;
+                                //const newOpacity = currentOpacity - opacityStep;
 
                                 // Actualiza la opacidad del segmento
-                                currentSegment.setStyle({ opacity: newOpacity });
+                                //currentSegment.setStyle({ opacity: newOpacity });
 
-                                console.log(`Reducing opacity of previous segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
+                                //console.log(`Reducing opacity of previous segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
+                                polyline = polylineSegments[i];
+                                const currentOpacity = polyline.options.opacity;
+                                if (currentOpacity > 0) {
+                                    polyline.setStyle({ opacity: currentOpacity - 0.02 });
+                                }
+                            
+                            
+                            
+                            
+                            
                             } 
                             
                         }
