@@ -452,6 +452,7 @@
                                 console.log('i ', i);
                                 const currentSegment = polylineSegments[i];
                                 const currentOpacity = currentSegment.options.opacity;
+
                                 const newOpacity = currentOpacity - opacityStep;
 
                                 // Actualiza la opacidad del segmento
@@ -471,7 +472,7 @@
 
                     // Crea una nueva polilínea y agrégala a polylineSegments
                     const newPolyline = L.polyline([[latitud, longitud]], {
-                        color: 'blue',
+                        color: 'red',
                         dashArray: '10, 10',
                         opacity: 1
                     }).addTo(map);
