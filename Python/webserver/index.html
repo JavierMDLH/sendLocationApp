@@ -409,7 +409,8 @@
 
             let currentIndex = 0;
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacityStep = 0.1;
+            const opacityStep = 0.01;
+            const maxOpacity = 1;
             const polylineSegments = [];
             let polyline;
 
@@ -427,13 +428,17 @@
                         polyline = L.polyline([[latitud, longitud]], {
                             color: 'blue',
                             dashArray: '10, 10',
-                            opacity: 1
+                            opacity: maxOpacity
                         }).addTo(map);
                     } else {
-                        // Reduce la opacidad de la polilínea existente
-                        const currentOpacity = polyline.options.opacity;
-                        const newOpacity = currentOpacity - opacityStep;
-                        polyline.setStyle({ opacity: newOpacity });
+                        // Reduce la opacidad de los segmentos más antiguos
+                        const segments = polyline.getLatLngs();
+                        const numSegments = segments.length;
+                        for (let i = 0; i < numSegments - 1; i++) {
+                            const currentOpacity = segments[i].options.opacity;
+                            const newOpacity = currentOpacity - opacityStep;
+                            segments[i].setStyle({ opacity: newOpacity });
+                        }
                     }
 
                     // Mueve el marcador
