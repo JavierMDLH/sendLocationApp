@@ -420,7 +420,7 @@
             }
 
             function moveMarker() {
-                if (currentIndex < polylines.length) {
+                if (currentIndex < polylineSegments.length) {
                     const [latitud, longitud] = polylines[currentIndex];
 
                     if (currentIndex === 0) {
@@ -469,7 +469,7 @@
 
 
                     // Agrega la nueva coordenada a la polilínea
-                    polyline.addLatLng([latitud, longitud]);
+                    //polyline.addLatLng([latitud, longitud]);
 
                     currentIndex++;
 
