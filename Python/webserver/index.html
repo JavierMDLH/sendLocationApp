@@ -425,40 +425,27 @@
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
 
-                    if (currentIndex === 0) {
-                        polylineSegments.push(
-                            L.polyline([[latitud, longitud]], {
-                                color: 'blue',
-                                dashArray: '10, 10',
-                                opacity: 1
-                            }).addTo(map)
-                        );
-                    } else {
-                        // Reduce la opacidad del segmento anterior si existe
-                        if (currentIndex - 1 < polylineSegments.length) {
-                            const currentSegment = polylineSegments[currentIndex - 1];
-                            const currentOpacity = currentSegment.options.opacity;
-                            const newOpacity = currentOpacity - opacityStep;
+                    // Siempre crea un nuevo segmento
+                    const currentSegment = L.polyline([[latitud, longitud]], {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: 1
+                    }).addTo(map);
 
-                            // Crea un nuevo segmento con la opacidad actualizada
-                            const newSegment = L.polyline(
-                                currentSegment.getLatLngs(),
-                                {
-                                    color: 'blue',
-                                    dashArray: '10, 10',
-                                    opacity: newOpacity
-                                }
-                            ).addTo(map);
+                    // Reduce la opacidad del segmento anterior si existe
+                    if (currentIndex > 0 && currentIndex - 1 < polylineSegments.length) {
+                        const previousSegment = polylineSegments[currentIndex - 1];
+                        const currentOpacity = previousSegment.options.opacity;
+                        const newOpacity = currentOpacity - opacityStep;
 
-                            // Elimina el segmento anterior
-                            map.removeLayer(currentSegment);
+                        // Actualiza el segmento anterior con la opacidad actualizada
+                        previousSegment.setStyle({ opacity: newOpacity });
 
-                            // Actualiza el segmento anterior con el nuevo segmento
-                            polylineSegments[currentIndex - 1] = newSegment;
-
-                            console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
-                        }
+                        console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
                     }
+
+                    // Agrega el nuevo segmento a la lista
+                    polylineSegments.push(currentSegment);
 
                     currentIndex++;
 
