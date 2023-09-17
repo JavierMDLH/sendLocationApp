@@ -471,7 +471,7 @@
                     const newPolyline = L.polyline([[latitud, longitud]], {
                         color: 'blue',
                         dashArray: '10, 10',
-                        opacity: maxOpacity
+                        opacity: currentOpacity-opacityStep
                     }).addTo(map);
                     polylineSegments.push(newPolyline);
 
