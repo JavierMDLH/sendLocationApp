@@ -426,7 +426,7 @@
                     if (currentIndex === 0) {
                         // Crea la polilínea inicial
                         polyline = L.polyline([[latitud, longitud]], {
-                            color: 'red',
+                            color: 'blue',
                             dashArray: '10, 10',
                             opacity: maxOpacity
                         }).addTo(map);
@@ -471,17 +471,19 @@
 
 
                     // Crea una nueva polilínea y agrégala a polylineSegments
-                    const newPolyline = L.polyline([[latitud, longitud]], {
-                        color: 'red',
-                        dashArray: '10, 10',
-                        opacity: 1
-                    }).addTo(map);
-                    polylineSegments.push(newPolyline);
+                    //const newPolyline = L.polyline([[latitud, longitud]], {
+                    //    color: 'red',
+                    //    dashArray: '10, 10',
+                    //    opacity: 1
+                    //}).addTo(map);
+                    //polylineSegments.push(newPolyline);
                     //console.log('polylineSegments ', polylineSegments);
 
 
                     // Agrega la nueva coordenada a la polilínea
                     polyline.addLatLng([latitud, longitud]);
+                    polylineSegments.push(polyline);
+
 
                     currentIndex++;
 
