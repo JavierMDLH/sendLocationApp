@@ -415,11 +415,6 @@
 
             function startMarkerAnimation() {
                 currentIndex = 0;
-                polyline = L.polyline([], {
-                    color: 'blue',
-                    dashArray: '10, 10',
-                    opacity: 1
-                }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
@@ -430,28 +425,32 @@
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
 
-                    // Reduce la opacidad del segmento anterior si existe
-                    if (currentIndex > 0 && currentIndex - 1 < polylineSegments.length) {
-                        const previousSegment = polylineSegments[currentIndex - 1];
-                        const currentOpacity = previousSegment.options.opacity;
-                        const newOpacity = currentOpacity - opacityStep;
+                    if (currentIndex === 0) {
+                        polylineSegments.push(
+                            L.polyline([[latitud, longitud]], {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: 1
+                            }).addTo(map)
+                        );
+                    } else {
+                        // Reduce la opacidad de todos los segmentos existentes
+                        for (let i = 0; i < polylineSegments.length; i++) {
+                            const segment = polylineSegments[i];
+                            const currentOpacity = segment.options.opacity;
+                            const newOpacity = currentOpacity - opacityStep;
+                            segment.setStyle({ opacity: newOpacity });
+                        }
 
-                        // Actualiza el segmento anterior con la opacidad actualizada
-                        previousSegment.setStyle({ opacity: newOpacity });
-
-                        console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
+                        console.log(`Reducing opacity of previous segments.`);
                     }
-
-                    // Agrega la nueva coordenada a la polilínea
-                    polyline.addLatLng([latitud, longitud]);
-
-                    // Agrega el nuevo segmento a la lista
-                    polylineSegments.push(polyline);
 
                     currentIndex++;
 
-                    // Programa la siguiente llamada después de un segundo
-                    setTimeout(moveMarker, delayBetweenMarkers);
+                    // Verifica si currentIndex es menor que la longitud de polylines antes de programar la siguiente llamada
+                    if (currentIndex < polylines.length) {
+                        setTimeout(moveMarker, delayBetweenMarkers);
+                    }
                 }
             }
 
