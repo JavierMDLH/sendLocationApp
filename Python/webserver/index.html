@@ -427,18 +427,26 @@
                     // Verifica si hay un segmento anterior para actualizar la opacidad
                     if (previousSegment !== null) {
                         // Reduce la opacidad del segmento anterior
-                        let previousOpacity = parseFloat(previousSegment.options.opacity);
-                        const newOpacity = previousOpacity - opacityStep;
-                        previousSegment.setStyle({ opacity: newOpacity });
-                        console.log(`Previous Opacity: ${previousOpacity}, New Opacity: ${newOpacity}`);
+                        const currentOpacity = previousSegment.options.opacity;
+                        const newOpacity = currentOpacity - opacityStep;
+
+                        // Crea un nuevo segmento con la opacidad actualizada
+                        const newSegment = L.polyline(
+                            previousSegment.getLatLngs(), // Copia las coordenadas del segmento anterior
+                            { color: 'blue', opacity: newOpacity }
+                        ).addTo(map);
+
+                        // Elimina el segmento anterior
+                        map.removeLayer(previousSegment);
+
+                        // Actualiza el segmento anterior con el nuevo segmento
+                        previousSegment = newSegment;
+
+                        console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
                     }
 
-                    // Agrega la nueva coordenada a la polilínea y guarda el segmento
-                    const newSegment = L.polyline([[latitud, longitud]], { color: 'blue', opacity: 1 }).addTo(map);
+                    // Agrega la nueva coordenada a la polilínea
                     polyline.addLatLng([latitud, longitud]);
-                    polylineSegments.push(newSegment);
-
-                    previousSegment = newSegment;
 
                     currentIndex++;
 
