@@ -424,8 +424,10 @@
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
 
-                    // Verifica si hay un segmento anterior para actualizar la opacidad
-                    if (previousSegment !== null) {
+                    if (currentIndex === 0) {
+                        previousSegment = L.polyline([[latitud, longitud]], { color: 'blue', opacity: 1 }).addTo(map);
+                    } else if(previousSegment !== null) {
+                        
                         // Reduce la opacidad del segmento anterior
                         const currentOpacity = previousSegment.options.opacity;
                         const newOpacity = currentOpacity - opacityStep;
