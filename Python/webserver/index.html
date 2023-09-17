@@ -407,12 +407,12 @@
                 polylines.push([latitud, longitud]);
             }
 
-            let currentIndex = 0;
+            //let currentIndex = 0;
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
             const opacityStep = 0.02;
-            const maxOpacity = 1;
+            //const maxOpacity = 1;
             const polylineSegments = [];
-            let polyline;
+            //let polyline;
 
             function startMarkerAnimation() {
                 currentIndex = 0;
@@ -422,13 +422,15 @@
             function moveMarker() {
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
+                    // Almacena el punto actual como punto anterior para la próxima polyline
+                    previousPoint = [latitud, longitud];
 
                     if (currentIndex === 0) {
                         // Crea la polilínea inicial
                         polyline = L.polyline([[latitud, longitud]], {
                             color: 'blue',
                             dashArray: '10, 10',
-                            opacity: maxOpacity
+                            opacity: opacity
                         }).addTo(map);
                         console.log('polilínea inicial');
                         polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
@@ -459,6 +461,17 @@
                                 //currentSegment.setStyle({ opacity: newOpacity });
 
                                 //console.log(`Reducing opacity of previous segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
+                                
+                                if (previousPoint) {
+                                    // Crea una nueva polyline desde el punto anterior al punto actual
+                                    polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+                                    polylines.push(polyline);
+                                }
+                                
+                                // Almacena el punto actual como punto anterior para la próxima polyline
+                                previousPoint = [latitud, longitud];
+                                
+                                
                                 polyline = polylineSegments[i];
                                 const currentOpacity = polyline.options.opacity;
                                 if (currentOpacity > 0) {
