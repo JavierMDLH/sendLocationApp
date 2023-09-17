@@ -437,6 +437,8 @@
                             { color: 'blue', opacity: newOpacity }
                         ).addTo(map);
 
+                        polylineSegments.push(newSegment); // Agregar el nuevo segmento al arreglo
+
                         // Elimina el segmento anterior
                         map.removeLayer(previousSegment);
 
