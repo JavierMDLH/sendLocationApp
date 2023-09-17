@@ -577,7 +577,8 @@
         function borrarPolilineas() {
             
             if (mostrarDatosNuevos){
-                console.log('Borrando polilíneas...');    
+                console.log('Borrando polilíneas...');  
+                console.log('polylines.length',polylines.length)  
                 for (let i = 0; i < polylines.length; i++) {
                 map.removeLayer(polyline);
                 polyline = polylines[i];
