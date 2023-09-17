@@ -618,6 +618,19 @@
                 // Restablece la variable `polyline` como null
                 ///polyline = null;
 
+                // Borra la polilínea principal
+                if (polyline) {
+                    map.removeLayer(polyline);
+                }
+
+                // Borra los segmentos de la polilínea
+                for (const segment of polylineSegments) {
+                    map.removeLayer(segment);
+                }
+
+                // Limpia el arreglo de segmentos
+                polylineSegments.length = 0;
+
             }
 
             
