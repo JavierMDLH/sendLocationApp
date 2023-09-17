@@ -434,7 +434,7 @@
                         }).addTo(map);
                         console.log('polilínea inicial');
                         polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
-                        //console.log('polylineSegments ', polylineSegments);
+                        console.log('polylineSegments ', polylineSegments);
                     } else {
                         console.log('polilínea secunadaria');
                         // Reduce la opacidad de los segmentos más antiguos
@@ -465,7 +465,7 @@
                                 if (previousPoint) {
                                     // Crea una nueva polyline desde el punto anterior al punto actual
                                     polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
-                                    polylineSegments.push(polyline);
+                                    //polylineSegments.push(polyline);
                                 }
                                 
                                 // Almacena el punto actual como punto anterior para la próxima polyline
