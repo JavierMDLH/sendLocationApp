@@ -297,7 +297,7 @@
         document.getElementById('toggleSwitch').addEventListener('click', () => {
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             mostrarDatosNuevos = !mostrarDatosNuevos;
-            borrarPolilineas();
+            
             if (mostrarDatosNuevos) {
               
 
@@ -592,6 +592,7 @@
                 if (polyline) {
                     map.removeLayer(polyline);
                 }
+                map.removeLayer(polyline);
                 polylineSegments=[];
                 // Conserva solo la polilínea 0 en el array
                 polylines = [polylines[0]];
