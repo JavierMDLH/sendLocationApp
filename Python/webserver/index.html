@@ -424,11 +424,13 @@
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
 
+                    // Verifica si hay un segmento anterior para actualizar la opacidad
                     if (previousSegment !== null) {
                         // Reduce la opacidad del segmento anterior
                         const previousOpacity = previousSegment.options.opacity;
-                        previousSegment.setStyle({ opacity: previousOpacity - opacityStep });
-                        console.log(`Previous Opacity: ${previousOpacity}`);
+                        const newOpacity = previousOpacity - opacityStep;
+                        previousSegment.setStyle({ opacity: newOpacity });
+                        console.log(`Previous Opacity: ${previousOpacity}, New Opacity: ${newOpacity}`);
                     }
 
                     // Agrega la nueva coordenada a la polilínea y guarda el segmento
