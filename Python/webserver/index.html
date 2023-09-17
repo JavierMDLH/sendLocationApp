@@ -459,6 +459,7 @@
                     console.log('moviendo marcador');
                     // Agrega la nueva coordenada a la polilínea
                     polyline.addLatLng([latitud, longitud]);
+                    polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
 
                     currentIndex++;
 
