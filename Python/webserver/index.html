@@ -245,7 +245,7 @@
         let polylines =[];
         let currentIndex = 0;
         let polyline = null;
-
+        let polylineSegments = [];
 
 
         socket.on('connect', function() {
@@ -412,7 +412,7 @@
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
             const opacityStep = 0.02;
             //const maxOpacity = 1;
-            let polylineSegments = [];
+            
             //let polyline;
 
             function startMarkerAnimation() {
