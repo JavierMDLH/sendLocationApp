@@ -433,10 +433,12 @@
                         }).addTo(map);
                         console.log('polilínea inicial')
                     } else {
+                        console.log('polilínea secunadaria')
                         // Reduce la opacidad de los segmentos más antiguos
                             const numSegments = polylineSegments.length;
 
                         // Asegúrate de que haya suficientes segmentos para aplicar la reducción de opacidad
+                        console.log('numSegments',numSegments)
                         if (numSegments > 1) {
                             for (let i = 0; i < numSegments - 1; i++) {
                                 const currentSegment = polylineSegments[i];
