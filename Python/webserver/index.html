@@ -412,9 +412,9 @@
             const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
             const opacityStep = 0.05;
             const polylineSegments = [];
+
             function startMarkerAnimation() {
                 currentIndex = 0;
-                polyline = L.polyline([], { color: 'blue', dashArray: '10, 10',opacity: 1 }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
@@ -425,29 +425,37 @@
                     map.setView([latitud, longitud]);
 
                     if (currentIndex === 0) {
-                        polyline = L.polyline([[latitud, longitud]], { color: 'blue', dashArray: '10, 10', opacity: 1 }).addTo(map);
+                        polylineSegments.push(
+                            L.polyline([[latitud, longitud]], {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: 1
+                            }).addTo(map)
+                        );
                     } else {
                         // Reduce la opacidad del segmento anterior
-                        const currentOpacity = polyline.options.opacity;
+                        const currentSegment = polylineSegments[currentIndex - 1];
+                        const currentOpacity = currentSegment.options.opacity;
                         const newOpacity = currentOpacity - opacityStep;
 
                         // Crea un nuevo segmento con la opacidad actualizada
                         const newSegment = L.polyline(
-                            polyline.getLatLngs(), // Copia las coordenadas del segmento anterior
-                            { color: 'blue', dashArray: '10, 10', opacity: newOpacity }
+                            currentSegment.getLatLngs(),
+                            {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: newOpacity
+                            }
                         ).addTo(map);
 
                         // Elimina el segmento anterior
-                        map.removeLayer(polyline);
+                        map.removeLayer(currentSegment);
 
-                        // Actualiza la variable de polilínea con el nuevo segmento
-                        polyline = newSegment;
+                        // Actualiza el segmento anterior con el nuevo segmento
+                        polylineSegments[currentIndex - 1] = newSegment;
 
                         console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
                     }
-
-                    // Agrega la nueva coordenada a la polilínea
-                    polyline.addLatLng([latitud, longitud]);
 
                     currentIndex++;
 
