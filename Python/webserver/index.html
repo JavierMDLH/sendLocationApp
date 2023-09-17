@@ -432,7 +432,7 @@
                         }).addTo(map);
                         console.log('polilínea inicial');
                         polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
-                        console.log('polylineSegments ', polylineSegments);
+                        //console.log('polylineSegments ', polylineSegments);
                     } else {
                         console.log('polilínea secunadaria');
                         // Reduce la opacidad de los segmentos más antiguos
@@ -448,7 +448,7 @@
                             //currentSegment.setStyle({ opacity: maxOpacity });
 
 
-                            for (let i = 1; i < numSegments - 1; i++) {
+                            for (let i = 0; i < numSegments - 1; i++) {
                                 const currentSegment = polylineSegments[i];
                                 const currentOpacity = currentSegment.options.opacity;
                                 const newOpacity = currentOpacity - opacityStep;
@@ -475,7 +475,7 @@
                         opacity: 1
                     }).addTo(map);
                     polylineSegments.push(newPolyline);
-                    console.log('polylineSegments ', polylineSegments);
+                    //console.log('polylineSegments ', polylineSegments);
 
 
                     // Agrega la nueva coordenada a la polilínea
