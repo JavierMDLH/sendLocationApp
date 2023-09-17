@@ -434,15 +434,21 @@
                     } else {
                         console.log('polilínea secundaria');
                         // Reduce la opacidad de los segmentos más antiguos en todas las polilíneas
-                        for (let i = 0; i < polylineSegments.length; i++) {
-                            const currentSegment = polylineSegments[i];
-                            const currentOpacity = currentSegment.options.opacity;
-                            const newOpacity = currentOpacity - opacityStep;
+                        const numSegments = polylineSegments.length;
 
-                            // Actualiza la opacidad del segmento
-                            currentSegment.setStyle({ opacity: newOpacity });
+                        // Asegúrate de que haya suficientes segmentos para aplicar la reducción de opacidad
+                        console.log('numSegments', numSegments);
+                        if (numSegments > 0) {
+                            for (let i = 0; i < numSegments; i++) {
+                                const currentSegment = polylineSegments[i];
+                                const currentOpacity = currentSegment.options.opacity;
+                                const newOpacity = currentOpacity - opacityStep;
 
-                            console.log(`Reducing opacity of segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
+                                // Actualiza la opacidad del segmento
+                                currentSegment.setStyle({ opacity: newOpacity });
+
+                                console.log(`Reducing opacity of segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
+                            }
                         }
                     }
 
@@ -450,6 +456,13 @@
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
                     console.log('moviendo marcador');
+                    // Crea una nueva polilínea y agrégala a polylineSegments
+                    const newPolyline = L.polyline([[latitud, longitud]], {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: maxOpacity
+                    }).addTo(map);
+                    polylineSegments.push(newPolyline);
 
                     currentIndex++;
 
@@ -460,6 +473,7 @@
 
             // Inicia la animación
             startMarkerAnimation();
+
 
 
 
