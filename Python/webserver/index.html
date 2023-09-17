@@ -431,6 +431,7 @@
                             dashArray: '10, 10',
                             opacity: maxOpacity
                         }).addTo(map);
+                        console.log('polilínea inicial')
                     } else {
                         // Reduce la opacidad de los segmentos más antiguos
                         const segments = polyline.getLatLngs();
@@ -439,8 +440,9 @@
                         // Asegurarse de que haya suficientes segmentos para aplicar la reducción de opacidad
                         if (numSegments > 1) {
                             for (let i = 0; i < numSegments - 1; i++) {
+                                console.log('polilínea secundaria')
                                 // Cada segmento es un objeto LatLng, así que no tiene 'options'
-                                // En su lugar, necesitas llevar un registro de la opacidad por separado
+                                // En su lugar, se neceita llevar un registro de la opacidad por separado
                                 if (segments[i].opacity !== undefined) {
                                     const currentOpacity = segments[i].opacity;
                                     const newOpacity = currentOpacity - opacityStep;
