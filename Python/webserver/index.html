@@ -451,7 +451,9 @@
                     // Cambia la opacidad de los segmentos anteriores
                     for (let i = 0; i < currentIndex - 1; i++) {
                         const segment = polylineSegments[i];
+                        
                         const currentOpacity = segment.options.opacity;
+                        console.log(currentOpacity)
                         if (currentOpacity > 0) {
                             segment.setStyle({ opacity: currentOpacity - 0.1 });
                         }
