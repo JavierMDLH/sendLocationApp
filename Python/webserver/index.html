@@ -419,6 +419,7 @@
             }
 
             function moveMarker() {
+                console.log('CurrentIndex: ',currentIndex)
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
                     marker.setLatLng([latitud, longitud]);
