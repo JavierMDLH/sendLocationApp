@@ -432,6 +432,7 @@
                         }).addTo(map);
                         console.log('polilínea inicial');
                         polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
+                        console.log('polylineSegments ', polylineSegments);
                     } else {
                         console.log('polilínea secunadaria');
                         // Reduce la opacidad de los segmentos más antiguos
@@ -471,9 +472,10 @@
                     const newPolyline = L.polyline([[latitud, longitud]], {
                         color: 'blue',
                         dashArray: '10, 10',
-                        opacity: 0.6
+                        opacity: 1
                     }).addTo(map);
                     polylineSegments.push(newPolyline);
+                    console.log('polylineSegments ', polylineSegments);
 
 
                     // Agrega la nueva coordenada a la polilínea
