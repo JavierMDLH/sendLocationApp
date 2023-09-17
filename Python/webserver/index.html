@@ -441,6 +441,7 @@
                         if (numSegments > 1) {
                             for (let i = 0; i < numSegments - 1; i++) {
                                 console.log('polilínea secundaria')
+                                console.log('segments[i].opacity',segments[i].opacity)
                                 // Cada segmento es un objeto LatLng, así que no tiene 'options'
                                 // En su lugar, se neceita llevar un registro de la opacidad por separado
                                 if (segments[i].opacity !== undefined) {
