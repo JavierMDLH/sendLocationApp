@@ -300,8 +300,10 @@
             
             if (mostrarDatosNuevos) {
               
-
-                borrarPolilineas();
+                if (polyline !== null){
+                    borrarPolilineas();
+                } 
+                
                 but.innerText = 'Datos en ventana de tiempo';
                 pol.innerText = 'Borrar Polilinea';
                 // Obtén la tabla
