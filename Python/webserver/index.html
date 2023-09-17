@@ -608,10 +608,6 @@
             }else{
                 console.log('Borrando polilínea anterior...');
                 // Verifica si hay una polilínea anterior
-                if (polyline) {
-                    map.removeLayer(polyline);
-                }
-
                 for (let i = 0; i < polylines.length; i++) {
                 map.removeLayer(polyline);
                 polyline = polylines[i];
@@ -619,12 +615,9 @@
                 //polyline = polylineSegments[i];
                 map.removeLayer(polyline);
                 }
-
+                
                 map.removeLayer(polyline);
-                polylineSegments=[];
-                // Conserva solo la polilínea 0 en el array
-                polylines = [polylines[0]];
-                // Restablece la variable `polyline` como null
+                //polylineSegments=[];
                 polylines = [];
                 polyline = null;
 
