@@ -431,13 +431,17 @@
                     }
 
                     // Crea un nuevo segmento con opacidad al 100%
-                    polylineSegments.push(
-                        L.polyline([[latitud, longitud]], {
-                            color: 'blue',
-                            dashArray: '10, 10',
-                            opacity: 1
-                        }).addTo(map)
-                    );
+                    const newSegment = L.polyline([[latitud, longitud]], {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: 1
+                    });
+
+                    // Agrega el nuevo segmento al mapa
+                    newSegment.addTo(map);
+
+                    // Agrega el nuevo segmento a la lista de segmentos
+                    polylineSegments.push(newSegment);
 
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
@@ -449,8 +453,6 @@
                 }
             }
 
-            // Inicia la animación
-            startMarkerAnimation();
 
         }
 
