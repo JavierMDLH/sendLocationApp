@@ -434,10 +434,11 @@
                     } else {
                         // Reduce la opacidad de los segmentos más antiguos
                         const segments = polyline.getLatLngs();
+                        console.log(segments)
                         const numSegments = segments.length;
                         console.log('Numero de segmentos: ',numSegments);
                         for (let i = 0; i < numSegments - 1; i++) {
-                            
+
                             const currentOpacity = segments[i].options.opacity;
                             const newOpacity = currentOpacity - opacityStep;
                             segments[i].setStyle({ opacity: newOpacity });
