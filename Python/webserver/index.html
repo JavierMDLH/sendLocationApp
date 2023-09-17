@@ -450,7 +450,7 @@
                             //currentSegment.setStyle({ opacity: maxOpacity });
 
 
-                            for (let i = 1; i < numSegments - 1; i++) {
+                            for (let i = 0; i < numSegments - 1; i++) {
                                 console.log('i ', i);
                                 //const currentSegment = polylineSegments[i];
                                // const currentOpacity = currentSegment.options.opacity;
@@ -465,7 +465,7 @@
                                 if (previousPoint) {
                                     // Crea una nueva polyline desde el punto anterior al punto actual
                                     polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
-                                    polylines.push(polyline);
+                                    polylineSegments.push(polyline);
                                 }
                                 
                                 // Almacena el punto actual como punto anterior para la próxima polyline
