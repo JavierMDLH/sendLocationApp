@@ -435,8 +435,10 @@
                     } else {
                         // Reduce la opacidad de los segmentos más antiguos
                         const segments = polyline.getLatLngs();
-                        //console.log(polyline)
+                        console.log(polyline)
                         const numSegments = segments.length;
+                        const opacitys = polyline.options.opacity;
+                        console.log(opacitys)
 
                         // Asegurarse de que haya suficientes segmentos para aplicar la reducción de opacidad
                         if (numSegments > 1) {
