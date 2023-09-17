@@ -436,11 +436,11 @@
                     } else {
                         // Reduce la opacidad de todos los segmentos existentes
                         for (let i = 0; i < polylineSegments.length; i++) {
-                            const segment = polylineSegments[i];
-                            const currentOpacity = segment.options.opacity;
+                            const polyline = polylineSegments[i];
+                            const currentOpacity = polyline.options.opacity;
                             const newOpacity = currentOpacity - opacityStep;
                             if (currentOpacity > 0) {
-                                segment.setStyle({ opacity: newOpacity });
+                                polyline.setStyle({ opacity: newOpacity });
                             }
                             
                             //segment.setStyle({ opacity: newOpacity });
