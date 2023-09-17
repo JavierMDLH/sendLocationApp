@@ -413,7 +413,6 @@
             const maxOpacity = 1;
             const polylineSegments = [];
             let polyline;
-            const segments = [];
 
             function startMarkerAnimation() {
                 currentIndex = 0;
@@ -423,7 +422,7 @@
             function moveMarker() {
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
-                    
+
                     if (currentIndex === 0) {
                         // Crea la polilínea inicial
                         polyline = L.polyline([[latitud, longitud]], {
@@ -431,14 +430,15 @@
                             dashArray: '10, 10',
                             opacity: maxOpacity
                         }).addTo(map);
-                        console.log('polilínea inicial')
+                        console.log('polilínea inicial');
+                        polylineSegments.push(polyline); // Agrega la polilínea inicial a polylineSegments
                     } else {
-                        console.log('polilínea secunadaria')
+                        console.log('polilínea secunadaria');
                         // Reduce la opacidad de los segmentos más antiguos
-                            const numSegments = polylineSegments.length;
+                        const numSegments = polylineSegments.length;
 
                         // Asegúrate de que haya suficientes segmentos para aplicar la reducción de opacidad
-                        console.log('numSegments',numSegments)
+                        console.log('numSegments', numSegments);
                         if (numSegments > 1) {
                             for (let i = 0; i < numSegments - 1; i++) {
                                 const currentSegment = polylineSegments[i];
@@ -456,7 +456,7 @@
                     // Mueve el marcador
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
-                    console.log('moviendo marcador')
+                    console.log('moviendo marcador');
                     // Agrega la nueva coordenada a la polilínea
                     polyline.addLatLng([latitud, longitud]);
 
