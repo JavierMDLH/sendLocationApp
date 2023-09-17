@@ -449,6 +449,7 @@
 
 
                             for (let i = 0; i < numSegments - 1; i++) {
+                                console.log('i ', i);
                                 const currentSegment = polylineSegments[i];
                                 const currentOpacity = currentSegment.options.opacity;
                                 const newOpacity = currentOpacity - opacityStep;
