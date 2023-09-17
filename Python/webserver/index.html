@@ -415,6 +415,11 @@
 
             function startMarkerAnimation() {
                 currentIndex = 0;
+                polyline = L.polyline([], {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: 1
+                }).addTo(map); // Inicializa la polilínea
                 moveMarker();
             }
 
@@ -424,13 +429,6 @@
                     const [latitud, longitud] = polylines[currentIndex];
                     marker.setLatLng([latitud, longitud]);
                     map.setView([latitud, longitud]);
-
-                    // Siempre crea un nuevo segmento
-                    const currentSegment = L.polyline([[latitud, longitud]], {
-                        color: 'blue',
-                        dashArray: '10, 10',
-                        opacity: 1
-                    }).addTo(map);
 
                     // Reduce la opacidad del segmento anterior si existe
                     if (currentIndex > 0 && currentIndex - 1 < polylineSegments.length) {
@@ -444,15 +442,16 @@
                         console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
                     }
 
+                    // Agrega la nueva coordenada a la polilínea
+                    polyline.addLatLng([latitud, longitud]);
+
                     // Agrega el nuevo segmento a la lista
-                    polylineSegments.push(currentSegment);
+                    polylineSegments.push(polyline);
 
                     currentIndex++;
 
-                    // Verifica si currentIndex es menor que la longitud de polylines antes de programar la siguiente llamada
-                    if (currentIndex < polylines.length) {
-                        setTimeout(moveMarker, delayBetweenMarkers);
-                    }
+                    // Programa la siguiente llamada después de un segundo
+                    setTimeout(moveMarker, delayBetweenMarkers);
                 }
             }
 
