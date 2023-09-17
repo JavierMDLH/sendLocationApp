@@ -424,20 +424,34 @@
                     const [latitud, longitud] = polylines[currentIndex];
 
                     if (currentIndex === 0) {
-                        // Crea la polilínea inicial si es el primer punto
+                        // Crea la polilínea inicial
                         polyline = L.polyline([[latitud, longitud]], {
                             color: 'blue',
                             dashArray: '10, 10',
-                            opacity: opacity
+                            opacity: maxOpacity
                         }).addTo(map);
                     } else {
-                        // Reduzca la opacidad de la polilínea principal
-                        const currentOpacity = polyline.options.opacity;
-                        polyline.setStyle({ opacity: currentOpacity - opacityStep });
+                        // Reduzca la opacidad de los segmentos más antiguos
+                        const numSegments = polylineSegments.length;
+
+                        if (numSegments > 1) {
+                            for (let i = 0; i < numSegments - 1; i++) {
+                                const segment = polylineSegments[i];
+                                const currentOpacity = segment.options.opacity;
+                                if (currentOpacity > 0) {
+                                    segment.setStyle({ opacity: currentOpacity - opacityStep });
+                                }
+                            }
+                        }
 
                         // Crea una nueva línea desde el punto anterior al punto actual
                         if (previousPoint) {
-                            polyline.addLatLng([latitud, longitud]);
+                            polyline = L.polyline([previousPoint, [latitud, longitud]], {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: maxOpacity
+                            }).addTo(map);
+                            polylineSegments.push(polyline);
                         }
                     }
 
@@ -457,11 +471,6 @@
 
             // Inicia la animación
             startMarkerAnimation();
-
-
-
-
-
 
         }
 
