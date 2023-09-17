@@ -439,7 +439,11 @@
                             const segment = polylineSegments[i];
                             const currentOpacity = segment.options.opacity;
                             const newOpacity = currentOpacity - opacityStep;
-                            segment.setStyle({ opacity: newOpacity });
+                            if (currentOpacity > 0) {
+                                segment.setStyle({ opacity: newOpacity });
+                            }
+                            
+                            //segment.setStyle({ opacity: newOpacity });
                         }
 
                         console.log(`Reducing opacity of previous segments.`);
