@@ -427,7 +427,7 @@
                     // Verifica si hay un segmento anterior para actualizar la opacidad
                     if (previousSegment !== null) {
                         // Reduce la opacidad del segmento anterior
-                        const previousOpacity = previousSegment.options.opacity;
+                        let previousOpacity = parseFloat(previousSegment.options.opacity);
                         const newOpacity = previousOpacity - opacityStep;
                         previousSegment.setStyle({ opacity: newOpacity });
                         console.log(`Previous Opacity: ${previousOpacity}, New Opacity: ${newOpacity}`);
