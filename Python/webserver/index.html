@@ -434,41 +434,19 @@
                         console.log('polilínea inicial')
                     } else {
                         // Reduce la opacidad de los segmentos más antiguos
-                        const segments = polyline.getLatLngs();
-                        console.log(polyline)
-                        const numSegments = segments.length;
-                        const opacitys = polyline.options.opacity;
-                        console.log(opacitys)
+                            const numSegments = polylineSegments.length;
 
-                        // Asegurarse de que haya suficientes segmentos para aplicar la reducción de opacidad
+                        // Asegúrate de que haya suficientes segmentos para aplicar la reducción de opacidad
                         if (numSegments > 1) {
                             for (let i = 0; i < numSegments - 1; i++) {
-                                console.log('polilínea secundaria')
-                                console.log('segments[i].opacity')
-                                // Cada segmento es un objeto LatLng, así que no tiene 'options'
-                                // En su lugar, se neceita llevar un registro de la opacidad por separado
-                                if (segments[i].opacity !== undefined) {
-                                    const currentOpacity = segments[i].opacity;
-                                    const newOpacity = currentOpacity - opacityStep;
-                                    
-                                    // Actualiza la opacidad del segmento
-                                    segments[i].opacity = newOpacity;
-                                    
-                                    // Luego, debes establecer la opacidad al crear la polilínea
-                                    const newSegment = L.polyline(segments, {
-                                        color: 'blue',
-                                        dashArray: '10, 10',
-                                        opacity: newOpacity
-                                    }).addTo(map);
+                                const currentSegment = polylineSegments[i];
+                                const currentOpacity = currentSegment.options.opacity;
+                                const newOpacity = currentOpacity - opacityStep;
 
-                                    // Elimina la polilínea anterior
-                                    map.removeLayer(polyline);
+                                // Actualiza la opacidad del segmento
+                                currentSegment.setStyle({ opacity: newOpacity });
 
-                                    // Actualiza la variable de polilínea con el nuevo segmento
-                                    polyline = newSegment;
-
-                                    console.log(`Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
-                                }
+                                console.log(`Reducing opacity of previous segment ${i}. Previous Opacity: ${currentOpacity}, New Opacity: ${newOpacity}`);
                             }
                         }
                     }
