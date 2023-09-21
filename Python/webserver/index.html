@@ -225,7 +225,8 @@
         <!-- Botón para borrar polilíneas -->
         <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
 
-        <!-- <input type="range" id="slider" min="0" max="1" step="0.01"> -->
+        <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
+
          
 
 
@@ -436,6 +437,22 @@
             function startMarkerAnimation() {
                 currentIndex = 0;
                 moveMarker();
+
+                const locationSlider = document.getElementById('locationSlider');
+
+                // Configura el evento input del slider
+                locationSlider.addEventListener('input', function() {
+                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
+
+                    const newPosition = parseInt(this.value);
+                    const totalLocations = data.length; // El número total de ubicaciones
+
+                    // Calcula el nuevo índice basado en el valor del slider
+                    const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
+
+                    currentIndex = newIndex;
+                    moveMarker();
+                });
             }
 
            
@@ -495,7 +512,12 @@
                         timestampDisplay.innerText = '';
                     }
 
-                    currentIndex++; // Avanzar al siguiente elemento de la tabla
+                    currentIndex++; // Avanzar a la siguiente ubicación del marcador
+
+                    // Actualiza el valor del slider para que refleje la ubicación actual
+                    const locationSlider = document.getElementById('locationSlider');
+                    const totalLocations = data.length; // El número total de ubicaciones
+                    locationSlider.value = (currentIndex / (totalLocations - 1)) * 100;
 
                     // Programa la siguiente llamada después de un segundo
                     setTimeout(moveMarker, delayBetweenMarkers);
