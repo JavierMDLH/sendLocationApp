@@ -256,6 +256,8 @@
         let polylineSegments = [];
         const slider = document.getElementById('slider');
         const timestampDisplay = document.getElementById('timestamp');
+        let animationInterval;
+
 
 
         socket.on('connect', function() {
@@ -433,6 +435,7 @@
 
                 // Configura el evento onChange del slider
                 slider.addEventListener('input', function() {
+                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
                     const newPosition = parseFloat(this.value);
                     const totalPositions = polylines.length;
                     const newIndex = Math.floor(newPosition * (totalPositions - 1));
@@ -445,6 +448,11 @@
                         timestampDisplay.innerText = data[newIndex].timestamp;
                     }
                 });
+
+                // Inicia la animación después de un corto retraso para evitar conflictos con el slider
+                setTimeout(function() {
+                    animationInterval = setInterval(moveMarker, delayBetweenMarkers);
+                }, 500); // Espera 0.5 segundos antes de iniciar la animación
             }
 
             function moveMarker() {
