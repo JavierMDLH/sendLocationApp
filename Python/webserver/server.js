@@ -5,6 +5,10 @@ const socketIo = require('socket.io');
 const mysql = require('mysql');
 const dgram = require('dgram'); // Importa el módulo dgram para UDP
 
+let mostrarDatosNuevos = true; // Variable para rastrear el estado del interruptor
+fechaInicial = 0;
+fechaFinal = 0;
+
 const app = require('express')(); // Usa require para crear la aplicación express directamente
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -54,27 +58,19 @@ udpServer.on('listening', () => {
   console.log(`Servidor UDP escuchando en ${address.address}:${address.port}`);
 });
 
-// Función para formatear la fecha
-//function formatDate(timestamp) {
-//  const fechaHora = new Date(timestamp).toISOString();
-//  const formattedDate = fechaHora.replace('T', ' ').replace(/\.\d+Z$/, '');
-//  return formattedDate;
-//}
 
 udpServer.on('message', (message, remote) => {
   // Aquí puedes procesar los datos UDP recibidos y luego insertarlos en la base de datos
-  console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}: ${message}`);
+  //console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}: ${message}`);
+  console.log(`Datos UDP recibidos de ${remote.address}:${remote.port}`);
 
   // Separar los datos en latitud, longitud, altitud y hora
   const received_data = message.toString();
   const latitud = received_data.split('Latitud ')[1].split(',')[0];
   const longitud = received_data.split('Longitud ')[1].split(',')[0];
   const altitud = received_data.split('Altitud ')[1].split(',')[0];
-  //const fecha_hora = formatDate(received_data.split('Hora: ')[1].trim());
-  //const fecha_hora = received_data.split('Hora: ')[1].trim().replace(/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/, '$3-$2-$1 $4:$5:$6');
-  //const fecha_hora = received_data.split('Hora: ')[1].trim();
-
-  const fecha_hora ="'"+ received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '')+"'";
+  
+  const fecha_hora = received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '');
 
 
   // Ejemplo de inserción en la base de datos
@@ -88,11 +84,13 @@ udpServer.on('message', (message, remote) => {
     }
 
     console.log('Datos insertados en la base de datos correctamente.',fecha_hora);
-
-
-    // Emitir un evento a todos los clientes cuando haya nuevos datos
-    io.emit('update_data', valores); // "nuevos_datos" es el nombre del evento personalizado
-    //io.emit('update__data',valores)
+    console.log('mostrar datos nuevos: ',mostrarDatosNuevos);
+    if (mostrarDatosNuevos){
+      // Emitir un evento a todos los clientes cuando haya nuevos datos
+      io.emit('update_data', valores); 
+    }
+    
+    
   });
 });
 
@@ -101,15 +99,43 @@ udpServer.bind(UDP_PORT);
 // Resto de tu código de Socket.IO
 io.on('connection', (socket) => {
   console.log('Un cliente se ha conectado');
-
-  // Obtén los datos actualizados y envíalos cuando un cliente se conecta
-  obtenerDatosActualizadosDesdeDB((err, data) => {
-    if (err) {
-      console.error('Error al obtener datos desde la base de datos:', err);
-      return;
-    }
-    socket.emit('update_data', data);
+  mostrarDatosNuevos = true;
+  socket.on('activar_switch', () => {
+      mostrarDatosNuevos = true;
+      console.log('Mostrar datos nuevos activado');
   });
+
+  socket.on('desactivar_switch',(fechaInicial, fechaFinal) => {
+      mostrarDatosNuevos = false;
+      fechaInicial = fechaInicial;
+      fechaFinal = fechaFinal;
+      console.log('Mostrar datos nuevos desactivado');
+      console.log('Consulta rango de tiempo');
+      // Obtener datos dentro del rango de fechas especificado
+      obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal, (err, data) => {
+        if (err) {
+          console.error('Error al obtener datos desde la base de datos:', err);
+          return;
+        }
+    
+        // Enviar datos al cliente
+        io.emit('update_table', data);
+        console.log('Tabla enviada');
+      });  
+  });
+  console.log(mostrarDatosNuevos);
+  if (mostrarDatosNuevos){
+    // Obtén los datos actualizados y envíalos cuando un cliente se conecta
+    obtenerDatosActualizadosDesdeDB((err, data) => {
+      if (err) {
+        console.error('Error al obtener datos desde la base de datos:', err);
+        return;
+      }
+      io.emit('update_data', data);
+    });
+
+  }
+  
 
   // Maneja la desconexión del cliente
   socket.on('disconnect', () => {
@@ -123,10 +149,11 @@ server.listen(PORT, () => {
 });
 
 // Función para obtener datos actualizados desde la base de datos
-function obtenerDatosActualizadosDesdeDB(callback) {
-  // Realiza una consulta SQL para obtener tus datos desde la base de datos
-  const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY iddatos DESC LIMIT 1';
 
+function obtenerDatosActualizadosDesdeDB(callback) {
+  // Realiza una consulta SQL para obtener los datos más recientes desde la base de datos
+  const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos ORDER BY iddatos DESC LIMIT 1';
+  console.log('Datos nuevos');
   db.query(consulta, (err, results) => {
     if (err) {
       callback(err, null);
@@ -139,7 +166,7 @@ function obtenerDatosActualizadosDesdeDB(callback) {
       return;
     }
 
-    // Extrae los datos de la consulta
+     // Extrae los datos de la consulta
     const data = [
       results[0].Latitud,
       results[0].Longitud,
@@ -150,4 +177,29 @@ function obtenerDatosActualizadosDesdeDB(callback) {
     callback(null, data);
     console.log(results[0].Timestamp);
   });
-}
+}  
+
+function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
+  // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
+  const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos WHERE Timestamp BETWEEN ? AND ? ORDER BY Timestamp';
+  const valores = [fechaInicial, fechaFinal];
+  console.log('Fecha inicial: ',fechaInicial);
+  console.log('Fecha final: ',fechaFinal);
+  db.query(consulta, valores, (err, results) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    console.log('Extrayendo datos')
+    // Extraer los datos de la consulta
+    const data = results.map((row) => ({
+      latitud: row.Latitud,
+      longitud: row.Longitud,
+      altitud: row.Altitud,
+      timestamp: row.Timestamp,
+    }));
+
+    callback(null, data);
+  });
+}  
+

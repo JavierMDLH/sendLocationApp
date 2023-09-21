@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GPS Finder - Webserver</title>
+    <title>Javier</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Agrega la biblioteca FLatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+IxnI4fZy/uqSk5xSl5u5M5m+2Z2tw5T5E5g5E5f5E5v5E5p5O5F5" crossorigin="anonymous">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
 
@@ -19,7 +25,7 @@
 
         /* Estilos para el navbar */
         .navbar {
-            background-color: #ff0095;
+            background-color: #0056b3;
             overflow: hidden;
         }
 
@@ -49,7 +55,7 @@
 
         /* Estilos para el encabezado */
         #data-box h1 {
-            background-color: #007BFF;
+            background-color: #0056b3;
             color: #ffffff;
             text-align: center;
             padding: 10px;
@@ -69,7 +75,7 @@
         }
 
         th {
-            background-color: #007BFF;
+            background-color: #0056b3;
             color: #ffffff;
         }
 
@@ -80,19 +86,6 @@
             margin-top: 20px;
         }
 
-        /* Estilos para el botón */
-        button {
-            background-color: #00ff15;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
 
         /* Estilos para los datos en dos columnas */
         .data-columns {
@@ -104,6 +97,65 @@
         .data-column {
             flex-basis: 48%; /* Ancho de las columnas */
         }
+
+        /* Estilos para los botones */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .date-input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #0056b3;
+            color: #0056b3;
+            font-family: 'Merriweather', serif;
+            margin-top: 20px;
+            width: 25%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .date-button {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-right: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Estilos para el botón de Fecha Final */
+        .date-button-final {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+        .toggleSwitch {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+
     </style>
 </head>
 <body>
@@ -136,10 +188,36 @@
             </div>
         </div>
 
+        <!-- Elemento de entrada de fecha inicial -->
+        <div class="button-container">
+            <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
+        </div>
+        
+        <!-- Botón para seleccionar fecha inicial -->
+        <button id="datePickerButton" class="date-button">
+            <i class="fas fa-calendar"></i> Seleccionar Fecha Inicial
+        </button>
+
+        <!-- Elemento de entrada de fecha final -->
+        <div class="button-container">
+            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">
+        </div>
+
+        <!-- Botón para seleccionar fecha final -->
+        <button id="datePickerButtonF" class="date-button-final">
+            <i class="fas fa-calendar"></i> Seleccionar Fecha Final
+        </button>
+
+        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
+        <button id="toggleSwitch" class="toggleSwitch">Datos en ventana de Tiempo</button>
+        
+
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
+    
         <!-- Botón para borrar polilíneas -->
-        <button onclick="borrarPolilineas()">Borrar Polilíneas</button>
+        <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
         <table>
@@ -159,9 +237,20 @@
 
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
-    
+        
+        let mostrarDatosNuevos = true;
+        let marker; // Variable para almacenar el marcador
+        let previousPoint; // Variable para almacenar el punto anterior
+        let opacity = 1; // Inicialmente, opacidad al 100%
+        let polylines =[];
+        let currentIndex = 0;
+        let polyline = null;
+        let polylineSegments = [];
+
+
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
+            mostrarDatosNuevos = true;
         });
     
         socket.on('disconnect', function() {
@@ -170,12 +259,12 @@
 
         // Función para formatear la fecha
         function formatDate(timestamp) {
-            const año = timestamp.substring(5, 9);
-            const mes = timestamp.substring(3, 5);
-            const dia = timestamp.substring(1, 3);
-            const hora = timestamp.substring(9, 11);
-            const minutos = timestamp.substring(11, 13);
-            const segundos = timestamp.substring(13, 15);
+            const año = timestamp.substring(4, 8);
+            const mes = timestamp.substring(2, 4);
+            const dia = timestamp.substring(0, 2);
+            const hora = timestamp.substring(8, 10);
+            const minutos = timestamp.substring(10, 12);
+            const segundos = timestamp.substring(12, 14);
 
             return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
         }
@@ -188,16 +277,234 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        let marker; // Variable para almacenar el marcador
-        let previousPoint; // Variable para almacenar el punto anterior
-        let opacity = 1; // Inicialmente, opacidad al 100%
-        let polylines =[];
+        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
+        function convertirFecha(fecha) {
+            const partes = fecha.split(/[- :]/);
+            const anio = partes[0]; 
+            const mes = partes[1];
+            const dia = partes[2];
+            const hora = partes[3];
+            const minuto = partes[4];
+            const segundo = '00'; 
+
+            return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
+        }
+        
+        const but = document.getElementById('toggleSwitch');
+        const pol = document.getElementById('erasePolyline')
+
+        // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
+        document.getElementById('toggleSwitch').addEventListener('click', () => {
+            // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
+            mostrarDatosNuevos = !mostrarDatosNuevos;
+            
+            if (mostrarDatosNuevos) {
+              
+                if (polyline !== null){
+                    borrarPolilineas();
+                } 
+                
+                but.innerText = 'Datos en ventana de tiempo';
+                pol.innerText = 'Borrar Polilinea';
+                // Obtén la tabla
+                const table = document.getElementById('data-table');
+
+                // Borra todas las filas existentes en la tabla
+                while (table.rows.length > 0) {
+                    table.deleteRow(0);
+                    }
+                // Si se activa, enviar una señal al servidor para mostrar datos nuevos
+                socket.emit('activar_switch');
+                
+                alert('Ahora verá los datos en tiempo real')
+            } else {
+
+                
+                
+                // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
+                const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
+                const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
+                console.log('Fecha inicial',fechaInicial);
+                if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
+                    alert('Ha establecido mal la ventana de Tiempo')
+                    mostrarDatosNuevos =true;
+                }else{
+                    //borrarPolilineas();
+                    alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal );
+                    but.innerText = 'Datos en tiempo real'; 
+                    pol.innerText = 'Pausar Simulación';
+                }      
+            }
+        });
+
+        
 
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
             updateDataOnPage(data);
             updateDataTable(data);
         });
+
+        socket.on('update_table', function(data) {
+            console.log('Nueva Tabla Recibida');
+            
+            // Crear un array con objetos que contienen todos los valores
+            const formattedData = data.map(item => ({
+                latitud: item.latitud,
+                longitud: item.longitud,
+                altitud: item.altitud,
+                timestamp: formatTimestamp(item.timestamp),
+            }));
+
+            // Actualizar la tabla con los datos formateados
+            updateDataTablereg(formattedData);
+        });
+
+        
+
+        function updateDataTablereg(data) {
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
+
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
+            }
+
+            // Crea un array de puntos para trazar la polilínea
+             //const polylines = [];
+             //borrarPolilineas();
+
+            // Itera a través de los datos y crea filas y celdas para cada valor
+            for (const item of data) {
+                const newRow = document.createElement('tr');
+
+                // Crear celdas para latitud, longitud, altitud y timestamp
+                const latitudCell = document.createElement('td');
+                latitudCell.innerText = item.latitud;
+                newRow.appendChild(latitudCell);
+
+                const longitudCell = document.createElement('td');
+                longitudCell.innerText = item.longitud;
+                newRow.appendChild(longitudCell);
+
+                const altitudCell = document.createElement('td');
+                altitudCell.innerText = item.altitud;
+                newRow.appendChild(altitudCell);
+
+                const timestampCell = document.createElement('td');
+                timestampCell.innerText = item.timestamp;
+                newRow.appendChild(timestampCell);
+
+                // Agrega la nueva fila en la parte superior de la tabla
+                if (table.rows.length > 0) {
+                    table.insertBefore(newRow, table.rows[0]);
+                } else {
+                    table.appendChild(newRow);
+                }
+
+                // Agrega el punto a la polilínea
+                const latitud = parseFloat(item.latitud);
+                const longitud = parseFloat(item.longitud);
+                polylines.push([latitud, longitud]);
+            }
+
+            //let currentIndex = 0;
+            const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
+            const opacityStep = 0.02;
+            //const maxOpacity = 1;
+            
+            //let polyline;
+
+            function startMarkerAnimation() {
+                currentIndex = 0;
+                moveMarker();
+            }
+
+            function moveMarker() {
+                if (currentIndex < polylines.length) {
+                    const [latitud, longitud] = polylines[currentIndex];
+
+                    if (currentIndex === 0) {
+                        // Crea la polilínea inicial
+                        polyline = L.polyline([[latitud, longitud]], {
+                            color: 'blue',
+                            dashArray: '10, 10',
+                            opacity: opacity
+                        }).addTo(map);
+                    } else {
+                        // Reduzca la opacidad de los segmentos más antiguos
+                        const numSegments = polylineSegments.length;
+
+                        if (numSegments > 1) {
+                            for (let i = 0; i < numSegments - 1; i++) {
+                                const segment = polylineSegments[i];
+                                const currentOpacity = segment.options.opacity;
+                                if (currentOpacity > 0) {
+                                    segment.setStyle({ opacity: currentOpacity - opacityStep });
+                                }
+                            }
+                        }
+
+                        // Crea una nueva línea desde el punto anterior al punto actual
+                        if (previousPoint) {
+                            polyline = L.polyline([previousPoint, [latitud, longitud]], {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: opacity
+                            }).addTo(map);
+                            polylineSegments.push(polyline);
+                        }
+                    }
+
+                    // Mueve el marcador
+                    marker.setLatLng([latitud, longitud]);
+                    map.setView([latitud, longitud]);
+
+                    // Almacena el punto actual como punto anterior para la próxima polyline
+                    previousPoint = [latitud, longitud];
+
+                    currentIndex++;
+
+                    // Programa la siguiente llamada después de un segundo
+                    setTimeout(moveMarker, delayBetweenMarkers);
+                }
+            }
+
+            // Inicia la animación
+            startMarkerAnimation();
+
+        }
+
+
+        
+
+
+        function formatTimestamp(timestamp) {
+            const day = timestamp.slice(0, 2);
+            const month = timestamp.slice(2, 4);
+            const year = timestamp.slice(4, 8);
+            const hours = timestamp.slice(8, 10);
+            const minutes = timestamp.slice(10, 12);
+            const seconds = timestamp.slice(12, 14);
+
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            const date = new Date(formattedDate);
+
+            const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+            };
+
+            return date.toLocaleString(undefined, options);
+        }
+
 
         function updateDataOnPage(data) {
             console.log('Actualizando datos en la página:', data);
@@ -220,7 +527,7 @@
 
             if (previousPoint) {
                 // Crea una nueva polyline desde el punto anterior al punto actual
-                const polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+                polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
                 polylines.push(polyline);
             }
 
@@ -231,7 +538,7 @@
             map.setView([latitud, longitud]);
 
             for (let i = 0; i < polylines.length - 1; i++) {
-                const polyline = polylines[i];
+                polyline = polylines[i];
                 const currentOpacity = polyline.options.opacity;
                 if (currentOpacity > 0) {
                     polyline.setStyle({ opacity: currentOpacity - 0.02 });
@@ -262,7 +569,7 @@
             }
 
             // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 50; // Cambia este valor según tus preferencias
+            const maxRows = 100;
             while (table.rows.length > maxRows) {
                 table.deleteRow(maxRows);
             }
@@ -270,12 +577,133 @@
 
         // Función para borrar las polilíneas
         function borrarPolilineas() {
-            for (let i = 0; i < polylines.length; i++) {
-                const polyline = polylines[i];
+            
+            if (mostrarDatosNuevos){
+                console.log('Borrando polilíneas...');  
+                console.log('polylines.length',polylines.length)  
+                for (let i = 0; i < polylines.length; i++) {
                 map.removeLayer(polyline);
+                polyline = polylines[i];
+                map.removeLayer(polyline);
+                //polyline = polylineSegments[i];
+                map.removeLayer(polyline);
+                }
+                
+                map.removeLayer(polyline);
+                //polylineSegments=[];
+                polylines = [];
+                polyline = null;
+
+                // Borra la polilínea principal
+                if (polyline) {
+                    map.removeLayer(polyline);
+                }
+
+                // Borra los segmentos de la polilínea
+                for (const segment of polylineSegments) {
+                    map.removeLayer(segment);
+                }
+
+                // Limpia el arreglo de segmentos
+                polylineSegments.length = 0;
+
+            }else{
+                console.log('Borrando polilínea anterior...');
+                // Verifica si hay una polilínea anterior
+                for (let i = 0; i < polylines.length; i++) {
+                map.removeLayer(polyline);
+                polyline = polylines[i];
+                map.removeLayer(polyline);
+                //polyline = polylineSegments[i];
+                map.removeLayer(polyline);
+                }
+                
+                map.removeLayer(polyline);
+                //polylineSegments=[];
+                polylines = [];
+                polyline = null;
+
+                // Borra la polilínea principal
+                if (polyline) {
+                    map.removeLayer(polyline);
+                }
+
+                // Borra los segmentos de la polilínea
+                for (const segment of polylineSegments) {
+                    map.removeLayer(segment);
+                }
+
+                // Limpia el arreglo de segmentos
+                polylineSegments.length = 0;
+
             }
-            polylines = [];
+
+            
         }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const datePickerInput = document.getElementById('datePickerInput');
+            const datePickerInputF = document.getElementById('datePickerInputF');
+            
+            const configInicial = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                onClose: function(selectedDates, dateStr, instance) {
+                    const fechaInicial = new Date(dateStr);
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
+
+                    // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
+                    if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
+                        fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
+                        datePickerInput._flatpickr.setDate(fechaInicial);
+                    }
+
+                    // Configura la fecha mínima para la fecha final
+                    datePickerInputF._flatpickr.set('minDate', fechaInicial);
+                    datePickerInput.value = dateStr;
+                }
+            };
+            
+            const configFinal = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                onClose: function(selectedDates, dateStr, instance) {
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
+                    const fechaFinal = new Date(dateStr);
+
+                    // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
+                    if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha final
+                        fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
+                        datePickerInputF._flatpickr.setDate(fechaFinal);
+                    }
+
+                    // Configura la fecha máxima para la fecha inicial
+                    datePickerInput._flatpickr.set('maxDate', fechaFinal);
+                    datePickerInputF.value = dateStr;
+                }
+            };
+
+            const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerButtonF = document.getElementById('datePickerButtonF');
+
+            // Inicializa Flatpickr en los elementos de entrada de fecha
+            flatpickr(datePickerInput, configInicial);
+            flatpickr(datePickerInputF, configFinal);
+
+            // Agrega el evento de clic al botón de Fecha Final
+            datePickerButtonF.addEventListener('click', function () {
+                datePickerInputF._flatpickr.open();
+            });
+            datePickerButton.addEventListener('click', function () {
+                datePickerInput._flatpickr.open();
+            });
+        });
     </script>
 </body>
 </html>
