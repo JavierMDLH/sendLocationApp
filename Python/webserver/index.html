@@ -453,6 +453,11 @@
                     if (newIndex >= 0 && newIndex < data.length) {
                         timestampDisplay.innerText = data[newIndex].timestamp;
                     }
+                     // Retraso para suavizar la actualización del marcador
+                    setTimeout(() => {
+                        currentIndex = newIndex;
+                        moveMarker();
+                    }, 400); // Puedes ajustar el valor del retraso según tu preferencia
                 });
             }
 
