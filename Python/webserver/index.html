@@ -215,6 +215,8 @@
 
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
         <button id="toggleSwitch" class="toggleSwitch">Datos en ventana de Tiempo</button>
+
+        <div id="timestampDisplay"></div> 
         
 
         <!-- Agrega un contenedor para el mapa -->
@@ -223,8 +225,8 @@
         <!-- Botón para borrar polilíneas -->
         <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
 
-        <input type="range" id="slider" min="0" max="1" step="0.01">
-        <div id="timestamp"></div>
+        <!-- <input type="range" id="slider" min="0" max="1" step="0.01"> -->
+         
 
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
@@ -485,6 +487,13 @@
                     // Almacena el punto actual como punto anterior para la próxima polyline
                     previousPoint = [latitud, longitud];
 
+                    // Actualiza el cuadro de texto con el timestamp actual
+                    const timestampDisplay = document.getElementById('timestampDisplay');
+                    if (currentIndex >= 0 && currentIndex < data.length) {
+                        timestampDisplay.innerText = `Timestamp: ${data[currentIndex].timestamp}`;
+                    } else {
+                        timestampDisplay.innerText = '';
+                    }
 
                     currentIndex++; // Avanzar al siguiente elemento de la tabla
 
