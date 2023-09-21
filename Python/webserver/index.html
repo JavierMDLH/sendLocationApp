@@ -434,25 +434,9 @@
             function startMarkerAnimation() {
                 currentIndex = 0;
                 moveMarker();
-
-                // Configura el evento onChange del select
-                slider.addEventListener('change', function() {
-                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
-
-                    const newIndex = parseInt(this.value);
-
-                    currentIndex = newIndex;
-                    moveMarker();
-                });
             }
 
-            // Configura las opciones del select basadas en los datos
-            for (let i = 0; i < data.length; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.text = data[i].timestamp;
-                slider.appendChild(option);
-            }
+           
 
             function moveMarker() {
                 if (currentIndex >= data.length) {
@@ -501,12 +485,6 @@
                     // Almacena el punto actual como punto anterior para la próxima polyline
                     previousPoint = [latitud, longitud];
 
-                    // Muestra el timestamp correspondiente en el elemento timestampDisplay
-                    if (currentIndex >= 0 && currentIndex < data.length) {
-                        timestampDisplay.innerText = data[currentIndex].timestamp;
-                    } else {
-                        timestampDisplay.innerText = '';
-                    }
 
                     currentIndex++; // Avanzar al siguiente elemento de la tabla
 
