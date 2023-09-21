@@ -257,6 +257,7 @@
         const slider = document.getElementById('slider');
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
+        let isSliding = false;
 
 
 
@@ -435,18 +436,37 @@
 
                 // Configura el evento onChange del slider
                 slider.addEventListener('input', function() {
-                    const newPosition = parseFloat(this.value);
-                    const totalPositions = data.length; // El número total de elementos en la tabla
+                    if (!isSliding) {
+                        clearInterval(animationInterval); // Detener la animación mientras se usa el slider
 
-                    const newIndex = Math.round(newPosition * (totalPositions - 1));
+                        const newPosition = parseFloat(this.value);
+                        const totalPositions = data.length; // El número total de elementos en la tabla
 
-                    currentIndex = newIndex;
-                    moveMarker();
+                        const newIndex = Math.round(newPosition * (totalPositions - 1));
 
-                    // Muestra el timestamp correspondiente
-                    if (newIndex >= 0 && newIndex < data.length) {
-                        timestampDisplay.innerText = data[newIndex].timestamp;
+                        currentIndex = newIndex;
+                        moveMarker();
+
+                        // Muestra el timestamp correspondiente
+                        if (newIndex >= 0 && newIndex < data.length) {
+                            timestampDisplay.innerText = data[newIndex].timestamp;
+                        }
                     }
+                });
+
+                // Configura eventos de inicio y finalización de arrastre del slider
+                slider.addEventListener('mousedown', function() {
+                    isSliding = true;
+                });
+
+                slider.addEventListener('mouseup', function() {
+                    isSliding = false;
+                    // Inicia la animación después de un corto retraso cuando se suelta el slider
+                    setTimeout(function() {
+                        if (!isSliding) {
+                            animationInterval = setInterval(moveMarker, delayBetweenMarkers);
+                        }
+                    }, 500); // Espera 0.5 segundos antes de iniciar la animación
                 });
             }
 
