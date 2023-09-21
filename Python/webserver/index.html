@@ -436,37 +436,20 @@
 
                 // Configura el evento onChange del slider
                 slider.addEventListener('input', function() {
-                    if (!isSliding) {
-                        clearInterval(animationInterval); // Detener la animación mientras se usa el slider
+                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
 
-                        const newPosition = parseFloat(this.value);
-                        const totalPositions = data.length; // El número total de elementos en la tabla
+                    const newPosition = parseFloat(this.value);
+                    const totalPositions = data.length; // El número total de elementos en la tabla
 
-                        const newIndex = Math.round(newPosition * (totalPositions - 1));
+                    const newIndex = Math.round(newPosition * (totalPositions - 1));
 
-                        currentIndex = newIndex;
-                        moveMarker();
+                    currentIndex = newIndex;
+                    moveMarker();
 
-                        // Muestra el timestamp correspondiente
-                        if (newIndex >= 0 && newIndex < data.length) {
-                            timestampDisplay.innerText = data[newIndex].timestamp;
-                        }
+                    // Muestra el timestamp correspondiente
+                    if (newIndex >= 0 && newIndex < data.length) {
+                        timestampDisplay.innerText = data[newIndex].timestamp;
                     }
-                });
-
-                // Configura eventos de inicio y finalización de arrastre del slider
-                slider.addEventListener('mousedown', function() {
-                    isSliding = true;
-                });
-
-                slider.addEventListener('mouseup', function() {
-                    isSliding = false;
-                    // Inicia la animación después de un corto retraso cuando se suelta el slider
-                    setTimeout(function() {
-                        if (!isSliding) {
-                            animationInterval = setInterval(moveMarker, delayBetweenMarkers);
-                        }
-                    }, 500); // Espera 0.5 segundos antes de iniciar la animación
                 });
             }
 
@@ -518,21 +501,20 @@
                     previousPoint = [latitud, longitud];
 
                     // Establece el valor máximo del slider para distribuirse uniformemente a lo largo de los datos
+                    slider.max = (data.length - 1).toString();
 
-
-                    // Muestra el timestamp correspondiente en el slider
-                    slider.value = currentIndex;
-
-                    // Muestra el timestamp en el elemento timestampDisplay
+                    // Muestra el timestamp correspondiente en el elemento timestampDisplay
                     if (currentIndex >= 0 && currentIndex < data.length) {
                         timestampDisplay.innerText = data[currentIndex].timestamp;
                     } else {
                         timestampDisplay.innerText = '';
                     }
 
+                    currentIndex++; // Avanzar al siguiente elemento de la tabla
+
 
                     // Programa la siguiente llamada después de un segundo
-                    setTimeout(moveMarker, delayBetweenMarkers);
+                    //setTimeout(moveMarker, delayBetweenMarkers);
                 }
             }
 
