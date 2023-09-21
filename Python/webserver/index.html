@@ -515,15 +515,7 @@
                 }
             }
 
-            // Muestra el timestamp correspondiente en el slider
-            slider.value = currentIndex / (polylines.length - 1);
-
-            // Muestra el timestamp en el elemento timestampDisplay
-            if (currentIndex >= 0 && currentIndex < data.length) {
-                timestampDisplay.innerText = data[currentIndex].timestamp;
-            } else {
-                timestampDisplay.innerText = '';
-            }
+            
 
             // Inicia la animación
             startMarkerAnimation();
