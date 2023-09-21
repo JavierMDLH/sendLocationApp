@@ -2,8 +2,6 @@
 <html>
 <head>
     <title>Javier</title>
-    <!-- Vincula el archivo CSS externo -->
-    <link rel="stylesheet" src="style.css"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -13,9 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+IxnI4fZy/uqSk5xSl5u5M5m+2Z2tw5T5E5g5E5f5E5v5E5p5O5F5" crossorigin="anonymous">
-    <style>
 
-        /* @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
 
         /* Estilos generales */
         body {
@@ -110,7 +108,7 @@
         .date-input {
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid #0056b3;
+            border-bottom: 1px solid #00b3aa;
             color: #0056b3;
             font-family: 'Merriweather', serif;
             margin-top: 20px;
@@ -159,10 +157,7 @@
 
 
     </style>
-
-    
 </head>
-
 <body>
     <div class="navbar">
         <a href="http://44.218.79.34:3000/">Javier</a>
@@ -215,8 +210,6 @@
 
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
         <button id="toggleSwitch" class="toggleSwitch">Datos en ventana de Tiempo</button>
-
-        <div id="timestampDisplay"></div> 
         
 
         <!-- Agrega un contenedor para el mapa -->
@@ -224,10 +217,6 @@
     
         <!-- Botón para borrar polilíneas -->
         <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-
-        <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
-
-         
 
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
@@ -257,11 +246,6 @@
         let currentIndex = 0;
         let polyline = null;
         let polylineSegments = [];
-        const slider = document.getElementById('slider');
-        const timestampDisplay = document.getElementById('timestamp');
-        let animationInterval;
-        let isSliding = false;
-
 
 
         socket.on('connect', function() {
@@ -433,35 +417,12 @@
             
             //let polyline;
 
-            // Esta función inicia la animación del marcador
             function startMarkerAnimation() {
                 currentIndex = 0;
                 moveMarker();
-
-                const locationSlider = document.getElementById('locationSlider');
-
-                // Configura el evento input del slider
-                locationSlider.addEventListener('input', function() {
-                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
-
-                    const newPosition = parseInt(this.value);
-                    const totalLocations = data.length; // El número total de ubicaciones
-
-                    // Calcula el nuevo índice basado en el valor del slider
-                    const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
-
-                    currentIndex = newIndex;
-                    moveMarker();
-                });
             }
 
-           
-
             function moveMarker() {
-                if (currentIndex >= data.length) {
-                    clearInterval(animationInterval); // Detener la animación cuando se alcanza el final de la tabla
-                    return;
-                }
                 if (currentIndex < polylines.length) {
                     const [latitud, longitud] = polylines[currentIndex];
 
@@ -504,32 +465,20 @@
                     // Almacena el punto actual como punto anterior para la próxima polyline
                     previousPoint = [latitud, longitud];
 
-                    // Actualiza el cuadro de texto con el timestamp actual
-                    const timestampDisplay = document.getElementById('timestampDisplay');
-                    if (currentIndex >= 0 && currentIndex < data.length) {
-                        timestampDisplay.innerText = `Timestamp: ${data[currentIndex].timestamp}`;
-                    } else {
-                        timestampDisplay.innerText = '';
-                    }
-
-                    currentIndex++; // Avanzar a la siguiente ubicación del marcador
-
-                    // Actualiza el valor del slider para que refleje la ubicación actual
-                    const locationSlider = document.getElementById('locationSlider');
-                    const totalLocations = data.length; // El número total de ubicaciones
-                    locationSlider.value = (currentIndex / (totalLocations - 1)) * 100;
+                    currentIndex++;
 
                     // Programa la siguiente llamada después de un segundo
                     setTimeout(moveMarker, delayBetweenMarkers);
                 }
             }
 
-        
             // Inicia la animación
             startMarkerAnimation();
 
         }
 
+
+        
 
 
         function formatTimestamp(timestamp) {
@@ -695,14 +644,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             const datePickerInput = document.getElementById('datePickerInput');
             const datePickerInputF = document.getElementById('datePickerInputF');
-
+            
             const configInicial = {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
-                maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
                     const fechaInicial = new Date(dateStr);
                     const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
@@ -719,14 +666,12 @@
                     datePickerInput.value = dateStr;
                 }
             };
-
+            
             const configFinal = {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
                 altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
-                maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
                     const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
                     const fechaFinal = new Date(dateStr);
@@ -759,7 +704,6 @@
                 datePickerInput._flatpickr.open();
             });
         });
-
     </script>
 </body>
 </html>
