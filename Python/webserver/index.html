@@ -435,30 +435,23 @@
                 currentIndex = 0;
                 moveMarker();
 
-                // Establece el valor máximo del slider para que use todo su rango
-                slider.max = (data.length - 1).toString();
-
-                // Configura el evento onChange del slider
-                slider.addEventListener('input', function() {
+                // Configura el evento onChange del select
+                slider.addEventListener('change', function() {
                     clearInterval(animationInterval); // Detener la animación mientras se usa el slider
 
-                    const newPosition = parseFloat(this.value);
-
-                    const newIndex = Math.round(newPosition);
+                    const newIndex = parseInt(this.value);
 
                     currentIndex = newIndex;
                     moveMarker();
-
-                    // Muestra el timestamp correspondiente
-                    if (newIndex >= 0 && newIndex < data.length) {
-                        timestampDisplay.innerText = data[newIndex].timestamp;
-                    }
-                     // Retraso para suavizar la actualización del marcador
-                    setTimeout(() => {
-                        currentIndex = newIndex;
-                        moveMarker();
-                    }, 400); // Puedes ajustar el valor del retraso según tu preferencia
                 });
+            }
+
+            // Configura las opciones del select basadas en los datos
+            for (let i = 0; i < data.length; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = data[i].timestamp;
+                slider.appendChild(option);
             }
 
             function moveMarker() {
