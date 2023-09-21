@@ -435,14 +435,16 @@
                 currentIndex = 0;
                 moveMarker();
 
+                // Establece el valor máximo del slider para que use todo su rango
+                slider.max = (data.length - 1).toString();
+
                 // Configura el evento onChange del slider
                 slider.addEventListener('input', function() {
                     clearInterval(animationInterval); // Detener la animación mientras se usa el slider
 
                     const newPosition = parseFloat(this.value);
-                    const totalPositions = data.length; // El número total de elementos en la tabla
 
-                    const newIndex = Math.round(newPosition * (totalPositions - 1));
+                    const newIndex = Math.round(newPosition);
 
                     currentIndex = newIndex;
                     moveMarker();
@@ -501,9 +503,6 @@
                     // Almacena el punto actual como punto anterior para la próxima polyline
                     previousPoint = [latitud, longitud];
 
-                    // Establece el valor máximo del slider para distribuirse uniformemente a lo largo de los datos
-                    slider.max = (data.length - 1).toString();
-
                     // Muestra el timestamp correspondiente en el elemento timestampDisplay
                     if (currentIndex >= 0 && currentIndex < data.length) {
                         timestampDisplay.innerText = data[currentIndex].timestamp;
@@ -513,14 +512,12 @@
 
                     currentIndex++; // Avanzar al siguiente elemento de la tabla
 
-
                     // Programa la siguiente llamada después de un segundo
                     setTimeout(moveMarker, delayBetweenMarkers);
                 }
             }
 
-            
-
+        
             // Inicia la animación
             startMarkerAnimation();
 
