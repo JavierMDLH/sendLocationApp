@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Javier</title>
+    <title id="pageTitle">Título por Defecto</title>
     <!-- Vincula el archivo CSS externo -->
     <link rel="stylesheet" src="style.css"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
@@ -261,6 +261,17 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
+
+        // Cargar el archivo JSON
+        fetch('var.json')
+            .then(response => response.json())
+            .then(data => {
+                // Acceder a la variable "name" del JSON y asignarla al título de la página
+                document.getElementById("pageTitle").textContent = data.NAME;
+            })
+            .catch(error => {
+                console.error('Error al cargar el JSON:', error);
+            });
 
 
 
