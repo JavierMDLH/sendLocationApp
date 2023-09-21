@@ -438,7 +438,7 @@
                     const newPosition = parseFloat(this.value);
                     const totalPositions = data.length; // El número total de elementos en la tabla
 
-                    const newIndex = Math.floor(newPosition * (totalPositions - 1));
+                    const newIndex = Math.round(newPosition * (totalPositions - 1));
 
                     currentIndex = newIndex;
                     moveMarker();
@@ -509,6 +509,7 @@
                     } else {
                         timestampDisplay.innerText = '';
                     }
+
 
                     // Programa la siguiente llamada después de un segundo
                     setTimeout(moveMarker, delayBetweenMarkers);
