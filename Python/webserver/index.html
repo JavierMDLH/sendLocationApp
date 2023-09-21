@@ -223,6 +223,9 @@
         <!-- Botón para borrar polilíneas -->
         <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
 
+        <input type="range" id="slider" min="0" max="1" step="0.01">
+        <div id="timestamp"></div>
+
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
         <table>
@@ -251,6 +254,8 @@
         let currentIndex = 0;
         let polyline = null;
         let polylineSegments = [];
+        const slider = document.getElementById('slider');
+        const timestampDisplay = document.getElementById('timestamp');
 
 
         socket.on('connect', function() {
@@ -425,6 +430,21 @@
             function startMarkerAnimation() {
                 currentIndex = 0;
                 moveMarker();
+
+                // Configura el evento onChange del slider
+                slider.addEventListener('input', function() {
+                    const newPosition = parseFloat(this.value);
+                    const totalPositions = polylines.length;
+                    const newIndex = Math.floor(newPosition * (totalPositions - 1));
+
+                    currentIndex = newIndex;
+                    moveMarker();
+
+                    // Muestra el timestamp correspondiente
+                    if (newIndex >= 0 && newIndex < data.length) {
+                        timestampDisplay.innerText = data[newIndex].timestamp;
+                    }
+                });
             }
 
             function moveMarker() {
@@ -477,13 +497,21 @@
                 }
             }
 
+            // Muestra el timestamp correspondiente en el slider
+            slider.value = currentIndex / (polylines.length - 1);
+
+            // Muestra el timestamp en el elemento timestampDisplay
+            if (currentIndex >= 0 && currentIndex < data.length) {
+                timestampDisplay.innerText = data[currentIndex].timestamp;
+            } else {
+                timestampDisplay.innerText = '';
+            }
+
             // Inicia la animación
             startMarkerAnimation();
 
         }
 
-
-        
 
 
         function formatTimestamp(timestamp) {
