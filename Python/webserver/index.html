@@ -333,7 +333,7 @@
                     borrarPolilineas();
                 } 
                 
-                but.innerText = 'Datos en ventana de tiempo';
+                but.innerText = 'Presione aquí para ver solo los datos en una ventana de Tiempo';
                 pol.innerText = 'Borrar Polilinea';
                 // Obtén la tabla
                 const table = document.getElementById('data-table');
@@ -361,7 +361,7 @@
                     //borrarPolilineas();
                     alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal );
-                    but.innerText = 'Datos en tiempo real'; 
+                    but.innerText = 'Presione aquí para ver los datos en Tiempo Real'; 
                     pol.innerText = 'Pausar Simulación';
                 }      
             }
