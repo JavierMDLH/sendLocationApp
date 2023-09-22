@@ -151,9 +151,11 @@ io.on('connection', (socket) => {
 
   socket.on('Pagina2', () => {
     mostrarDatosNuevos=false;
+    console.log('pag2');
   });
-  
+
   socket.on('Pagina1', () => {
+    console.log('pag1');
     mostrarDatosNuevos=true;
   });
 
