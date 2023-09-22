@@ -24,7 +24,21 @@ const host = config.HOST.replace(/"/g, "'");
 const user = config.USER.replace(/"/g, "'");
 const password = config.PASSWORD.replace(/"/g, "'");
 const database = config.DATABASE.replace(/"/g, "'");
-console.log(`El valor de host es ${host}`);
+
+
+const server1 = http.createServer((req, res) => {
+  if (req.url === '/name') {
+      // Proporciona la variable "name" en formato JSON
+      const name = config.NAME.replace(/"/g, "'");
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ name }));
+  } else {
+      // Sirve la página HTML
+      const html = fs.readFileSync('index.html', 'utf8');
+      res.setHeader('Content-Type', 'text/html');
+      res.end(html);
+  }
+});
 
 
 // Configura una ruta para servir tu página HTML

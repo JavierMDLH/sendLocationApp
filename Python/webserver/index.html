@@ -262,15 +262,17 @@
         let animationInterval;
         let isSliding = false;
 
-        // Cargar el archivo JSON (ruta relativa al archivo HTML)
-        fetch('var.json')
+        // Realiza una solicitud HTTP al servidor para obtener el valor del nombre desde "var.json"
+        fetch('/name')
             .then(response => response.json())
             .then(data => {
-                // Acceder a la variable "name" del JSON y asignarla al título de la página
-                document.getElementById("pageTitle").textContent = data.NAME;
+                // Manipula el valor del nombre y actualiza el título de la pestaña
+                document.title = data.name;
+
+                // Puedes utilizar la variable "data.name" en otros lugares de tu código si es necesario
             })
             .catch(error => {
-                console.error('Error al cargar el JSON:', error);
+                console.error('Error al cargar el nombre de la página:', error);
             });
 
 
