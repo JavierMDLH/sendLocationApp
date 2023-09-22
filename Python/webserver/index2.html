@@ -347,6 +347,19 @@
         document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
 
         function buscarLocalizaciones() {
+
+            // Agrega un evento de clic al mapa para establecer el marcador
+            map.on('click', function (e) {
+                if (marker) {
+                    // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
+                    map.removeLayer(marker);
+                }
+
+                // Crea un nuevo marcador en la ubicación donde se hizo clic
+                marker = L.marker(e.latlng).addTo(map);
+
+                // Luego, puedes usar e.latlng para obtener la posición del marcador
+            });
             // Obtener la posición actual del marcador en el mapa
             const marcador = marker.getLatLng();
             const latitud = marcador.lat;
