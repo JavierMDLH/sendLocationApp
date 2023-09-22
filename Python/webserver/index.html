@@ -273,7 +273,7 @@
 
                 // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
             });
-            
+
             pagina2Link.addEventListener("click", function(event) {
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
@@ -336,6 +336,7 @@
         document.getElementById('toggleSwitch').addEventListener('click', () => {
             // Redirige a la página deseada
             window.location.href = 'http://javierm.ddns.net/index2.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
+            socket.emit('Pagina2')
         });
 
         
