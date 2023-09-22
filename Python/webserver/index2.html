@@ -483,6 +483,8 @@
 
         socket.on('update_table', function(data) {
             console.log('Nueva Tabla Recibida');
+            console.log(data);
+            
             
             // Crear un array con objetos que contienen todos los valores
             const formattedData = data.map(item => ({
