@@ -480,9 +480,6 @@
                 } else {
                     timestampDisplay.innerText = '';
                 }
-
-                // Actualiza el slider para que esté en su valor final
-                locationSlider.value = 100;
             }
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
@@ -491,7 +488,6 @@
             // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
             const locationSlider = document.getElementById('locationSlider');
             locationSlider.addEventListener('input', showRoute);
-
 
 
 
