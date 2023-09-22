@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title id="pageTitle"></title>
+    <title><%= nombrePagina %></title>
     <!-- Vincula el archivo CSS externo -->
     <link rel="stylesheet" src="style.css"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
@@ -261,20 +261,6 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
-
-        // Realiza una solicitud HTTP al servidor para obtener el valor del nombre desde "var.json"
-        fetch('/name')
-            .then(response => response.json())
-            .then(data => {
-                // Manipula el valor del nombre y actualiza el título de la pestaña
-                document.title = data.name;
-
-                // Puedes utilizar la variable "data.name" en otros lugares de tu código si es necesario
-            })
-            .catch(error => {
-                console.error('Error al cargar el nombre de la página:', error);
-            });
-
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
