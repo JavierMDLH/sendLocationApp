@@ -257,6 +257,7 @@
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
             mostrarDatosNuevos = false;
+            socket.emit('Pagina2');
         });
     
         socket.on('disconnect', function() {

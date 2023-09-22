@@ -147,7 +147,19 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Un cliente se ha desconectado');
   });
+
+
+  socket.on('Pagina2', () => {
+    mostrarDatosNuevos=false;
+  });
+  
+  socket.on('Pagina1', () => {
+    mostrarDatosNuevos=true;
+  });
+
 });
+
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
