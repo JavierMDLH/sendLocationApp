@@ -495,7 +495,7 @@
                     }
 
                     // Mueve el marcador
-                    if (!marker) {
+                    if (marker==null || marker==undefined) {
                         // Si no hay un marcador existente, crea uno nuevo
                         marker = L.marker([latitud, longitud]).addTo(map);
                     }else{    
