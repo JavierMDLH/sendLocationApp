@@ -213,7 +213,7 @@
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div><br>
-        <p id= "textoplano">Mueva este cursor para desplazarse a lo largo del recorrido</p> 
+        <p id= "texto1">Mueva este cursor para desplazarse a lo largo del recorrido</p> 
     
        
         <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
@@ -253,10 +253,10 @@
         let animationInterval;
         let isSliding = false;
 
-        //var elemento1 = document.getElementById('locationSlider');
-        //elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
-        //var elemento2 = document.getElementById('textoplano');
-        //elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        var elemento1 = document.getElementById('locationSlider');
+        elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+        var elemento2 = document.getElementById('elementoOculto');
+        elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
 
 
         document.getElementById('mostrarBoton').addEventListener('click', function() {
