@@ -382,7 +382,7 @@
     
         // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
         socket.on('places', function(results) {
-            console.log('Datos de localizaciones recibidos:');
+            console.log('Datos de localizaciones recibidos: ',results);
             mostrarLocalizacionesEnTabla(results);
         });
        
