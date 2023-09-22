@@ -262,7 +262,7 @@
         let animationInterval;
         let isSliding = false;
 
-        // Cargar el archivo JSON
+        // Cargar el archivo JSON (ruta relativa al archivo HTML)
         fetch('var.json')
             .then(response => response.json())
             .then(data => {
@@ -272,7 +272,6 @@
             .catch(error => {
                 console.error('Error al cargar el JSON:', error);
             });
-
 
 
         socket.on('connect', function() {
