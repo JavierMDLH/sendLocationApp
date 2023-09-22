@@ -259,7 +259,7 @@
                 console.error('Error al cargar el archivo JSON:', error);
             });
 
-            // Obtén el enlace "Página 1" por su id
+            // Obtener el enlace Página 1 y 2 por su id
             const pagina1Link = document.getElementById("Pagina1");
             const pagina2Link = document.getElementById("Pagina2");
 
@@ -273,6 +273,7 @@
 
                 // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
             });
+            
             pagina2Link.addEventListener("click", function(event) {
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
