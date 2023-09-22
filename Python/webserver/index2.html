@@ -213,7 +213,7 @@
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div><br>
-        Mueva este cursor para desplazarse a lo largo del recorrido
+        <p id= "textoplano">Mueva este cursor para desplazarse a lo largo del recorrido</p> 
     
        
         <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
@@ -252,6 +252,16 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
+
+        var elemento1 = document.getElementById('locationSlider');
+        elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        var elemento2 = document.getElementById('textoplano');
+        elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+
+
+        document.getElementById('mostrarBoton').addEventListener('click', function() {
+            
+        } );
 
         // Cargar el archivo JSON
         fetch('./var.json')
@@ -337,7 +347,7 @@
         }
         
         const but = document.getElementById('toggleSwitch');
-        const pol = document.getElementById('erasePolyline')
+  
 
         document.getElementById('switch').addEventListener('click', () => {
             // Redirige a la página deseada
@@ -366,7 +376,10 @@
                 alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                 socket.emit('desactivar_switch', fechaInicial, fechaFinal );
                 but.innerText = 'Presione aquí para hacer otra consulta'; 
-                pol.innerText = 'Detener Simulación';
+                var elemento1 = document.getElementById('locationSlider');
+                elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                var elemento2 = document.getElementById('textoplano');
+                elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
             }
  
         });
