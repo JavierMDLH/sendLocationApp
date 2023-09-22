@@ -365,26 +365,59 @@
             socket.emit('location',latitudMin, latitudMax, longitudMin, longitudMax);
         }
 
-        function buscarLocalizacionesEnArea(latitudMin, latitudMax, longitudMin, longitudMax) {
-            // Aquí deberías realizar una consulta a tu base de datos o servicio web
-            // para buscar las localizaciones dentro del área especificada.
+        socket.on('places', function(results) {
             
-            // Este es un ejemplo ficticio de resultados:
-            const resultados = [
-                { nombre: 'Lugar 1', latitud: 10.95, longitud: -74.80 },
-                { nombre: 'Lugar 2', latitud: 10.96, longitud: -74.81 },
-                // ...
-            ];
+            
+        });
 
-            // Puedes hacer lo que necesites con los resultados, como mostrarlos en el mapa o en la página web.
-            // Por ejemplo, puedes agregar marcadores en el mapa para cada localización encontrada.
 
-            for (const resultado of resultados) {
-                const marcador = L.marker([resultado.latitud, resultado.longitud]).addTo(map);
-                // Puedes personalizar el marcador, por ejemplo, agregando un popup con el nombre del lugar.
-                marcador.bindPopup(resultado.nombre).openPopup();
+        // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
+        socket.on('places', function(results) {
+            console.log('Datos de localizaciones recibidos:');
+            mostrarLocalizacionesEnTabla(results);
+        });
+       
+
+        function mostrarLocalizacionesEnTabla(results) {
+            // Obtén la tabla donde deseas mostrar los datos
+            const table = document.getElementById('localizaciones-table');
+
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
+            }
+
+            // Itera a través de los datos y crea filas y celdas para cada valor
+            for (const item of results) {
+                const newRow = document.createElement('tr');
+
+                // Crear celdas para latitud, longitud, altitud y timestamp
+                const latitudCell = document.createElement('td');
+                latitudCell.innerText = item.latitud;
+                newRow.appendChild(latitudCell);
+
+                const longitudCell = document.createElement('td');
+                longitudCell.innerText = item.longitud;
+                newRow.appendChild(longitudCell);
+
+                const altitudCell = document.createElement('td');
+                altitudCell.innerText = item.altitud;
+                newRow.appendChild(altitudCell);
+
+                const timestampCell = document.createElement('td');
+                timestampCell.innerText = item.timestamp;
+                newRow.appendChild(timestampCell);
+
+                // Agrega la nueva fila en la parte superior de la tabla
+                if (table.rows.length > 0) {
+                    table.insertBefore(newRow, table.rows[0]);
+                } else {
+                    table.appendChild(newRow);
+                }
             }
         }
+
+        
 
 
 

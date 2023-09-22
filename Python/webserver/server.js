@@ -167,7 +167,7 @@ io.on('connection', (socket) => {
       }
   
       // Enviar datos al cliente
-      io.emit('place', results);
+      io.emit('places', results);
       console.log('localizaciones enviadas');
     });  
 
