@@ -254,7 +254,7 @@
         let isSliding = false;
 
         //var elemento1 = document.getElementById('locationSlider');
-        //elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        //elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
         //var elemento2 = document.getElementById('textoplano');
         //elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
 
@@ -347,7 +347,7 @@
         }
         
         const but = document.getElementById('toggleSwitch');
-  
+        const pol = document.getElementById('erasePolyline')
 
         document.getElementById('switch').addEventListener('click', () => {
             // Redirige a la página deseada
@@ -376,10 +376,7 @@
                 alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                 socket.emit('desactivar_switch', fechaInicial, fechaFinal );
                 but.innerText = 'Presione aquí para hacer otra consulta'; 
-                //var elemento1 = document.getElementById('locationSlider');
-                //elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
-                //var elemento2 = document.getElementById('textoplano');
-                //elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                pol.innerText = 'Detener Simulación';
             }
  
         });
