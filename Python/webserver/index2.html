@@ -495,7 +495,12 @@
                     }
 
                     // Mueve el marcador
+                    if (!marker) {
+                        // Si no hay un marcador existente, crea uno nuevo
+                        marker = L.marker([latitud, longitud]).addTo(map);
+                    }else{    
                     marker.setLatLng([latitud, longitud]);
+                    }
                     map.setView([latitud, longitud]);
 
                     // Almacena el punto actual como punto anterior para la próxima polyline
