@@ -254,7 +254,7 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
-        let table = document.getElementById('data-table');
+        
 
         var elemento = document.getElementById('texto1');
         //elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
@@ -391,7 +391,7 @@
 
         function mostrarLocalizacionesEnTabla(formattedResults) {
             // Obtén la tabla donde deseas mostrar los datos
-            const table = document.getElementById('localizaciones-table');
+            const table = document.getElementById('data-table');
 
             // Borra todas las filas existentes en la tabla
             while (table.rows.length > 0) {
