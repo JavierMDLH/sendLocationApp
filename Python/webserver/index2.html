@@ -365,12 +365,7 @@
             socket.emit('location',latitudMin, latitudMax, longitudMin, longitudMax);
         }
 
-        socket.on('places', function(results) {
-            
-            
-        });
-
-
+    
         // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
         socket.on('places', function(results) {
             console.log('Datos de localizaciones recibidos:');
