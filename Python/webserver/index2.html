@@ -226,7 +226,7 @@
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
         
-        let mostrarDatosNuevos = true;
+        let mostrarDatosNuevos = false;
         let marker; // Variable para almacenar el marcador
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
@@ -256,7 +256,7 @@
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
-            mostrarDatosNuevos = true;
+            mostrarDatosNuevos = false;
         });
     
         socket.on('disconnect', function() {
