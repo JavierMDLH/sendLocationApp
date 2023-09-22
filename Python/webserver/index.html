@@ -229,7 +229,7 @@
         <!-- Botón para borrar polilíneas -->
         <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
 
-        <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
+        
 
          
 
@@ -261,7 +261,7 @@
         let currentIndex = 0;
         let polyline = null;
         let polylineSegments = [];
-        const slider = document.getElementById('slider');
+       
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
@@ -379,175 +379,7 @@
             updateDataTable(data);
         });
 
-        socket.on('update_table', function(data) {
-            console.log('Nueva Tabla Recibida');
-            
-            // Crear un array con objetos que contienen todos los valores
-            const formattedData = data.map(item => ({
-                latitud: item.latitud,
-                longitud: item.longitud,
-                altitud: item.altitud,
-                timestamp: formatTimestamp(item.timestamp),
-            }));
-
-            // Actualizar la tabla con los datos formateados
-            updateDataTablereg(formattedData);
-        });
-
         
-
-        function updateDataTablereg(data) {
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Borra todas las filas existentes en la tabla
-            while (table.rows.length > 0) {
-                table.deleteRow(0);
-            }
-
-            // Crea un array de puntos para trazar la polilínea
-             //const polylines = [];
-             //borrarPolilineas();
-
-            // Itera a través de los datos y crea filas y celdas para cada valor
-            for (const item of data) {
-                const newRow = document.createElement('tr');
-
-                // Crear celdas para latitud, longitud, altitud y timestamp
-                const latitudCell = document.createElement('td');
-                latitudCell.innerText = item.latitud;
-                newRow.appendChild(latitudCell);
-
-                const longitudCell = document.createElement('td');
-                longitudCell.innerText = item.longitud;
-                newRow.appendChild(longitudCell);
-
-                const altitudCell = document.createElement('td');
-                altitudCell.innerText = item.altitud;
-                newRow.appendChild(altitudCell);
-
-                const timestampCell = document.createElement('td');
-                timestampCell.innerText = item.timestamp;
-                newRow.appendChild(timestampCell);
-
-                // Agrega la nueva fila en la parte superior de la tabla
-                if (table.rows.length > 0) {
-                    table.insertBefore(newRow, table.rows[0]);
-                } else {
-                    table.appendChild(newRow);
-                }
-
-                // Agrega el punto a la polilínea
-                const latitud = parseFloat(item.latitud);
-                const longitud = parseFloat(item.longitud);
-                polylines.push([latitud, longitud]);
-            }
-
-            //let currentIndex = 0;
-            const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacityStep = 0.02;
-            //const maxOpacity = 1;
-            
-            //let polyline;
-
-            // Esta función inicia la animación del marcador
-            function startMarkerAnimation() {
-                currentIndex = 0;
-                moveMarker();
-
-                const locationSlider = document.getElementById('locationSlider');
-
-                // Configura el evento input del slider
-                locationSlider.addEventListener('input', function() {
-                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
-
-                    const newPosition = parseInt(this.value);
-                    const totalLocations = data.length; // El número total de ubicaciones
-
-                    // Calcula el nuevo índice basado en el valor del slider
-                    const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
-
-                    currentIndex = newIndex;
-                    moveMarker();
-                });
-            }
-
-           
-
-            function moveMarker() {
-                if (currentIndex >= data.length) {
-                    clearInterval(animationInterval); // Detener la animación cuando se alcanza el final de la tabla
-                    return;
-                }
-                if (currentIndex < polylines.length) {
-                    const [latitud, longitud] = polylines[currentIndex];
-
-                    if (currentIndex === 0) {
-                        // Crea la polilínea inicial
-                        polyline = L.polyline([[latitud, longitud]], {
-                            color: 'blue',
-                            dashArray: '10, 10',
-                            opacity: opacity
-                        }).addTo(map);
-                    } else {
-                        // Reduzca la opacidad de los segmentos más antiguos
-                        const numSegments = polylineSegments.length;
-
-                        if (numSegments > 1) {
-                            for (let i = 0; i < numSegments - 1; i++) {
-                                const segment = polylineSegments[i];
-                                const currentOpacity = segment.options.opacity;
-                                if (currentOpacity > 0) {
-                                    segment.setStyle({ opacity: currentOpacity - opacityStep });
-                                }
-                            }
-                        }
-
-                        // Crea una nueva línea desde el punto anterior al punto actual
-                        if (previousPoint) {
-                            polyline = L.polyline([previousPoint, [latitud, longitud]], {
-                                color: 'blue',
-                                dashArray: '10, 10',
-                                opacity: opacity
-                            }).addTo(map);
-                            polylineSegments.push(polyline);
-                        }
-                    }
-
-                    // Mueve el marcador
-                    marker.setLatLng([latitud, longitud]);
-                    map.setView([latitud, longitud]);
-
-                    // Almacena el punto actual como punto anterior para la próxima polyline
-                    previousPoint = [latitud, longitud];
-
-                    // Actualiza el cuadro de texto con el timestamp actual
-                    const timestampDisplay = document.getElementById('timestampDisplay');
-                    if (currentIndex >= 0 && currentIndex < data.length) {
-                        timestampDisplay.innerText = `Timestamp: ${data[currentIndex].timestamp}`;
-                    } else {
-                        timestampDisplay.innerText = '';
-                    }
-
-                    currentIndex++; // Avanzar a la siguiente ubicación del marcador
-
-                    // Actualiza el valor del slider para que refleje la ubicación actual
-                    const locationSlider = document.getElementById('locationSlider');
-                    const totalLocations = data.length; // El número total de ubicaciones
-                    locationSlider.value = (currentIndex / (totalLocations - 1)) * 100;
-
-                    // Programa la siguiente llamada después de un segundo
-                    setTimeout(moveMarker, delayBetweenMarkers);
-                }
-            }
-
-        
-            // Inicia la animación
-            startMarkerAnimation();
-
-        }
-
-
 
         function formatTimestamp(timestamp) {
             const day = timestamp.slice(0, 2);
@@ -708,74 +540,6 @@
 
             
         }
-    
-        document.addEventListener('DOMContentLoaded', function () {
-            const datePickerInput = document.getElementById('datePickerInput');
-            const datePickerInputF = document.getElementById('datePickerInputF');
-
-            const configInicial = {
-                enableTime: true,
-                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
-                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
-                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
-                maxDate: "today", // Fecha máxima permitida (día actual)
-                onClose: function(selectedDates, dateStr, instance) {
-                    const fechaInicial = new Date(dateStr);
-                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
-
-                    // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
-                    if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
-                        // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
-                        fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
-                        datePickerInput._flatpickr.setDate(fechaInicial);
-                    }
-
-                    // Configura la fecha mínima para la fecha final
-                    datePickerInputF._flatpickr.set('minDate', fechaInicial);
-                    datePickerInput.value = dateStr;
-                }
-            };
-
-            const configFinal = {
-                enableTime: true,
-                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
-                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
-                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
-                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
-                maxDate: "today", // Fecha máxima permitida (día actual)
-                onClose: function(selectedDates, dateStr, instance) {
-                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
-                    const fechaFinal = new Date(dateStr);
-
-                    // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
-                    if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
-                        // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha final
-                        fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
-                        datePickerInputF._flatpickr.setDate(fechaFinal);
-                    }
-
-                    // Configura la fecha máxima para la fecha inicial
-                    datePickerInput._flatpickr.set('maxDate', fechaFinal);
-                    datePickerInputF.value = dateStr;
-                }
-            };
-
-            const datePickerButton = document.getElementById('datePickerButton');
-            const datePickerButtonF = document.getElementById('datePickerButtonF');
-
-            // Inicializa Flatpickr en los elementos de entrada de fecha
-            flatpickr(datePickerInput, configInicial);
-            flatpickr(datePickerInputF, configFinal);
-
-            // Agrega el evento de clic al botón de Fecha Final
-            datePickerButtonF.addEventListener('click', function () {
-                datePickerInputF._flatpickr.open();
-            });
-            datePickerButton.addEventListener('click', function () {
-                datePickerInput._flatpickr.open();
-            });
-        });
 
     </script>
 </body>
