@@ -130,6 +130,18 @@ io.on('connection', (socket) => {
       });  
   });
   console.log(mostrarDatosNuevos);
+
+  socket.on('Pagina2', () => {
+    mostrarDatosNuevos=false;
+    console.log('pag2');
+  });
+
+  socket.on('Pagina1', () => {
+    console.log('pag1');
+    mostrarDatosNuevos=true;
+  });
+
+  
   if (mostrarDatosNuevos){
     // Obtén los datos actualizados y envíalos cuando un cliente se conecta
     obtenerDatosActualizadosDesdeDB((err, data) => {
@@ -149,15 +161,7 @@ io.on('connection', (socket) => {
   });
 
 
-  socket.on('Pagina2', () => {
-    mostrarDatosNuevos=false;
-    console.log('pag2');
-  });
 
-  socket.on('Pagina1', () => {
-    console.log('pag1');
-    mostrarDatosNuevos=true;
-  });
 
 });
 
