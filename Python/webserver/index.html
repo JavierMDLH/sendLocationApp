@@ -287,9 +287,10 @@
 
 
         socket.on('connect', function() {
+            socket.emit('Pagina1');
             console.log('Conectado al servidor WebSocket');
             //mostrarDatosNuevos = true;
-            //socket.emit('Pagina1');
+            
         });
     
         socket.on('disconnect', function() {
