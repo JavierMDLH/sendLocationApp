@@ -262,24 +262,22 @@
         let animationInterval;
         let isSliding = false;
 
+        // Cargar el archivo JSON
+        fetch('var.json')
+            .then(response => response.json())
+            .then(data => {
+                // Acceder a los datos del archivo JSON
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error al cargar el archivo JSON:', error);
+            });
+
 
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
             mostrarDatosNuevos = true;
-            // Realiza una solicitud para cargar el archivo JSON
-            fetch('./var.json')
-                .then(response => response.json())
-                .then(data => {
-                    // Accede a la variable deseada en el archivo JSON (por ejemplo, "name")
-                    const nombrePagina = data.name || 'Título por Defecto';
-
-                    // Cambia el título de la pestaña con el valor obtenido
-                    document.title = nombrePagina;
-                })
-                .catch(error => {
-                    console.error('Error al cargar el archivo JSON:', error);
-                });
         });
     
         socket.on('disconnect', function() {
