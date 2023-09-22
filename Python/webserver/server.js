@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 
 // Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.ejs');
+  res.sendFile(__dirname + '/index');
 });
 
 // Conéctate a la base de datos
