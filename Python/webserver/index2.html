@@ -382,13 +382,13 @@
 
     
         // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
-        socket.on('places', function(results) {
-            console.log('Datos de localizaciones recibidos: ',results);
-            mostrarLocalizacionesEnTabla(results);
+        socket.on('places', function(formattedResults) {
+            console.log('Datos de localizaciones recibidos: ',formattedResults);
+            mostrarLocalizacionesEnTabla(formattedResults);
         });
        
 
-        function mostrarLocalizacionesEnTabla(results) {
+        function mostrarLocalizacionesEnTabla(formattedResults) {
             // Obtén la tabla donde deseas mostrar los datos
             const table = document.getElementById('localizaciones-table');
 
@@ -398,7 +398,7 @@
             }
 
             // Itera a través de los datos y crea filas y celdas para cada valor
-            for (const item of results) {
+            for (const item of formattedResults) {
                 const newRow = document.createElement('tr');
 
                 // Crear celdas para latitud, longitud, altitud y timestamp
