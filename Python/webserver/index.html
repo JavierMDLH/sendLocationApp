@@ -267,7 +267,9 @@
             .then(response => response.json())
             .then(data => {
                 // Acceder a los datos del archivo JSON
-                console.log(data);
+                console.log(data.NAME);
+                // Acceder al valor "NAME" y establecerlo como título de la pestaña
+                document.title = data.NAME;
             })
             .catch(error => {
                 console.error('Error al cargar el archivo JSON:', error);
