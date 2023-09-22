@@ -466,7 +466,7 @@
                     opacity: opacity,
                 }).addTo(map);
 
-                // Mueve el marcador a la última posición de la ruta
+                // Mueve el marcador al último punto de la ruta
                 if (latLngs.length > 0) {
                     const [latitud, longitud] = latLngs[latLngs.length - 1];
                     marker = L.marker([latitud, longitud]).addTo(map);
@@ -476,7 +476,7 @@
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
                 if (data.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${data[newIndex + (totalLocations - latLngs.length)].timestamp}`;
+                    timestampDisplay.innerText = `Timestamp: ${data[data.length - 1].timestamp}`;
                 } else {
                     timestampDisplay.innerText = '';
                 }
@@ -494,6 +494,7 @@
                 locationSlider.value = 100;
                 showRoute();
             });
+
 
 
 
