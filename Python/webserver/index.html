@@ -268,7 +268,7 @@
             console.log('Conectado al servidor WebSocket');
             mostrarDatosNuevos = true;
             // Realiza una solicitud para cargar el archivo JSON
-            fetch('-/var.json')
+            fetch('./var.json')
                 .then(response => response.json())
                 .then(data => {
                     // Accede a la variable deseada en el archivo JSON (por ejemplo, "name")
