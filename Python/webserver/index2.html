@@ -177,7 +177,7 @@
     <div id="data-box">
         <h1>GPS Finder - Webserver</h1>
         
-        <button  class="toggleSwitch">Presione aquí para volver los datos en Tiempo Real</button>
+        <button id="switch" class="toggleSwitch">Presione aquí para volver los datos en Tiempo Real</button>
 
         <!-- Elemento de entrada de fecha inicial -->
         <div class="button-container">
@@ -308,6 +308,13 @@
         
         const but = document.getElementById('toggleSwitch');
         const pol = document.getElementById('erasePolyline')
+
+        document.getElementById('switch').addEventListener('click', () => {
+            // Redirige a la página deseada
+            window.location.href = 'http://javierm.ddns.net/index.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
+            
+ 
+        });
 
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
