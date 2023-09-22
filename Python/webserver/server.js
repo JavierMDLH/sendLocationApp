@@ -15,6 +15,9 @@ const io = socketIo(server);
 
 const fs = require('fs');
 
+// Configura EJS como motor de plantillas y especifica la carpeta de vistas
+app.set('view engine', 'ejs');
+
 // Lee el archivo de configuración
 const configData = fs.readFileSync('var.json', 'utf8');
 const config = JSON.parse(configData);
@@ -26,7 +29,6 @@ const password = config.PASSWORD.replace(/"/g, "'");
 const database = config.DATABASE.replace(/"/g, "'");
 const name = config.NAME.replace(/"/g, "'");
 
-// Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
   // Lee el archivo "var.json" y obtén el valor del nombre
   fs.readFile('var.json', 'utf8', (err, data) => {
@@ -40,8 +42,8 @@ app.get('/', (req, res) => {
     const jsonData = JSON.parse(data);
     const nombrePagina = jsonData.NAME || 'Nombre de Página Predeterminado';
 
-    // Envia el valor del nombre a la página HTML como variable
-    res.render(__dirname + '/index.html', { nombrePagina });
+    // Renderiza el archivo HTML utilizando EJS y pasa la variable "nombrePagina"
+    res.render('index', { nombrePagina });
   });
 });
 
