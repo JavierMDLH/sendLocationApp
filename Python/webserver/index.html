@@ -200,7 +200,7 @@
     
 
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
-        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
+        <a<button href= "http://44.218.79.34:3000/index2.html"id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>/a>
 
         <div id="timestampDisplay"></div> 
         
@@ -310,47 +310,7 @@
 
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
-            // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
-            mostrarDatosNuevos = !mostrarDatosNuevos;
             
-            if (mostrarDatosNuevos) {
-              
-                if (polyline !== null){
-                    borrarPolilineas();
-                } 
-                
-                but.innerText = 'Presione aquí para ver solo los datos en una ventana de Tiempo';
-                pol.innerText = 'Borrar Polilinea';
-                // Obtén la tabla
-                const table = document.getElementById('data-table');
-
-                // Borra todas las filas existentes en la tabla
-                while (table.rows.length > 0) {
-                    table.deleteRow(0);
-                    }
-                // Si se activa, enviar una señal al servidor para mostrar datos nuevos
-                socket.emit('activar_switch');
-                
-                alert('Ahora verá los datos en tiempo real')
-            } else {
-
-                
-                
-                // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
-                const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
-                const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
-                console.log('Fecha inicial',fechaInicial);
-                if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
-                    alert('Ha establecido mal la ventana de Tiempo')
-                    mostrarDatosNuevos =true;
-                }else{
-                    //borrarPolilineas();
-                    alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
-                    socket.emit('desactivar_switch', fechaInicial, fechaFinal );
-                    but.innerText = 'Presione aquí para ver los datos en Tiempo Real'; 
-                    pol.innerText = 'Pausar Simulación';
-                }      
-            }
         });
 
         
