@@ -170,8 +170,8 @@
 
 <body>
     <div class="navbar">
-        <a href="index.html">Datos en Tiempo Real</a>
-        <a href="index2.html">Datos en ventana de Tiempo</a>
+        <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
+        <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
     </div>
 
     <div id="data-box">
@@ -259,12 +259,36 @@
                 console.error('Error al cargar el archivo JSON:', error);
             });
 
+            // Obtén el enlace "Página 1" por su id
+            const pagina1Link = document.getElementById("Pagina1");
+            const pagina2Link = document.getElementById("Pagina2");
+
+            // Agrega un event listener para el evento "click"
+            pagina1Link.addEventListener("click", function(event) {
+                // Evita que el enlace siga su enlace predeterminado
+                //event.preventDefault();
+
+                // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
+                socket.emit('Pagina1')
+
+                // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
+            });
+            pagina2Link.addEventListener("click", function(event) {
+                // Evita que el enlace siga su enlace predeterminado
+                //event.preventDefault();
+
+                // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
+                socket.emit('Pagina2')
+
+                // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
+            });
+
 
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
-            mostrarDatosNuevos = true;
-            socket.emit('Pagina1');
+            //mostrarDatosNuevos = true;
+            //socket.emit('Pagina1');
         });
     
         socket.on('disconnect', function() {

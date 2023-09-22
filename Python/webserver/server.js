@@ -117,7 +117,7 @@ io.on('connection', (socket) => {
     mostrarDatosNuevos = false;
     console.log('pag2');
     console.log('Mostrar datos nuevos desactivado');
-});
+  });
 
   socket.on('desactivar_switch',(fechaInicial, fechaFinal) => {
       mostrarDatosNuevos = false;
@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
         console.log('Tabla enviada');
       });  
   });
-  
+
   console.log(mostrarDatosNuevos);
 
 
