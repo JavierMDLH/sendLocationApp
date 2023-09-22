@@ -137,6 +137,7 @@ io.on('connection', (socket) => {
         console.log('Tabla enviada');
       });  
   });
+  
   console.log(mostrarDatosNuevos);
 
 
