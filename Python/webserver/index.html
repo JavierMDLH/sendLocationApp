@@ -419,32 +419,13 @@
         // Función para borrar las polilíneas
         function borrarPolilineas() {
             console.log('Borrando polilíneas...');  
-            //console.log('polylines.length',polylines.length)  
             for (let i = 0; i < polylines.length; i++) {
-                //map.removeLayer(polyline);
+                
                 polyline = polylines[i];
                 map.removeLayer(polyline);
-                //polyline = polylineSegments[i];
-                //map.removeLayer(polyline);
-            }
                 
-            //map.removeLayer(polyline);
+            }     
             
-            //polylines = [];
-            //polyline = null;
-
-            // Borra la polilínea principal
-            //if (polyline) {
-            //    map.removeLayer(polyline);
-            //}
-
-            // Borra los segmentos de la polilínea
-            //for (const segment of polylineSegments) {
-            //    map.removeLayer(segment);
-            //}
-
-            // Limpia el arreglo de segmentos
-            //polylineSegments.length = 0;
         }
 
     </script>
