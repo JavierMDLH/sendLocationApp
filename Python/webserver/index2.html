@@ -366,7 +366,7 @@
             const longitud = marcador.lng;
 
             // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
-            const radioBusquedaKm = 1;
+            const RadioKm = 1;
 
             // Calcular los límites del área de búsqueda
             const latitudMin = latitud - (radioBusquedaKm / 111.32); // Aproximadamente 111.32 km por grado de latitud
@@ -375,8 +375,8 @@
             const longitudMax = longitud + (radioBusquedaKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
 
             // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
-            socket.emit('location',latitudMin, latitudMax, longitudMin, longitudMax);
-            console.log('location',latitudMin, latitudMax, longitudMin, longitudMax);
+            socket.emit('location',latitud, longitud, RadioKm);
+            console.log('location',latitud, longitud, RadioKm);
             console.log('Solicitud de ubicaciones enviado');
         }
 
