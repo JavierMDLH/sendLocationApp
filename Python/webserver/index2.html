@@ -454,8 +454,8 @@
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
-                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                // Crea una nueva polilínea que incluye todos los puntos desde el nuevo índice hasta el final
+                const latLngs = polylines.slice(newIndex).map(([latitud, longitud]) => [latitud, longitud]);
 
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
@@ -476,7 +476,7 @@
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
                 if (data.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
+                    timestampDisplay.innerText = `Timestamp: ${data[newIndex + (totalLocations - latLngs.length)].timestamp}`;
                 } else {
                     timestampDisplay.innerText = '';
                 }
@@ -488,6 +488,13 @@
             // Configura el evento input del slider para actualizar la ruta cuando se mueve
             const locationSlider = document.getElementById('locationSlider');
             locationSlider.addEventListener('input', showRoute);
+
+            // Configura el slider y la ruta al valor máximo cuando la página se carga por primera vez
+            window.addEventListener('load', () => {
+                locationSlider.value = 100;
+                showRoute();
+            });
+
 
 
         }
