@@ -433,87 +433,47 @@
             
             //let polyline;
 
-            // Esta función inicia la animación del marcador
-            function showRouteImmediately() {
-            currentIndex = 0;
+            
 
-            const locationSlider = document.getElementById('locationSlider');
+            function showRoute() {
+                // Reinicia la ruta y el marcador
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Polyline) {
+                        map.removeLayer(layer);
+                    }
+                });
+                marker = null;
 
-            // Configura el evento input del slider
-            locationSlider.addEventListener('input', function () {
-                const newPosition = parseInt(this.value);
-                const totalLocations = data.length; // El número total de ubicaciones
-
-                // Calcula el nuevo índice basado en el valor del slider
-                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
-
-                currentIndex = newIndex;
-                showRoute();
-            });
-        }
-
-        function showRoute() {
-            if (currentIndex >= data.length) {
-                return;
-            }
-
-            const [latitud, longitud] = polylines[currentIndex];
-
-            if (currentIndex === 0) {
-                // Crea la polilínea inicial con opacidad al 100%
-                polyline = L.polyline([[latitud, longitud]], {
+                // Crea una nueva polilínea que incluye todos los puntos de la ruta
+                const latLngs = polylines.map(([latitud, longitud]) => [latitud, longitud]);
+                
+                // Configura la opacidad de la polilínea (entre 30% y 100%)
+                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
+                
+                polyline = L.polyline(latLngs, {
                     color: 'blue',
                     dashArray: '10, 10',
-                    opacity: 1.0, // Opacidad al 100%
+                    opacity: opacity,
                 }).addTo(map);
-            } else {
-                // Calcula la opacidad en función de la posición actual
-                const opacity = 0.3 + (0.7 * (currentIndex / data.length)); // Opacidad entre 30% y 100%
 
-                // Crea una nueva línea desde el punto anterior al punto actual
-                if (previousPoint) {
-                    polyline = L.polyline([previousPoint, [latitud, longitud]], {
-                        color: 'blue',
-                        dashArray: '10, 10',
-                        opacity: opacity,
-                    }).addTo(map);
+                // Mueve el marcador al último punto de la ruta
+                if (latLngs.length > 0) {
+                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    marker = L.marker([latitud, longitud]).addTo(map);
+                    map.setView([latitud, longitud]);
+                }
+
+                // Actualiza el cuadro de texto con el timestamp del último punto
+                const timestampDisplay = document.getElementById('timestampDisplay');
+                if (data.length > 0) {
+                    timestampDisplay.innerText = `Timestamp: ${data[data.length - 1].timestamp}`;
+                } else {
+                    timestampDisplay.innerText = '';
                 }
             }
 
-            // Mueve el marcador
-            if (!marker) {
-                // Si no hay un marcador existente, crea uno nuevo
-                marker = L.marker([latitud, longitud]).addTo(map);
-            } else {
-                marker.setLatLng([latitud, longitud]);
-            }
-            map.setView([latitud, longitud]);
-
-            // Almacena el punto actual como punto anterior para la próxima polyline
-            previousPoint = [latitud, longitud];
-
-            // Actualiza el cuadro de texto con el timestamp actual
-            const timestampDisplay = document.getElementById('timestampDisplay');
-            if (currentIndex >= 0 && currentIndex < data.length) {
-                timestampDisplay.innerText = `Timestamp: ${data[currentIndex].timestamp}`;
-            } else {
-                timestampDisplay.innerText = '';
-            }
-
-            currentIndex++; // Avanzar a la siguiente ubicación del marcador
-
-            // Actualiza el valor del slider para que refleje la ubicación actual
-            const locationSlider = document.getElementById('locationSlider');
-            const totalLocations = data.length; // El número total de ubicaciones
-            locationSlider.value = (currentIndex / (totalLocations - 1)) * 100;
-
-            // Programa la siguiente llamada después de un breve retraso
-            setTimeout(showRoute, 100); // Muestra la siguiente ubicación después de 100 ms (0.1 segundos)
-        }
-
-        // Inicia la visualización de la ruta
-        showRouteImmediately();
-
+            // Llama a showRoute cuando se reciben los datos para mostrar la ruta inmediatamente
+            showRoute();
 
         }
 
