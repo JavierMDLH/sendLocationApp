@@ -256,7 +256,8 @@
 
         socket.on('connect', function() {
             console.log('Conectado al servidor WebSocket');
-            
+            mostrarDatosNuevos = false;
+            socket.emit('Pagina2');
         });
     
         socket.on('disconnect', function() {
@@ -302,8 +303,7 @@
         document.getElementById('switch').addEventListener('click', () => {
             // Redirige a la página deseada
             window.location.href = 'http://javierm.ddns.net/index.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
-            mostrarDatosNuevos = true;
-            socket.emit('Pagina1');
+            
  
         });
 
