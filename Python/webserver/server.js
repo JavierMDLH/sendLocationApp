@@ -30,6 +30,7 @@ const host = config.HOST.replace(/"/g, "'");
 const user = config.USER.replace(/"/g, "'");
 const password = config.PASSWORD.replace(/"/g, "'");
 const database = config.DATABASE.replace(/"/g, "'");
+const name = config.name.replace(/"/g, "'");
 console.log(`El valor de host es ${host}`);
 
 // Configura una ruta para servir tu página HTML
