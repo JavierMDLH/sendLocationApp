@@ -10,8 +10,8 @@ fechaInicial = 0;
 fechaFinal = 0;
 
 const app = require('express')(); // Usa require para crear la aplicación express directamente
-const server = http.createServer(app);
-const io = socketIo(server);
+const server1 = http.createServer(app);
+const io = socketIo(server1);
 
 const fs = require('fs');
 
@@ -26,7 +26,7 @@ const password = config.PASSWORD.replace(/"/g, "'");
 const database = config.DATABASE.replace(/"/g, "'");
 
 
-const server1 = http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   if (req.url === '/name') {
       // Proporciona la variable "name" en formato JSON
       const name = config.NAME.replace(/"/g, "'");
@@ -158,7 +158,7 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
+server1.listen(PORT, () => {
   console.log(`Servidor Socket.IO escuchando en el puerto ${PORT}`);
 });
 
