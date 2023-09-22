@@ -15,9 +15,6 @@ const io = socketIo(server);
 
 const fs = require('fs');
 
-// Configura EJS como motor de plantillas y especifica la carpeta de vistas
-app.set('view engine', 'ejs');
-
 // Lee el archivo de configuración
 const configData = fs.readFileSync('var.json', 'utf8');
 const config = JSON.parse(configData);
@@ -27,30 +24,13 @@ const host = config.HOST.replace(/"/g, "'");
 const user = config.USER.replace(/"/g, "'");
 const password = config.PASSWORD.replace(/"/g, "'");
 const database = config.DATABASE.replace(/"/g, "'");
-const name = config.NAME.replace(/"/g, "'");
+console.log(`El valor de host es ${host}`);
 
-app.get('/', (req, res) => {
-  // Lee el archivo "var.json" y obtén el valor del nombre
-  fs.readFile('var.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error al leer el archivo var.json:', err);
-      res.statusCode = 500;
-      res.end('Error interno del servidor');
-      return;
-    }
-
-    const jsonData = JSON.parse(data);
-    const nombrePagina = jsonData.NAME || 'Nombre de Página Predeterminado';
-
-    // Renderiza el archivo HTML utilizando EJS y pasa la variable "nombrePagina"
-    res.render('index', { nombrePagina });
-  });
-});
 
 // Configura una ruta para servir tu página HTML
-//app.get('/', (req, res) => {
-//  res.sendFile(__dirname + '/index');
-//});
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
 // Conéctate a la base de datos
 const db = mysql.createConnection({
@@ -222,4 +202,3 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
     callback(null, data);
   });
 }  
-
