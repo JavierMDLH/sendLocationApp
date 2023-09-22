@@ -204,6 +204,8 @@
             <i class="fas fa-calendar"></i> Seleccionar Fecha Final
         </button>
 
+        <button id="buscarLocalizacionesButton">Buscar por área</button>
+
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
 
         <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button><br>
@@ -341,6 +343,53 @@
 
             return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
         }
+
+        document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
+
+        function buscarLocalizaciones() {
+            // Obtener la posición actual del marcador en el mapa
+            const marcador = marker.getLatLng();
+            const latitud = marcador.lat;
+            const longitud = marcador.lng;
+
+            // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
+            const radioBusquedaKm = 1;
+
+            // Calcular los límites del área de búsqueda
+            const latitudMin = latitud - (radioBusquedaKm / 111.32); // Aproximadamente 111.32 km por grado de latitud
+            const latitudMax = latitud + (radioBusquedaKm / 111.32);
+            const longitudMin = longitud - (radioBusquedaKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
+            const longitudMax = longitud + (radioBusquedaKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
+
+            // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
+            socket.emit('location',latitudMin, latitudMax, longitudMin, longitudMax);
+        }
+
+        function buscarLocalizacionesEnArea(latitudMin, latitudMax, longitudMin, longitudMax) {
+            // Aquí deberías realizar una consulta a tu base de datos o servicio web
+            // para buscar las localizaciones dentro del área especificada.
+            
+            // Este es un ejemplo ficticio de resultados:
+            const resultados = [
+                { nombre: 'Lugar 1', latitud: 10.95, longitud: -74.80 },
+                { nombre: 'Lugar 2', latitud: 10.96, longitud: -74.81 },
+                // ...
+            ];
+
+            // Puedes hacer lo que necesites con los resultados, como mostrarlos en el mapa o en la página web.
+            // Por ejemplo, puedes agregar marcadores en el mapa para cada localización encontrada.
+
+            for (const resultado of resultados) {
+                const marcador = L.marker([resultado.latitud, resultado.longitud]).addTo(map);
+                // Puedes personalizar el marcador, por ejemplo, agregando un popup con el nombre del lugar.
+                marcador.bindPopup(resultado.nombre).openPopup();
+            }
+        }
+
+
+
+
+
         
         const but = document.getElementById('toggleSwitch');
         const pol = document.getElementById('erasePolyline')

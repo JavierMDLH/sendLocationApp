@@ -153,6 +153,28 @@ io.on('connection', (socket) => {
     });
 
   }
+
+  socket.on('location',(latitudMin, latitudMax, longitudMin, longitudMax) => {
+    latitudMax = latitudMax;
+    latitudMin = latitudMin;
+    longitudMax = longitudMax;
+    longitudMin = longitudMin;
+    console.log('Consulta por localizacion');
+    buscarLocalizacionesEnArea(latitudMax,latitudMin,longitudMax,longitudMin, (err, results) => {
+      if (err) {
+        console.error('Error al obtener datos desde la base de datos:', err);
+        return;
+      }
+  
+      // Enviar datos al cliente
+      io.emit('place', results);
+      console.log('localizaciones enviadas');
+    });  
+
+
+  });
+  
+
   
 
   // Maneja la desconexión del cliente
@@ -202,6 +224,41 @@ function obtenerDatosActualizadosDesdeDB(callback) {
     console.log(results[0].Timestamp);
   });
 }  
+
+
+// Función para buscar localizaciones en un área específica
+function buscarLocalizacionesEnArea(latitudMin, latitudMax, longitudMin, longitudMax,callback) {
+  const query = `
+      SELECT Latitud, Longitud, Altitud, Timestamp FROM datos
+      WHERE Latitud BETWEEN ? AND ?
+      AND Longitud BETWEEN ? AND ?
+  `;
+
+  connection.query(query, [latitudMin, latitudMax, longitudMin, longitudMax], function (error, results, fields) {
+      if (error) {
+          console.error('Error al ejecutar la consulta:', error);
+          return;
+      }
+
+      // Los resultados de la consulta se encuentran en la variable "results"
+      console.log('Resultados de la consulta:', results);
+      // Extraer los datos de la consulta
+      const results = results.map((row) => ({
+        latitud: row.Latitud,
+        longitud: row.Longitud,
+        altitud: row.Altitud,
+        timestamp: row.Timestamp,
+      }));
+
+      callback(null, results);
+
+  });
+
+
+}
+
+
+
 
 function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
   // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
