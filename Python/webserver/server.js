@@ -160,14 +160,14 @@ io.on('connection', (socket) => {
     longitudMax = longitudMax;
     longitudMin = longitudMin;
     console.log('Consulta por localizacion');
-    buscarLocalizacionesEnArea(latitudMax,latitudMin,longitudMax,longitudMin, (err, results) => {
+    buscarLocalizacionesEnArea(latitudMax,latitudMin,longitudMax,longitudMin, (err, data) => {
       if (err) {
         console.error('Error al obtener datos desde la base de datos:', err);
         return;
       }
   
       // Enviar datos al cliente
-      io.emit('places', results);
+      io.emit('places', data);
       console.log('localizaciones enviadas');
     });  
 
@@ -243,14 +243,14 @@ function buscarLocalizacionesEnArea(latitudMin, latitudMax, longitudMin, longitu
       // Los resultados de la consulta se encuentran en la variable "results"
       console.log('Resultados de la consulta:', results);
       // Extraer los datos de la consulta
-      const results = results.map((row) => ({
+      const data = results.map((row) => ({
         latitud: row.Latitud,
         longitud: row.Longitud,
         altitud: row.Altitud,
         timestamp: row.Timestamp,
       }));
 
-      callback(null, results);
+      callback(null, data);
 
   });
 
