@@ -485,7 +485,7 @@
                 // Mueve el marcador a la última posición de la ruta
                 console.log('latLngs.length: ',latLngs.length);
                 if (polylines.length > 0) {
-                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    const [latitud, longitud] = latLngs[polylines.length - 1];
                     marker = L.marker([latitud, longitud]).addTo(map);
                     map.setView([latitud, longitud]);
                     console.log("marker en ultima posicion");
