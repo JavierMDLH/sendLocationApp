@@ -1,35 +1,40 @@
-// Importa el módulo http
+// Importa los módulos necesarios
 const http = require('http');
-// Importa el módulo socket.io
 const socketIo = require('socket.io');
 const mysql = require('mysql');
 const dgram = require('dgram'); // Importa el módulo dgram para UDP
+const express = require('express'); // Importa Express
+const fs = require('fs');
+const path = require('path'); // Importa el módulo path
 
 let mostrarDatosNuevos = true; // Variable para rastrear el estado del interruptor
-fechaInicial = 0;
-fechaFinal = 0;
+let fechaInicial = 0;
+let fechaFinal = 0;
 
-const app = require('express')(); // Usa require para crear la aplicación express directamente
+// Crea una instancia de Express
+const app = express();
+
+// Configura Express para servir archivos estáticos desde la carpeta actual (__dirname)
+app.use(express.static(__dirname));
+
+// Crea un servidor HTTP usando Express
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const fs = require('fs');
-
-// Lee el archivo de configuración
-const configData = fs.readFileSync('var.json', 'utf8');
+// Lee el archivo de configuración localmente
+const configData = fs.readFileSync('./var.json', 'utf8');
 const config = JSON.parse(configData);
 
-// Accede a las variables de entorno
+// Accede a las variables de entorno desde el archivo local
 const host = config.HOST.replace(/"/g, "'");
 const user = config.USER.replace(/"/g, "'");
 const password = config.PASSWORD.replace(/"/g, "'");
 const database = config.DATABASE.replace(/"/g, "'");
 console.log(`El valor de host es ${host}`);
 
-
 // Configura una ruta para servir tu página HTML
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'index.html')); // Utiliza path.join para construir la ruta del archivo HTML
 });
 
 // Conéctate a la base de datos
