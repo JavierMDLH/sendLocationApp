@@ -234,7 +234,7 @@ function buscarLocalizacionesEnArea(latitudMin, latitudMax, longitudMin, longitu
       AND Longitud BETWEEN ? AND ?
   `;
 
-  connection.query(query, [latitudMin, latitudMax, longitudMin, longitudMax], function (error, results, fields) {
+  db.query(query, [latitudMin, latitudMax, longitudMin, longitudMax], function (error, results, fields) {
       if (error) {
           console.error('Error al ejecutar la consulta:', error);
           return;
