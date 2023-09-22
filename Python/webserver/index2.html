@@ -335,6 +335,9 @@
 
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
+            if (but.innerText =='Presione aquí para hacer otra consulta'){
+                borrarPolilineas();
+            } 
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
             //mostrarDatosNuevos = false;
             // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
