@@ -450,14 +450,6 @@
                 polylines.push([latitud, longitud]);
             }
 
-            //let currentIndex = 0;
-            const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacityStep = 0.02;
-            //const maxOpacity = 1;
-            
-            //let polyline;
-
-            
 
             function showRoute() {
                 // Reinicia la ruta y el marcador
@@ -491,6 +483,7 @@
                 }).addTo(map);
 
                 // Mueve el marcador a la última posición de la ruta
+                console.log('latLngs.length: ',latLngs.length);
                 if (latLngs.length > 0) {
                     const [latitud, longitud] = latLngs[latLngs.length - 1];
                     marker = L.marker([latitud, longitud]).addTo(map);
