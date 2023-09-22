@@ -434,104 +434,86 @@
             //let polyline;
 
             // Esta función inicia la animación del marcador
-            function startMarkerAnimation() {
-                currentIndex = 0;
-                moveMarker();
+            function showRouteImmediately() {
+            currentIndex = 0;
 
-                const locationSlider = document.getElementById('locationSlider');
+            const locationSlider = document.getElementById('locationSlider');
 
-                // Configura el evento input del slider
-                locationSlider.addEventListener('input', function() {
-                    clearInterval(animationInterval); // Detener la animación mientras se usa el slider
+            // Configura el evento input del slider
+            locationSlider.addEventListener('input', function () {
+                const newPosition = parseInt(this.value);
+                const totalLocations = data.length; // El número total de ubicaciones
 
-                    const newPosition = parseInt(this.value);
-                    const totalLocations = data.length; // El número total de ubicaciones
+                // Calcula el nuevo índice basado en el valor del slider
+                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
-                    // Calcula el nuevo índice basado en el valor del slider
-                    const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
+                currentIndex = newIndex;
+                showRoute();
+            });
+        }
 
-                    currentIndex = newIndex;
-                    moveMarker();
-                });
+        function showRoute() {
+            if (currentIndex >= data.length) {
+                return;
             }
 
-           
+            const [latitud, longitud] = polylines[currentIndex];
 
-            function moveMarker() {
-                if (currentIndex >= data.length) {
-                    clearInterval(animationInterval); // Detener la animación cuando se alcanza el final de la tabla
-                    return;
-                }
-                if (currentIndex < polylines.length) {
-                    const [latitud, longitud] = polylines[currentIndex];
+            if (currentIndex === 0) {
+                // Crea la polilínea inicial con opacidad al 100%
+                polyline = L.polyline([[latitud, longitud]], {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: 1.0, // Opacidad al 100%
+                }).addTo(map);
+            } else {
+                // Calcula la opacidad en función de la posición actual
+                const opacity = 0.3 + (0.7 * (currentIndex / data.length)); // Opacidad entre 30% y 100%
 
-                    if (currentIndex === 0) {
-                        // Crea la polilínea inicial
-                        polyline = L.polyline([[latitud, longitud]], {
-                            color: 'blue',
-                            dashArray: '10, 10',
-                            opacity: opacity
-                        }).addTo(map);
-                    } else {
-                        // Reduzca la opacidad de los segmentos más antiguos
-                        const numSegments = polylineSegments.length;
-
-                        if (numSegments > 1) {
-                            for (let i = 0; i < numSegments - 1; i++) {
-                                const segment = polylineSegments[i];
-                                const currentOpacity = segment.options.opacity;
-                                if (currentOpacity > 0) {
-                                    segment.setStyle({ opacity: currentOpacity - opacityStep });
-                                }
-                            }
-                        }
-
-                        // Crea una nueva línea desde el punto anterior al punto actual
-                        if (previousPoint) {
-                            polyline = L.polyline([previousPoint, [latitud, longitud]], {
-                                color: 'blue',
-                                dashArray: '10, 10',
-                                opacity: opacity
-                            }).addTo(map);
-                            polylineSegments.push(polyline);
-                        }
-                    }
-
-                    // Mueve el marcador
-                    if (marker==null || marker==undefined) {
-                        // Si no hay un marcador existente, crea uno nuevo
-                        marker = L.marker([latitud, longitud]).addTo(map);
-                    }else{    
-                    marker.setLatLng([latitud, longitud]);
-                    }
-                    map.setView([latitud, longitud]);
-
-                    // Almacena el punto actual como punto anterior para la próxima polyline
-                    previousPoint = [latitud, longitud];
-
-                    // Actualiza el cuadro de texto con el timestamp actual
-                    const timestampDisplay = document.getElementById('timestampDisplay');
-                    if (currentIndex >= 0 && currentIndex < data.length) {
-                        timestampDisplay.innerText = `Timestamp: ${data[currentIndex].timestamp}`;
-                    } else {
-                        timestampDisplay.innerText = '';
-                    }
-
-                    currentIndex++; // Avanzar a la siguiente ubicación del marcador
-
-                    // Actualiza el valor del slider para que refleje la ubicación actual
-                    const locationSlider = document.getElementById('locationSlider');
-                    const totalLocations = data.length; // El número total de ubicaciones
-                    locationSlider.value = (currentIndex / (totalLocations - 1)) * 100;
-
-                    // Programa la siguiente llamada después de un segundo
-                    setTimeout(moveMarker, delayBetweenMarkers);
+                // Crea una nueva línea desde el punto anterior al punto actual
+                if (previousPoint) {
+                    polyline = L.polyline([previousPoint, [latitud, longitud]], {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: opacity,
+                    }).addTo(map);
                 }
             }
 
-        
-            // Inicia la animación
-            startMarkerAnimation();
+            // Mueve el marcador
+            if (!marker) {
+                // Si no hay un marcador existente, crea uno nuevo
+                marker = L.marker([latitud, longitud]).addTo(map);
+            } else {
+                marker.setLatLng([latitud, longitud]);
+            }
+            map.setView([latitud, longitud]);
+
+            // Almacena el punto actual como punto anterior para la próxima polyline
+            previousPoint = [latitud, longitud];
+
+            // Actualiza el cuadro de texto con el timestamp actual
+            const timestampDisplay = document.getElementById('timestampDisplay');
+            if (currentIndex >= 0 && currentIndex < data.length) {
+                timestampDisplay.innerText = `Timestamp: ${data[currentIndex].timestamp}`;
+            } else {
+                timestampDisplay.innerText = '';
+            }
+
+            currentIndex++; // Avanzar a la siguiente ubicación del marcador
+
+            // Actualiza el valor del slider para que refleje la ubicación actual
+            const locationSlider = document.getElementById('locationSlider');
+            const totalLocations = data.length; // El número total de ubicaciones
+            locationSlider.value = (currentIndex / (totalLocations - 1)) * 100;
+
+            // Programa la siguiente llamada después de un breve retraso
+            setTimeout(showRoute, 100); // Muestra la siguiente ubicación después de 100 ms (0.1 segundos)
+        }
+
+        // Inicia la visualización de la ruta
+        showRouteImmediately();
+
 
         }
 
