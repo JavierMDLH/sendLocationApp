@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavierM</title>
+    <!-- Vincula el archivo CSS externo -->
+    <link rel="stylesheet" src="style.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <!-- Agrega la biblioteca Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Agrega la biblioteca FLatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+IxnI4fZy/uqSk5xSl5u5M5m+2Z2tw5T5E5g5E5f5E5v5E5p5O5F5" crossorigin="anonymous">
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
+
+        /* Estilos generales */
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para el navbar */
+        .navbar {
+            background-color: #0056b3;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            display: inline-block;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            margin-right: 10px; /* Espacio entre elementos (ajusta según desees) */
+        }
+
+        .navbar a:last-child {
+            margin-right: 0; /* Elimina el margen derecho del último elemento */
+        }
+
+        .navbar a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para el cuadro de datos */
+        #data-box {
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* Estilos para el encabezado */
+        #data-box h1 {
+            background-color: #0056b3;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Estilos para la tabla de datos históricos */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dcdcdc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+
+        /* Estilos para el mapa */
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+
+
+
+        /* Estilos para los botones */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .date-input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #0056b3;
+            color: #0056b3;
+            font-family: 'Merriweather', serif;
+            margin-top: 20px;
+            width: 25%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .date-button {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-right: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Estilos para el botón de Fecha Final */
+        .date-button-final {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+        .toggleSwitch {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+
+    </style>
+
+    
+</head>
+
+<body>
+    <div class="navbar">
+        <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
+        <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
+    </div>
+
+    <div id="data-box">
+        <h1>GPS Finder - Webserver</h1>
+        
+        <button id="switch" class="toggleSwitch">Presione aquí para volver los datos en Tiempo Real</button>
+
+        <!-- Elemento de entrada de fecha inicial -->
+        <div class="button-container">
+            <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
+        </div>
+        
+        <!-- Botón para seleccionar fecha inicial -->
+        <button id="datePickerButton" class="date-button">
+            <i class="fas fa-calendar"></i> Seleccionar Fecha Inicial
+        </button>
+
+        <!-- Elemento de entrada de fecha final -->
+        <div class="button-container">
+            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">
+        </div>
+
+        <!-- Botón para seleccionar fecha final -->
+        <button id="datePickerButtonF" class="date-button-final">
+            <i class="fas fa-calendar"></i> Seleccionar Fecha Final
+        </button>
+
+        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
+
+        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button>
+
+        <div id="timestampDisplay"></div> 
+        
+
+        <!-- Agrega un contenedor para el mapa -->
+        <div id="map"></div>
+    
+        <!-- Botón para borrar polilíneas -->
+        <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+
+        <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
+
+         
+
+
+        <!-- Agrega una tabla para mostrar los datos del servidor -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th>Altitud</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+        
+        let mostrarDatosNuevos = false;
+        let marker; // Variable para almacenar el marcador
+        let previousPoint; // Variable para almacenar el punto anterior
+        let opacity = 1; // Inicialmente, opacidad al 100%
+        let polylines =[];
+        let currentIndex = 0;
+        let polyline = null;
+        let polylineSegments = [];
+        const slider = document.getElementById('slider');
+        const timestampDisplay = document.getElementById('timestamp');
+        let animationInterval;
+        let isSliding = false;
+
+        // Cargar el archivo JSON
+        fetch('./var.json')
+            .then(response => response.json())
+            .then(data => {
+                // Acceder a los datos del archivo JSON
+                console.log(data.NAME);
+                // Acceder al valor "NAME" y establecerlo como título de la pestaña
+                document.title = data.NAME;
+            })
+            .catch(error => {
+                console.error('Error al cargar el archivo JSON:', error);
+            });
+
+        // Obtener el enlace Página 1 y 2 por su id
+        const pagina1Link = document.getElementById("Pagina1");
+        const pagina2Link = document.getElementById("Pagina2");
+
+        // Agrega un event listener para el evento "click"
+        pagina1Link.addEventListener("click", function(event) {
+            // Evita que el enlace siga su enlace predeterminado
+            //event.preventDefault();
+
+            // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
+            socket.emit('Pagina1')
+
+            // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
+        });
+            
+        pagina2Link.addEventListener("click", function(event) {
+            // Evita que el enlace siga su enlace predeterminado
+            //event.preventDefault();
+
+            // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
+            socket.emit('Pagina2')
+
+            // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
+        });
+
+
+
+        socket.on('connect', function() {
+            console.log('Conectado al servidor WebSocket');
+            //mostrarDatosNuevos = false;
+            //socket.emit('Pagina2');
+        });
+    
+        socket.on('disconnect', function() {
+            console.log('Desconectado del servidor WebSocket');
+        });
+
+        // Función para formatear la fecha
+        function formatDate(timestamp) {
+            const año = timestamp.substring(4, 8);
+            const mes = timestamp.substring(2, 4);
+            const dia = timestamp.substring(0, 2);
+            const hora = timestamp.substring(8, 10);
+            const minutos = timestamp.substring(10, 12);
+            const segundos = timestamp.substring(12, 14);
+
+            return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
+        }
+
+        // Crea un mapa Leaflet
+        const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
+
+        // Agrega una capa de mapa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
+        function convertirFecha(fecha) {
+            const partes = fecha.split(/[- :]/);
+            const anio = partes[0]; 
+            const mes = partes[1];
+            const dia = partes[2];
+            const hora = partes[3];
+            const minuto = partes[4];
+            const segundo = '00'; 
+
+            return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
+        }
+        
+        const but = document.getElementById('toggleSwitch');
+        const pol = document.getElementById('erasePolyline')
+
+        document.getElementById('switch').addEventListener('click', () => {
+            // Redirige a la página deseada
+            socket.emit('Pagina1');
+            window.location.href = 'http://javierm.ddns.net/index.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
+            
+ 
+        });
+
+        // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
+        document.getElementById('toggleSwitch').addEventListener('click', () => {
+            if (but.innerText =='Presione aquí para hacer otra consulta'){
+                borrarPolilineas();
+            } 
+            // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
+            //mostrarDatosNuevos = false;
+            // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
+            const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
+            const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
+            console.log('Fecha inicial',fechaInicial);
+            if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
+                alert('Ha establecido mal la ventana de Tiempo')
+                mostrarDatosNuevos =true;
+            }else{
+                //borrarPolilineas();
+                alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
+                socket.emit('desactivar_switch', fechaInicial, fechaFinal );
+                but.innerText = 'Presione aquí para hacer otra consulta'; 
+                pol.innerText = 'Detener Simulación';
+            }
+ 
+        });
+
+        
+
+        socket.on('update_data', function(data) {
+            console.log('Nuevos datos recibidos:', data);
+            updateDataOnPage(data);
+            updateDataTable(data);
+        });
+
+        socket.on('update_table', function(data) {
+            console.log('Nueva Tabla Recibida');
+            
+            // Crear un array con objetos que contienen todos los valores
+            const formattedData = data.map(item => ({
+                latitud: item.latitud,
+                longitud: item.longitud,
+                altitud: item.altitud,
+                timestamp: formatTimestamp(item.timestamp),
+            }));
+
+            // Actualizar la tabla con los datos formateados
+            updateDataTablereg(formattedData);
+        });
+
+        
+
+        function updateDataTablereg(data) {
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
+
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
+            }
+
+
+            // Itera a través de los datos y crea filas y celdas para cada valor
+            for (const item of data) {
+                const newRow = document.createElement('tr');
+
+                // Crear celdas para latitud, longitud, altitud y timestamp
+                const latitudCell = document.createElement('td');
+                latitudCell.innerText = item.latitud;
+                newRow.appendChild(latitudCell);
+
+                const longitudCell = document.createElement('td');
+                longitudCell.innerText = item.longitud;
+                newRow.appendChild(longitudCell);
+
+                const altitudCell = document.createElement('td');
+                altitudCell.innerText = item.altitud;
+                newRow.appendChild(altitudCell);
+
+                const timestampCell = document.createElement('td');
+                timestampCell.innerText = item.timestamp;
+                newRow.appendChild(timestampCell);
+
+                // Agrega la nueva fila en la parte superior de la tabla
+                if (table.rows.length > 0) {
+                    table.insertBefore(newRow, table.rows[0]);
+                } else {
+                    table.appendChild(newRow);
+                }
+
+                // Agrega el punto a la polilínea
+                const latitud = parseFloat(item.latitud);
+                const longitud = parseFloat(item.longitud);
+                polylines.push([latitud, longitud]);
+            }
+
+            //let currentIndex = 0;
+            const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
+            const opacityStep = 0.02;
+            //const maxOpacity = 1;
+            
+            //let polyline;
+
+            
+
+            function showRoute() {
+                // Reinicia la ruta y el marcador
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Polyline) {
+                        map.removeLayer(layer);
+                    }
+                });
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+
+                // Obtiene la posición actual del slider
+                const locationSlider = document.getElementById('locationSlider');
+                const newPosition = parseInt(locationSlider.value);
+                const totalLocations = data.length;
+
+                // Calcula el nuevo índice basado en la posición del slider
+                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
+
+                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
+                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+
+                // Configura la opacidad de la polilínea (entre 30% y 100%)
+                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
+
+                polyline = L.polyline(latLngs, {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: opacity,
+                }).addTo(map);
+
+                // Mueve el marcador a la última posición de la ruta
+                if (latLngs.length > 0) {
+                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    marker = L.marker([latitud, longitud]).addTo(map);
+                    map.setView([latitud, longitud]);
+                }
+
+                // Actualiza el cuadro de texto con el timestamp del último punto
+                const timestampDisplay = document.getElementById('timestampDisplay');
+                if (data.length > 0) {
+                    timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
+                } else {
+                    timestampDisplay.innerText = '';
+                }
+            }
+
+            // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
+            showRoute();
+
+            // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
+            const locationSlider = document.getElementById('locationSlider');
+            locationSlider.addEventListener('input', showRoute);
+
+
+
+        }
+
+
+
+        function formatTimestamp(timestamp) {
+            const day = timestamp.slice(0, 2);
+            const month = timestamp.slice(2, 4);
+            const year = timestamp.slice(4, 8);
+            const hours = timestamp.slice(8, 10);
+            const minutes = timestamp.slice(10, 12);
+            const seconds = timestamp.slice(12, 14);
+
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            const date = new Date(formattedDate);
+
+            const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+            };
+
+            return date.toLocaleString(undefined, options);
+        }
+
+
+        function updateDataOnPage(data) {
+            console.log('Actualizando datos en la página:', data);
+            document.getElementById('latitud').innerText = data[0];
+            document.getElementById('longitud').innerText = data[1];
+            document.getElementById('altitud').innerText = data[2];
+            document.getElementById('timestamp').innerText = formatDate(data[3]);
+
+            // Actualiza la ubicación en el mapa
+            const latitud = parseFloat(data[0]);
+            const longitud = parseFloat(data[1]);
+
+            if (!marker) {
+                // Si no hay un marcador existente, crea uno nuevo
+                marker = L.marker([latitud, longitud]).addTo(map);
+            } else {
+                // Si hay un marcador existente, actualiza su ubicación
+                marker.setLatLng([latitud, longitud]);
+            }
+
+            if (previousPoint) {
+                // Crea una nueva polyline desde el punto anterior al punto actual
+                polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+                polylines.push(polyline);
+            }
+
+            // Almacena el punto actual como punto anterior para la próxima polyline
+            previousPoint = [latitud, longitud];
+
+            // Establece la vista del mapa en la nueva ubicación
+            map.setView([latitud, longitud]);
+
+            for (let i = 0; i < polylines.length - 1; i++) {
+                polyline = polylines[i];
+                const currentOpacity = polyline.options.opacity;
+                if (currentOpacity > 0) {
+                    polyline.setStyle({ opacity: currentOpacity - 0.02 });
+                }
+            }
+        }
+
+        function updateDataTable(data) {
+            data[3]=formatDate(data[3]);
+            // Obtén la tabla
+            const table = document.getElementById('data-table');
+
+            // Crea una nueva fila de datos
+            const newRow = document.createElement('tr');
+
+            // Itera a través de los datos y crea celdas para cada valor
+            for (const value of data) {
+                const cell = document.createElement('td');
+                cell.innerText = value;
+                newRow.appendChild(cell);
+            }
+
+            // Agrega la nueva fila en la parte superior de la tabla
+            if (table.rows.length > 0) {
+                table.insertBefore(newRow, table.rows[0]);
+            } else {
+                table.appendChild(newRow);
+            }
+
+            // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
+            const maxRows = 100;
+            while (table.rows.length > maxRows) {
+                table.deleteRow(maxRows);
+            }
+        }
+
+        // Función para borrar las polilíneas
+        function borrarPolilineas() {
+            console.log('Borrando polilínea anterior...');
+            // Verifica si hay una polilínea anterior
+            for (let i = 0; i < polylines.length; i++) {
+                map.removeLayer(polyline);
+                polyline = polylines[i];
+                map.removeLayer(polyline);
+                //polyline = polylineSegments[i];
+                map.removeLayer(polyline);
+            }
+                
+            map.removeLayer(polyline);
+                
+            polylines = [];
+            polyline = null;
+
+            // Borra la polilínea principal
+            if (polyline) {
+                map.removeLayer(polyline);
+            }
+
+            // Borra los segmentos de la polilínea
+            for (const segment of polylineSegments) {
+                map.removeLayer(segment);
+            }
+            // Limpia el arreglo de segmentos
+            polylineSegments.length = 0;
+
+            
+        }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const datePickerInput = document.getElementById('datePickerInput');
+            const datePickerInputF = document.getElementById('datePickerInputF');
+
+            const configInicial = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
+                maxDate: "today", // Fecha máxima permitida (día actual)
+                onClose: function(selectedDates, dateStr, instance) {
+                    const fechaInicial = new Date(dateStr);
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
+
+                    // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
+                    if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
+                        fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
+                        datePickerInput._flatpickr.setDate(fechaInicial);
+                    }
+
+                    // Configura la fecha mínima para la fecha final
+                    datePickerInputF._flatpickr.set('minDate', fechaInicial);
+                    datePickerInput.value = dateStr;
+                }
+            };
+
+            const configFinal = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
+                maxDate: "today", // Fecha máxima permitida (día actual)
+                onClose: function(selectedDates, dateStr, instance) {
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
+                    const fechaFinal = new Date(dateStr);
+
+                    // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
+                    if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha final
+                        fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
+                        datePickerInputF._flatpickr.setDate(fechaFinal);
+                    }
+
+                    // Configura la fecha máxima para la fecha inicial
+                    datePickerInput._flatpickr.set('maxDate', fechaFinal);
+                    datePickerInputF.value = dateStr;
+                }
+            };
+
+            const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerButtonF = document.getElementById('datePickerButtonF');
+
+            // Inicializa Flatpickr en los elementos de entrada de fecha
+            flatpickr(datePickerInput, configInicial);
+            flatpickr(datePickerInputF, configFinal);
+
+            // Agrega el evento de clic al botón de Fecha Final
+            datePickerButtonF.addEventListener('click', function () {
+                datePickerInputF._flatpickr.open();
+            });
+            datePickerButton.addEventListener('click', function () {
+                datePickerInput._flatpickr.open();
+            });
+        });
+
+    </script>
+</body>
+</html>

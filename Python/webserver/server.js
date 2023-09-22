@@ -102,13 +102,21 @@ udpServer.on('message', (message, remote) => {
 
 udpServer.bind(UDP_PORT);
 
-// Resto de tu código de Socket.IO
+// Resto de código de Socket.IO
 io.on('connection', (socket) => {
   console.log('Un cliente se ha conectado');
-  mostrarDatosNuevos = true;
-  socket.on('activar_switch', () => {
+  
+
+  socket.on('Pagina1', () => {
       mostrarDatosNuevos = true;
+      console.log('pag1');
       console.log('Mostrar datos nuevos activado');
+  });
+
+  socket.on('Pagina2', () => {
+    mostrarDatosNuevos = false;
+    console.log('pag2');
+    console.log('Mostrar datos nuevos desactivado');
   });
 
   socket.on('desactivar_switch',(fechaInicial, fechaFinal) => {
@@ -129,7 +137,11 @@ io.on('connection', (socket) => {
         console.log('Tabla enviada');
       });  
   });
+
   console.log(mostrarDatosNuevos);
+
+
+
   if (mostrarDatosNuevos){
     // Obtén los datos actualizados y envíalos cuando un cliente se conecta
     obtenerDatosActualizadosDesdeDB((err, data) => {
@@ -147,7 +159,13 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Un cliente se ha desconectado');
   });
+
+
+
+
 });
+
+
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
