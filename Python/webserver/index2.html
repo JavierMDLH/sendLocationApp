@@ -452,15 +452,12 @@
 
 
             function showRoute() {
-                // Reinicia la ruta y el marcador
+                // Reinicia la ruta
                 map.eachLayer(function (layer) {
                     if (layer instanceof L.Polyline) {
                         map.removeLayer(layer);
                     }
                 });
-                if (marker) {
-                    map.removeLayer(marker);
-                }
 
                 // Obtiene la posición actual del slider
                 const locationSlider = document.getElementById('locationSlider');
@@ -482,21 +479,26 @@
                     opacity: opacity,
                 }).addTo(map);
 
-                // Mueve el marcador a la última posición de la ruta
-                console.log('latLngs.length: ',latLngs.length);
-                if (latLngs.length > 0) {
-                    const [latitud, longitud] = latLngs[latLngs.length - 1];
-                    marker = L.marker([latitud, longitud]).addTo(map);
-                    map.setView([latitud, longitud]);
-                    console.log("marker en ultima posicion");
-                }
-
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
                 if (data.length > 0) {
                     timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
                 } else {
                     timestampDisplay.innerText = '';
+                }
+
+                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
+                if (latLngs.length > 0) {
+                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    if (marker) {
+                        // Si el marcador ya existe, mueve su posición
+                        marker.setLatLng([latitud, longitud]);
+                    } else {
+                        // Si el marcador no existe, créalo y añádalo al mapa
+                        marker = L.marker([latitud, longitud]).addTo(map);
+                    }
+                    map.setView([latitud, longitud]);
+                    console.log("marker en última posición");
                 }
             }
 
@@ -506,6 +508,7 @@
             // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
             const locationSlider = document.getElementById('locationSlider');
             locationSlider.addEventListener('input', showRoute);
+
 
 
 
