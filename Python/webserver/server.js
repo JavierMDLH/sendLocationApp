@@ -154,13 +154,12 @@ io.on('connection', (socket) => {
 
   }
 
-  socket.on('location',(latitudMin, latitudMax, longitudMin, longitudMax) => {
-    latitudMax = latitudMax;
-    latitudMin = latitudMin;
-    longitudMax = longitudMax;
-    longitudMin = longitudMin;
+  socket.on('location',(latitud, longitud, RadioKm) => {
+    latitud = latitud;
+    longitud = longitud;
+    RadioKm = RadioKm;
     console.log('Consulta por localizacion');
-    buscarLocalizacionesEnArea(latitud,longitud,radioKm, (err, formattedResults) => {
+    buscarLocalizacionesEnArea(latitud,longitud,RadioKm, (err, formattedResults) => {
       if (err) {
         console.error('Error al obtener datos desde la base de datos:', err);
         return;
