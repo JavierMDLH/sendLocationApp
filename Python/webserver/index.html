@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Javier</title>
+    <title>JavierM</title>
     <!-- Vincula el archivo CSS externo -->
     <link rel="stylesheet" src="style.css"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
@@ -261,6 +261,19 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
+
+        // Cargar el archivo JSON
+        fetch('./var.json')
+            .then(response => response.json())
+            .then(data => {
+                // Acceder a los datos del archivo JSON
+                console.log(data.NAME);
+                // Acceder al valor "NAME" y establecerlo como título de la pestaña
+                document.title = data.NAME;
+            })
+            .catch(error => {
+                console.error('Error al cargar el archivo JSON:', error);
+            });
 
 
 
