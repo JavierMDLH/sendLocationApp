@@ -156,6 +156,12 @@
             font-family: 'Merriweather', serif;
         }
 
+        .buttons {
+        display: flex;
+        justify-content: space-between;
+        
+        }
+
         /* Estilo personalizado para el slider */
         #locationSlider {
             width: 100%; /* Ajusta el ancho del slider */
@@ -208,11 +214,15 @@
             <i class="fas fa-calendar"></i> Seleccionar Fecha Final
         </button><br>
 
-        <button id="buscarLocalizacionesButton" class="toggleSwitch">Buscar por área</button>
+        <div class="buttons">
+            <button id="buscarLocalizacionesButton" class="toggleSwitch">Buscar por área</button>
+            <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button><br>
+          </div>
+        
 
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
 
-        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button><br>
+        
 
         <div id="timestampDisplay"></div> 
         
