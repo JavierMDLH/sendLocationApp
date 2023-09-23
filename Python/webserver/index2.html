@@ -304,7 +304,6 @@
             // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
             socket.emit('Pagina1')
 
-            // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
         });
             
         pagina2Link.addEventListener("click", function(event) {
@@ -314,7 +313,6 @@
             // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
             socket.emit('Pagina2')
 
-            // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
         });
 
 
@@ -394,135 +392,6 @@
         }
 
     
-        // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
-        socket.on('places', function(formattedResults) {
-            console.log('Datos de localizaciones recibidos: ',formattedResults);
-
-
-            // Crear un array con objetos que contienen todos los valores
-            const formattedData = formattedResults.map(item => ({
-                latitud: item.latitud,
-                longitud: item.longitud,
-                altitud: item.altitud,
-                timestamp: formatTimestamp(item.timestamp),
-            }));
-
-            mostrarLocalizacionesEnTabla(formattedData);
-
-
-        });
-       
-
-        function mostrarLocalizacionesEnTabla(formattedData) {
-            console.log(formattedData[3]);
-            //formattedData[3]=formatTimestamp(formattedData[3]);
-            // Obtén la tabla donde deseas mostrar los datos
-            const table = document.getElementById('data-table');
-
-            // Borra todas las filas existentes en la tabla
-            while (table.rows.length > 0) {
-                table.deleteRow(0);
-            }
-
-            // Itera a través de los datos y crea filas y celdas para cada valor
-            for (const item of formattedData) {
-                const newRow = document.createElement('tr');
-
-                // Crear celdas para latitud, longitud, altitud y timestamp
-                const latitudCell = document.createElement('td');
-                latitudCell.innerText = item.latitud;
-                newRow.appendChild(latitudCell);
-
-                const longitudCell = document.createElement('td');
-                longitudCell.innerText = item.longitud;
-                newRow.appendChild(longitudCell);
-
-                const altitudCell = document.createElement('td');
-                altitudCell.innerText = item.altitud;
-                newRow.appendChild(altitudCell);
-
-                const timestampCell = document.createElement('td');
-                timestampCell.innerText = item.timestamp;
-                newRow.appendChild(timestampCell);
-
-                // Agrega la nueva fila en la parte superior de la tabla
-                if (table.rows.length > 0) {
-                    table.insertBefore(newRow, table.rows[0]);
-                } else {
-                    table.appendChild(newRow);
-                }
-
-                // Agrega el punto a la polilínea
-                const latitud = parseFloat(item.latitud);
-                const longitud = parseFloat(item.longitud);
-                polylines.push([latitud, longitud]);
-            }
-
-            function showRoute() {
-                // Reinicia la ruta
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.Polyline) {
-                        map.removeLayer(layer);
-                    }
-                });
-
-                // Obtiene la posición actual del slider
-                const locationSlider = document.getElementById('locationSlider');
-                const newPosition = parseInt(locationSlider.value);
-                const totalLocations = formattedData.length;
-
-                // Calcula el nuevo índice basado en la posición del slider
-                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
-
-                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
-
-                // Configura la opacidad de la polilínea (entre 30% y 100%)
-                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
-
-                polyline = L.polyline(latLngs, {
-                    color: 'blue',
-                    dashArray: '10, 10',
-                    opacity: opacity,
-                }).addTo(map);
-
-                // Actualiza el cuadro de texto con el timestamp del último punto
-                const timestampDisplay = document.getElementById('timestampDisplay');
-                if (formattedData.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${formattedData[newIndex].timestamp}`;
-                } else {
-                    timestampDisplay.innerText = '';
-                }
-
-                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
-                if (latLngs.length > 0) {
-                    const [latitud, longitud] = latLngs[latLngs.length - 1];
-                    if (marker) {
-                        // Si el marcador ya existe, mueve su posición
-                        marker.setLatLng([latitud, longitud]);
-                    } else {
-                        // Si el marcador no existe, créalo y añádalo al mapa
-                        marker = L.marker([latitud, longitud]).addTo(map);
-                    }
-                    map.setView([latitud, longitud]);
-                    console.log("marker en última posición");
-                }
-            }
-
-            // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
-            showRoute();
-
-            // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
-            const locationSlider = document.getElementById('locationSlider');
-            locationSlider.addEventListener('input', showRoute);
-
-
-
-
-        }
-
-        
-
         
         const but = document.getElementById('toggleSwitch');
         const pol = document.getElementById('erasePolyline')
@@ -565,11 +434,7 @@
 
         
 
-        socket.on('update_data', function(data) {
-            console.log('Nuevos datos recibidos:', data);
-            updateDataOnPage(data);
-            updateDataTable(data);
-        });
+        
 
         socket.on('update_table', function(data) {
             console.log('Nueva Tabla Recibida');
@@ -725,36 +590,6 @@
         }
 
 
-        
-
-        function updateDataTable(data) {
-            data[3]=formatDate(data[3]);
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Crea una nueva fila de datos
-            const newRow = document.createElement('tr');
-
-            // Itera a través de los datos y crea celdas para cada valor
-            for (const value of data) {
-                const cell = document.createElement('td');
-                cell.innerText = value;
-                newRow.appendChild(cell);
-            }
-
-            // Agrega la nueva fila en la parte superior de la tabla
-            if (table.rows.length > 0) {
-                table.insertBefore(newRow, table.rows[0]);
-            } else {
-                table.appendChild(newRow);
-            }
-
-            // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 100;
-            while (table.rows.length > maxRows) {
-                table.deleteRow(maxRows);
-            }
-        }
 
         // Función para borrar las polilíneas
         function borrarPolilineas() {
