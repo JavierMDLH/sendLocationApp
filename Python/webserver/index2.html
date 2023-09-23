@@ -361,8 +361,10 @@
         }
 
         document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
+        locbut = getElementById('buscarLocalizacionesButton');
 
         function buscarLocalizaciones() {
+            locbut.innerText = "Ahora puede hacer click sobre el mapa";
             if (marker) {
                 // Si ya existe un marcador, no se permite colocar otro
                 alert('Ya se ha colocado un marcador.');
@@ -371,6 +373,7 @@
 
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
+
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
                     map.removeLayer(marker);
