@@ -178,6 +178,35 @@
             cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
         }
 
+        /* Estilo para el tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
     </style>
 
     
@@ -216,8 +245,12 @@
 
         <div class="buttons">
             <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button>
-            <button id="buscarLocalizacionesButton" class="toggleSwitch"></i>Seleccionar área de búsqueda <i class="fas fa-map-marker-alt"></i></button>
-          </div>
+            <div>
+            
+                <button id="buscarLocalizacionesButton" class="toggleSwitch"></i>Seleccionar área de búsqueda <i class="fas fa-map-marker-alt"></i></button>
+                <span class="tooltip-text">Al presionar este botón se habilita el mapa para que al dar click sobre el se muestre el marcador que indica el lugar de interés para hacer la consulta de datos.</span>
+            </div>
+        </div>
         
 
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
