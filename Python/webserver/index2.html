@@ -385,13 +385,25 @@
         // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
         socket.on('places', function(formattedResults) {
             console.log('Datos de localizaciones recibidos: ',formattedResults);
-            mostrarLocalizacionesEnTabla(formattedResults);
+
+
+            // Crear un array con objetos que contienen todos los valores
+            const formattedData = formattedResults.map(item => ({
+                latitud: item.latitud,
+                longitud: item.longitud,
+                altitud: item.altitud,
+                timestamp: formatTimestamp(item.timestamp),
+            }));
+
+            mostrarLocalizacionesEnTabla(formattedData);
+
+
         });
        
 
-        function mostrarLocalizacionesEnTabla(formattedResults) {
-            console.log(formattedResults[3]);
-            formattedResults[3]=formatTimestamp(formattedResults[3]);
+        function mostrarLocalizacionesEnTabla(formattedData) {
+            console.log(formattedData[3]);
+            formattedData[3]=formatTimestamp(formattedData[3]);
             // Obtén la tabla donde deseas mostrar los datos
             const table = document.getElementById('data-table');
 
@@ -401,7 +413,7 @@
             }
 
             // Itera a través de los datos y crea filas y celdas para cada valor
-            for (const item of formattedResults) {
+            for (const item of formattedData) {
                 const newRow = document.createElement('tr');
 
                 // Crear celdas para latitud, longitud, altitud y timestamp
@@ -445,7 +457,7 @@
                 // Obtiene la posición actual del slider
                 const locationSlider = document.getElementById('locationSlider');
                 const newPosition = parseInt(locationSlider.value);
-                const totalLocations = formattedResults.length;
+                const totalLocations = formattedData.length;
 
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
@@ -464,8 +476,8 @@
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
-                if (formattedResults.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${formattedResults[newIndex].timestamp}`;
+                if (formattedData.length > 0) {
+                    timestampDisplay.innerText = `Timestamp: ${formattedData[newIndex].timestamp}`;
                 } else {
                     timestampDisplay.innerText = '';
                 }
