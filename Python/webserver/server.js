@@ -274,7 +274,7 @@ function buscarLocalizacionesEnArea(latitud, longitud, radioKm, callback) {
 function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,callback){
   // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
   // Convertir el radio de kilómetros a grados aproximados (1 grado de latitud ~ 111.32 km)
-  const radioGrados = radioKm / 111.32;
+  const radioGrados = RadioKm / 111.32;
 
   // Calcular los límites del área de búsqueda
   const latitudMin = lat - radioGrados;
