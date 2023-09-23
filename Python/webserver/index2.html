@@ -443,7 +443,7 @@
                 // Obtiene la posición actual del slider
                 const locationSlider = document.getElementById('locationSlider');
                 const newPosition = parseInt(locationSlider.value);
-                const totalLocations = data.length;
+                const totalLocations = formattedResults.length;
 
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
@@ -462,8 +462,8 @@
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
-                if (data.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
+                if (formattedResults.length > 0) {
+                    timestampDisplay.innerText = `Timestamp: ${formattedResults[newIndex].timestamp}`;
                 } else {
                     timestampDisplay.innerText = '';
                 }
@@ -489,7 +489,7 @@
             // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
             const locationSlider = document.getElementById('locationSlider');
             locationSlider.addEventListener('input', showRoute);
-                
+
 
 
 
