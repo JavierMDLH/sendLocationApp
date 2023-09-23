@@ -268,6 +268,9 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
+        let lat ;
+        let long ;
+        let RadioKm;
         
 
         var elemento = document.getElementById('texto1');
@@ -377,21 +380,16 @@
             });
             // Obtener la posición actual del marcador en el mapa
             const marcador = marker.getLatLng();
-            const latitud = marcador.lat;
-            const longitud = marcador.lng;
+            lat = marcador.lat;
+            long = marcador.lng;
 
             // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
-            const RadioKm = 1;
+            RadioKm = 1;
 
-            // Calcular los límites del área de búsqueda
-            const latitudMin = latitud - (RadioKm / 111.32); // Aproximadamente 111.32 km por grado de latitud
-            const latitudMax = latitud + (RadioKm / 111.32);
-            const longitudMin = longitud - (RadioKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
-            const longitudMax = longitud + (RadioKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
-
+            
             // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
-            socket.emit('location',latitud, longitud, RadioKm);
-            console.log('location',latitud, longitud, RadioKm);
+            //socket.emit('location',lat, long, RadioKm);
+            console.log('location',lat, long, RadioKm);
             console.log('Solicitud de ubicaciones enviado');
         }
 
@@ -554,7 +552,7 @@
             }else{
                 //borrarPolilineas();
                 alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
-                socket.emit('desactivar_switch', fechaInicial, fechaFinal );
+                socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
                 but.innerText = 'Presione aquí para hacer otra consulta'; 
                 
                 
