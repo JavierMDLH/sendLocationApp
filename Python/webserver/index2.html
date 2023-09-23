@@ -430,7 +430,7 @@
                 newRow.appendChild(altitudCell);
 
                 const timestampCell = document.createElement('td');
-                timestampCell.innerText = formatDate(item.timestamp);
+                timestampCell.innerText = item.timestamp;
                 newRow.appendChild(timestampCell);
 
                 // Agrega la nueva fila en la parte superior de la tabla
@@ -713,45 +713,7 @@
         }
 
 
-        function updateDataOnPage(data) {
-            console.log('Actualizando datos en la página:', data);
-            document.getElementById('latitud').innerText = data[0];
-            document.getElementById('longitud').innerText = data[1];
-            document.getElementById('altitud').innerText = data[2];
-            document.getElementById('timestamp').innerText = formatDate(data[3]);
-
-            // Actualiza la ubicación en el mapa
-            const latitud = parseFloat(data[0]);
-            const longitud = parseFloat(data[1]);
-
-            if (!marker) {
-                // Si no hay un marcador existente, crea uno nuevo
-                marker = L.marker([latitud, longitud]).addTo(map);
-            } else {
-                // Si hay un marcador existente, actualiza su ubicación
-                marker.setLatLng([latitud, longitud]);
-            }
-
-            if (previousPoint) {
-                // Crea una nueva polyline desde el punto anterior al punto actual
-                polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
-                polylines.push(polyline);
-            }
-
-            // Almacena el punto actual como punto anterior para la próxima polyline
-            previousPoint = [latitud, longitud];
-
-            // Establece la vista del mapa en la nueva ubicación
-            map.setView([latitud, longitud]);
-
-            for (let i = 0; i < polylines.length - 1; i++) {
-                polyline = polylines[i];
-                const currentOpacity = polyline.options.opacity;
-                if (currentOpacity > 0) {
-                    polyline.setStyle({ opacity: currentOpacity - 0.02 });
-                }
-            }
-        }
+        
 
         function updateDataTable(data) {
             data[3]=formatDate(data[3]);
