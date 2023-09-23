@@ -363,6 +363,11 @@
         document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
 
         function buscarLocalizaciones() {
+            if (marker) {
+                // Si ya existe un marcador, no se permite colocar otro
+                alert('Ya se ha colocado un marcador.');
+                return;
+            }
 
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
@@ -375,20 +380,20 @@
                 marker = L.marker(e.latlng).addTo(map);
 
                 // Luego, puedes usar e.latlng para obtener la posición del marcador
+
+                // Obtener la posición actual del marcador en el mapa
+                const marcador = marker.getLatLng();
+                lat = marcador.lat;
+                long = marcador.lng;
+
+                // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
+                RadioKm = 1;
+
+                // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
+                //socket.emit('location', lat, long, RadioKm);
+                console.log('location', lat, long, RadioKm);
+                console.log('Solicitud de ubicaciones enviada');
             });
-            // Obtener la posición actual del marcador en el mapa
-            const marcador = marker.getLatLng();
-            lat = marcador.lat;
-            long = marcador.lng;
-
-            // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
-            RadioKm = 1;
-
-            
-            // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
-            //socket.emit('location',lat, long, RadioKm);
-            console.log('location',lat, long, RadioKm);
-            console.log('Solicitud de ubicaciones enviado');
         }
 
     
