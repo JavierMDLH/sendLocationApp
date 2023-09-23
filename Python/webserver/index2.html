@@ -390,6 +390,7 @@
        
 
         function mostrarLocalizacionesEnTabla(formattedResults) {
+            console.log(formattedResults[3]);
             formattedResults[3]=formatTimestamp(formattedResults[3]);
             // Obtén la tabla donde deseas mostrar los datos
             const table = document.getElementById('data-table');
