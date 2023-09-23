@@ -17,8 +17,6 @@
     <!-- Agrega la etiqueta link para el ícono (favicon) -->
     <link rel="icon" href="favicon64.png" type="image/x-icon">
 
-    <script src="/home/ubuntu/node_modules/lottie-web/build/player/lottie.min.js"></script>
-
     <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
@@ -209,8 +207,6 @@
         <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
 
         <div id="timestampDisplay"></div> 
-
-        <div id="animation-container"></div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
@@ -460,16 +456,6 @@
                 map.removeLayer(polyline);    
             }       
         }
-
-        // Cargar la animación Lottie JSON
-        const animationContainer = document.getElementById('animation-container'); // Reemplaza 'animation-container' con el ID de tu contenedor
-        const animation = lottie.loadAnimation({
-            container: animationContainer,
-            renderer: 'svg', // Puedes cambiar el renderizador según tus necesidades (svg, canvas, html)
-            loop: true, // Si deseas que la animación se repita
-            autoplay: true, // Si deseas que la animación comience automáticamente
-            path: 'nombre_de_tu_animacion.json', // Reemplaza 'nombre_de_tu_animacion.json' con el nombre de tu archivo JSON
-        });
 
 
     </script>
