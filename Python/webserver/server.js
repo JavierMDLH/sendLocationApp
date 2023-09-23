@@ -153,6 +153,27 @@ io.on('connection', (socket) => {
     });
 
   }
+
+  socket.on('location',(latitud, longitud, RadioKm) => {
+    latitud = latitud;
+    longitud = longitud;
+    RadioKm = RadioKm;
+    console.log('Consulta por localizacion');
+    buscarLocalizacionesEnArea(latitud,longitud,RadioKm, (err, formattedResults) => {
+      if (err) {
+        console.error('Error al obtener datos desde la base de datos:', err);
+        return;
+      }
+  
+      // Enviar datos al cliente
+      io.emit('places', formattedResults);
+      console.log('localizaciones enviadas');
+    });  
+
+
+  });
+  
+
   
 
   // Maneja la desconexión del cliente
@@ -202,6 +223,50 @@ function obtenerDatosActualizadosDesdeDB(callback) {
     console.log(results[0].Timestamp);
   });
 }  
+
+
+// Función para buscar localizaciones en un área específica
+function buscarLocalizacionesEnArea(latitud, longitud, radioKm, callback) {
+  // Convertir el radio de kilómetros a grados aproximados (1 grado de latitud ~ 111.32 km)
+  const radioGrados = radioKm / 111.32;
+
+  // Calcular los límites del área de búsqueda
+  const latitudMin = latitud - radioGrados;
+  const latitudMax = latitud + radioGrados;
+  const longitudMin = longitud - (radioGrados / Math.cos(latitud * (Math.PI / 180)));
+  const longitudMax = longitud + (radioGrados / Math.cos(latitud * (Math.PI / 180)));
+
+  // Consulta SQL para buscar localizaciones dentro del área
+  const query = `
+    SELECT Latitud, Longitud, Altitud, Timestamp FROM datos
+    WHERE Latitud BETWEEN ? AND ?
+    AND Longitud BETWEEN ? AND ?
+  `;
+
+  // Ejecutar la consulta SQL con los límites del área
+  db.query(query, [latitudMin, latitudMax, longitudMin, longitudMax], function (error, results, fields) {
+    if (error) {
+      console.error('Error al ejecutar la consulta:', error);
+      return callback(error, null);
+    }
+
+    // Los resultados de la consulta se encuentran en la variable "results"
+    console.log('Resultados de la consulta:', results);
+
+    // Formatear los resultados si es necesario
+    const formattedResults = results.map((row) => ({
+      latitud: row.Latitud,
+      longitud: row.Longitud,
+      altitud: row.Altitud,
+      timestamp: row.Timestamp,
+    }));
+
+    callback(null, formattedResults);
+  });
+}
+
+
+
 
 function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
   // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas

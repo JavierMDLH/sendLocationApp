@@ -12,7 +12,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+IxnI4fZy/uqSk5xSl5u5M5m+2Z2tw5T5E5g5E5f5E5v5E5p5O5F5" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Agrega la etiqueta link para el ícono (favicon) -->
+    <link rel="icon" href="favicon64.png" type="image/x-icon">
+    
     <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
@@ -152,6 +156,21 @@
             font-family: 'Merriweather', serif;
         }
 
+        /* Estilo personalizado para el slider */
+        #locationSlider {
+            width: 100%; /* Ajusta el ancho del slider */
+            height: 20px; /* Ajusta la altura del slider*/
+        }
+
+        /* Estilo personalizado para el control deslizante del slider */
+        #locationSlider::-webkit-slider-thumb {
+            width: 30px; /* Ajusta el ancho del control deslizante */
+            height: 30px; /* Ajusta la altura del control deslizante */
+            background-color: #007BFF; /* Color de fondo del control deslizante */
+            border: 2px solid #0056b3; /* Borde del control deslizante */
+            border-radius: 50%; /* Borde redondeado para que parezca un círculo */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
+        }
 
     </style>
 
@@ -189,19 +208,20 @@
             <i class="fas fa-calendar"></i> Seleccionar Fecha Final
         </button>
 
+        <button id="buscarLocalizacionesButton">Buscar por área</button>
+
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
 
-        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button>
+        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button><br>
 
         <div id="timestampDisplay"></div> 
         
 
         <!-- Agrega un contenedor para el mapa -->
-        <div id="map"></div>
+        <div id="map"></div><br>
+        <p id="texto1">Mueva este cursor para desplazarse a lo largo del recorrido</p>
     
-        <!-- Botón para borrar polilíneas -->
-        <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-
+       
         <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
 
          
@@ -238,6 +258,13 @@
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
+        
+
+        var elemento = document.getElementById('texto1');
+        //elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        var elemento1 = document.getElementById('locationSlider');
+        //elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        
 
         // Cargar el archivo JSON
         fetch('./var.json')
@@ -309,7 +336,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
+        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss' Hora de DayPicker
         function convertirFecha(fecha) {
             const partes = fecha.split(/[- :]/);
             const anio = partes[0]; 
@@ -321,6 +348,173 @@
 
             return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
         }
+
+        document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
+
+        function buscarLocalizaciones() {
+
+            // Agrega un evento de clic al mapa para establecer el marcador
+            map.on('click', function (e) {
+                if (marker) {
+                    // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
+                    map.removeLayer(marker);
+                }
+
+                // Crea un nuevo marcador en la ubicación donde se hizo clic
+                marker = L.marker(e.latlng).addTo(map);
+
+                // Luego, puedes usar e.latlng para obtener la posición del marcador
+            });
+            // Obtener la posición actual del marcador en el mapa
+            const marcador = marker.getLatLng();
+            const latitud = marcador.lat;
+            const longitud = marcador.lng;
+
+            // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
+            const RadioKm = 1;
+
+            // Calcular los límites del área de búsqueda
+            const latitudMin = latitud - (RadioKm / 111.32); // Aproximadamente 111.32 km por grado de latitud
+            const latitudMax = latitud + (RadioKm / 111.32);
+            const longitudMin = longitud - (RadioKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
+            const longitudMax = longitud + (RadioKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
+
+            // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
+            socket.emit('location',latitud, longitud, RadioKm);
+            console.log('location',latitud, longitud, RadioKm);
+            console.log('Solicitud de ubicaciones enviado');
+        }
+
+    
+        // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
+        socket.on('places', function(formattedResults) {
+            console.log('Datos de localizaciones recibidos: ',formattedResults);
+
+
+            // Crear un array con objetos que contienen todos los valores
+            const formattedData = formattedResults.map(item => ({
+                latitud: item.latitud,
+                longitud: item.longitud,
+                altitud: item.altitud,
+                timestamp: formatTimestamp(item.timestamp),
+            }));
+
+            mostrarLocalizacionesEnTabla(formattedData);
+
+
+        });
+       
+
+        function mostrarLocalizacionesEnTabla(formattedData) {
+            console.log(formattedData[3]);
+            //formattedData[3]=formatTimestamp(formattedData[3]);
+            // Obtén la tabla donde deseas mostrar los datos
+            const table = document.getElementById('data-table');
+
+            // Borra todas las filas existentes en la tabla
+            while (table.rows.length > 0) {
+                table.deleteRow(0);
+            }
+
+            // Itera a través de los datos y crea filas y celdas para cada valor
+            for (const item of formattedData) {
+                const newRow = document.createElement('tr');
+
+                // Crear celdas para latitud, longitud, altitud y timestamp
+                const latitudCell = document.createElement('td');
+                latitudCell.innerText = item.latitud;
+                newRow.appendChild(latitudCell);
+
+                const longitudCell = document.createElement('td');
+                longitudCell.innerText = item.longitud;
+                newRow.appendChild(longitudCell);
+
+                const altitudCell = document.createElement('td');
+                altitudCell.innerText = item.altitud;
+                newRow.appendChild(altitudCell);
+
+                const timestampCell = document.createElement('td');
+                timestampCell.innerText = item.timestamp;
+                newRow.appendChild(timestampCell);
+
+                // Agrega la nueva fila en la parte superior de la tabla
+                if (table.rows.length > 0) {
+                    table.insertBefore(newRow, table.rows[0]);
+                } else {
+                    table.appendChild(newRow);
+                }
+
+                // Agrega el punto a la polilínea
+                const latitud = parseFloat(item.latitud);
+                const longitud = parseFloat(item.longitud);
+                polylines.push([latitud, longitud]);
+            }
+
+            function showRoute() {
+                // Reinicia la ruta
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Polyline) {
+                        map.removeLayer(layer);
+                    }
+                });
+
+                // Obtiene la posición actual del slider
+                const locationSlider = document.getElementById('locationSlider');
+                const newPosition = parseInt(locationSlider.value);
+                const totalLocations = formattedData.length;
+
+                // Calcula el nuevo índice basado en la posición del slider
+                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
+
+                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
+                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+
+                // Configura la opacidad de la polilínea (entre 30% y 100%)
+                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
+
+                polyline = L.polyline(latLngs, {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: opacity,
+                }).addTo(map);
+
+                // Actualiza el cuadro de texto con el timestamp del último punto
+                const timestampDisplay = document.getElementById('timestampDisplay');
+                if (formattedData.length > 0) {
+                    timestampDisplay.innerText = `Timestamp: ${formattedData[newIndex].timestamp}`;
+                } else {
+                    timestampDisplay.innerText = '';
+                }
+
+                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
+                if (latLngs.length > 0) {
+                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    if (marker) {
+                        // Si el marcador ya existe, mueve su posición
+                        marker.setLatLng([latitud, longitud]);
+                    } else {
+                        // Si el marcador no existe, créalo y añádalo al mapa
+                        marker = L.marker([latitud, longitud]).addTo(map);
+                    }
+                    map.setView([latitud, longitud]);
+                    console.log("marker en última posición");
+                }
+            }
+
+            // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
+            showRoute();
+
+            // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
+            const locationSlider = document.getElementById('locationSlider');
+            locationSlider.addEventListener('input', showRoute);
+
+
+
+
+        }
+
+        
+
         
         const but = document.getElementById('toggleSwitch');
         const pol = document.getElementById('erasePolyline')
@@ -352,7 +546,11 @@
                 alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
                 socket.emit('desactivar_switch', fechaInicial, fechaFinal );
                 but.innerText = 'Presione aquí para hacer otra consulta'; 
-                pol.innerText = 'Detener Simulación';
+                
+                
+                elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+                elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
             }
  
         });
@@ -367,6 +565,8 @@
 
         socket.on('update_table', function(data) {
             console.log('Nueva Tabla Recibida');
+            console.log(data);
+            
             
             // Crear un array con objetos que contienen todos los valores
             const formattedData = data.map(item => ({
@@ -426,25 +626,14 @@
                 polylines.push([latitud, longitud]);
             }
 
-            //let currentIndex = 0;
-            const delayBetweenMarkers = 1000; // Intervalo de 1 segundo
-            const opacityStep = 0.02;
-            //const maxOpacity = 1;
-            
-            //let polyline;
-
-            
 
             function showRoute() {
-                // Reinicia la ruta y el marcador
+                // Reinicia la ruta
                 map.eachLayer(function (layer) {
                     if (layer instanceof L.Polyline) {
                         map.removeLayer(layer);
                     }
                 });
-                if (marker) {
-                    map.removeLayer(marker);
-                }
 
                 // Obtiene la posición actual del slider
                 const locationSlider = document.getElementById('locationSlider');
@@ -466,19 +655,26 @@
                     opacity: opacity,
                 }).addTo(map);
 
-                // Mueve el marcador a la última posición de la ruta
-                if (latLngs.length > 0) {
-                    const [latitud, longitud] = latLngs[latLngs.length - 1];
-                    marker = L.marker([latitud, longitud]).addTo(map);
-                    map.setView([latitud, longitud]);
-                }
-
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
                 if (data.length > 0) {
                     timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
                 } else {
                     timestampDisplay.innerText = '';
+                }
+
+                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
+                if (latLngs.length > 0) {
+                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    if (marker) {
+                        // Si el marcador ya existe, mueve su posición
+                        marker.setLatLng([latitud, longitud]);
+                    } else {
+                        // Si el marcador no existe, créalo y añádalo al mapa
+                        marker = L.marker([latitud, longitud]).addTo(map);
+                    }
+                    map.setView([latitud, longitud]);
+                    console.log("marker en última posición");
                 }
             }
 
@@ -488,6 +684,7 @@
             // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
             const locationSlider = document.getElementById('locationSlider');
             locationSlider.addEventListener('input', showRoute);
+
 
 
 
@@ -520,45 +717,7 @@
         }
 
 
-        function updateDataOnPage(data) {
-            console.log('Actualizando datos en la página:', data);
-            document.getElementById('latitud').innerText = data[0];
-            document.getElementById('longitud').innerText = data[1];
-            document.getElementById('altitud').innerText = data[2];
-            document.getElementById('timestamp').innerText = formatDate(data[3]);
-
-            // Actualiza la ubicación en el mapa
-            const latitud = parseFloat(data[0]);
-            const longitud = parseFloat(data[1]);
-
-            if (!marker) {
-                // Si no hay un marcador existente, crea uno nuevo
-                marker = L.marker([latitud, longitud]).addTo(map);
-            } else {
-                // Si hay un marcador existente, actualiza su ubicación
-                marker.setLatLng([latitud, longitud]);
-            }
-
-            if (previousPoint) {
-                // Crea una nueva polyline desde el punto anterior al punto actual
-                polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
-                polylines.push(polyline);
-            }
-
-            // Almacena el punto actual como punto anterior para la próxima polyline
-            previousPoint = [latitud, longitud];
-
-            // Establece la vista del mapa en la nueva ubicación
-            map.setView([latitud, longitud]);
-
-            for (let i = 0; i < polylines.length - 1; i++) {
-                polyline = polylines[i];
-                const currentOpacity = polyline.options.opacity;
-                if (currentOpacity > 0) {
-                    polyline.setStyle({ opacity: currentOpacity - 0.02 });
-                }
-            }
-        }
+        
 
         function updateDataTable(data) {
             data[3]=formatDate(data[3]);
