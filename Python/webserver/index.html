@@ -17,6 +17,11 @@
     <!-- Agrega la etiqueta link para el ícono (favicon) -->
     <link rel="icon" href="favicon64.png" type="image/x-icon">
 
+
+    <!-- <link rel="stylesheet" href="ruta/a/lottie.min.css"> -->
+    <script src="/home/ubuntu/node_modules/lottie-web/build/player/lottie.min.js"></script>
+
+
     <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
@@ -208,6 +213,7 @@
 
         <div id="timestampDisplay"></div> 
         
+        <div id="lottie-container"></div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
@@ -457,6 +463,22 @@
                 map.removeLayer(polyline);    
             }       
         }
+
+
+        // Obtén el contenedor
+        const lottieContainer = document.getElementById('lottie-container');
+
+        // Configura las opciones de la animación (reemplaza 'ruta/al/animacion.json' con la ruta de tu archivo JSON)
+        const animationOptions = {
+        container: lottieContainer,
+        renderer: 'svg', // Elige 'svg' o 'canvas' según tus preferencias
+        loop: true, // Si quieres que la animación se repita
+        autoplay: true, // Si quieres que la animación comience automáticamente
+        path: 'bluecar.json', // Ruta al archivo JSON de la animación
+        };
+
+        // Carga la animación Lottie
+        const anim = lottie.loadAnimation(animationOptions);
 
     </script>
 </body>
