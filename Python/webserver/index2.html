@@ -450,7 +450,7 @@
 
         socket.on('update_table', function(data) {
             console.log('Nueva Tabla Recibida');
-            if (data.length < 0){
+            if (data.length < 1){
                 alert('No se encontraron registros asociados a la fecha y lugar establecidos ')
             }
             console.log(data);
