@@ -488,6 +488,24 @@
                 marker.bindPopup("Esta es tú area de búsqueda").openPopup();;
                 circle.addTo(map);
 
+                // Agregar un control deslizante para cambiar el radio del círculo
+                    const slider = L.control.range({
+                        position: 'topright',
+                        min: 0, // Valor mínimo del radio
+                        max: 5000, // Valor máximo del radio (en metros)
+                        step: 100, // Incremento del radio
+                        value: initialRadius, // Valor inicial del radio
+                        title: 'Radio (metros)' // Título del control deslizante
+                    });
+
+                    slider.on('input', function (e) {
+                        // Actualizar el radio del círculo cuando cambie el valor del control deslizante
+                        circle.setRadius(e.value);
+                        RadioKm = e.value;
+                    });
+
+                    slider.addTo(map);
+
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
                 
