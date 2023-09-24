@@ -520,6 +520,13 @@
                 
                 // Crea un nuevo marcador en la ubicación donde se hizo clic
                 marker = L.marker(e.latlng).addTo(map);
+                // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
+                marker.bindPopup("Esta es tú area de búsqueda").openPopup();
+                // Cierra el popup después de 5 segundos (5000 milisegundos)
+                setTimeout(function() {
+                    marker.closePopup();
+                }, 5000);
+                circle.addTo(map);
       
 
                 updatecirclevalue();
@@ -554,13 +561,7 @@
                 radius: RadioKm*1000 // Radio en metros (representa 1 km)
             }).addTo(map);
 
-            // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
-            marker.bindPopup("Esta es tú area de búsqueda").openPopup();
-            // Cierra el popup después de 5 segundos (5000 milisegundos)
-            setTimeout(function() {
-                marker.closePopup();
-            }, 5000);
-            circle.addTo(map);
+            
 
             // Actualiza el cuadro de texto con el valor del rango
             const valuerange = document.getElementById('rangeSliderValue');
