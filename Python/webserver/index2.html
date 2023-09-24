@@ -456,7 +456,10 @@
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
                     map.removeLayer(marker);
-                    map.removeLayer(circle);
+                    if (circle){
+                        map.removeLayer(circle);
+                    }
+                    
                 }
 
                 // Crea un nuevo marcador en la ubicación donde se hizo clic
