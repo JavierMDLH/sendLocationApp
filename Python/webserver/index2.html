@@ -241,6 +241,7 @@
             visibility: visible;
             opacity: 1;
         }
+        
 
         
 
@@ -280,17 +281,18 @@
             <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">  
         </div>
         
+        <div id="buttons">
+            <!-- Botón para seleccionar fecha final -->
+            <div  class="tooltip">
+                <button id="datePickerButtonF" class="date-button-final">
+                    <i class="fas fa-calendar"></i> Seleccionar Fecha Final
+                </button><br>
+                <span class="tooltip-text">Presione para escoger la fecha final.</span>
 
-        <!-- Botón para seleccionar fecha final -->
-        <div  class="tooltip">
-            <button id="datePickerButtonF" class="date-button-final">
-                <i class="fas fa-calendar"></i> Seleccionar Fecha Final
-            </button><br>
-            <span class="tooltip-text">Presione para escoger la fecha final.</span>
-
+                
+            </div>
             <input type="range" id="rangeSlider" min="0" max="100" step="1" value="0">
         </div>
-        
 
         <div class="buttons">
             <div  class="tooltip">
@@ -512,7 +514,7 @@
 
                 // Agregar un control deslizante para cambiar el radio del círculo
                 
-                
+
 
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
