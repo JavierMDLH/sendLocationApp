@@ -456,7 +456,7 @@
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
                     map.removeLayer(marker);
-                    if (circle){
+                    if (circle != null || circle != undefined){
                         map.removeLayer(circle);
                     }
                     
