@@ -501,16 +501,7 @@
                 circle.addTo(map);
 
                 // Agregar un control deslizante para cambiar el radio del círculo
-                slider1 = L.control.slider(function(value) {
-                        console.log(value);
-                    }, {
-                    max: 6,
-                    value: 5,
-                    step:0.1,
-                    size: '250px',
-                    orientation:'vertical',
-                    id: 'slider1'
-                }).addTo(map);
+                slider2 = L.control.slider(function(value) {alert(value);}, {id:slider2, orientation: 'horizontal'}).addTo(map);
                     //map.addControl(slider); // Agregar el control deslizante al mapa
 
                     // Inicializar el control deslizante con el valor inicial del radio
