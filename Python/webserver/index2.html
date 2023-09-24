@@ -516,33 +516,11 @@
                 // Luego, puedes usar e.latlng para obtener la posición del marcador
 
                 // Obtener la posición actual del marcador en el mapa
-                const marcador = marker.getLatLng();
-                lat = marcador.lat;
-                long = marcador.lng;
+                
 
                 // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
                 //RadioKm = 1;
-                function updatecirclevalue(){
-
-                    RadioKm = rangeslider.value;
-
-                    // Calcular las coordenadas del círculo que representa un área de 1 km alrededor del marcador
-                    circle = L.circle([lat, long], {
-                        color: 'blue', // Color del borde del círculo
-                        fillColor: 'blue', // Color de relleno del círculo
-                        fillOpacity: 0.5, // Opacidad del relleno del círculo
-                        radius: RadioKm*1000 // Radio en metros (representa 1 km)
-                    }).addTo(map);
-
-                    // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
-                    marker.bindPopup("Esta es tú area de búsqueda").openPopup();;
-                    circle.addTo(map);
-
-                    // Actualiza el cuadro de texto con el valor del rango
-                    const valuerange = document.getElementById('rangeSliderValue');
-                    valuerange.innerText = `Radio de búsqueda en metros: ${rangeslider.value*1000}`;
-
-                }
+                updatecirclevalue();
                 
                 
                
@@ -555,7 +533,34 @@
             });
         }
 
-        updatecirclevalue();
+        function updatecirclevalue(){
+
+            const marcador = marker.getLatLng();
+            lat = marcador.lat;
+            long = marcador.lng;
+
+            RadioKm = rangeslider.value;
+
+            // Calcular las coordenadas del círculo que representa un área de 1 km alrededor del marcador
+            circle = L.circle([lat, long], {
+                color: 'blue', // Color del borde del círculo
+                fillColor: 'blue', // Color de relleno del círculo
+                fillOpacity: 0.5, // Opacidad del relleno del círculo
+                radius: RadioKm*1000 // Radio en metros (representa 1 km)
+            }).addTo(map);
+
+            // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
+            marker.bindPopup("Esta es tú area de búsqueda").openPopup();;
+            circle.addTo(map);
+
+            // Actualiza el cuadro de texto con el valor del rango
+            const valuerange = document.getElementById('rangeSliderValue');
+            valuerange.innerText = `Radio de búsqueda en metros: ${rangeslider.value*1000}`;
+
+        }
+
+        
+
         
     
         
