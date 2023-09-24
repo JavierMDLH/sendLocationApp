@@ -60,25 +60,23 @@
 
         /* Estilos para el cuadro de datos */
         #data-box {
-            background-color: #f2faff;
+            background-color: #ffffff;
             border: 8px ridge #0056b3;
             border-radius: 20px;
             margin: 20px auto;
             max-width: 1000px;
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
-            background: url('gpsicon.png') repeat; /* Fondo con iconos de GPS repetidos */
+            background-color: white; /* Fondo blanco */
         }
 
-        .message {
+        .gps-icon {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 24px;
-            color: #007BFF;
             opacity: 0;
-            animation: showMessage 5s ease-in-out infinite; /* Animación para mostrar el mensaje */
+            animation: fadeInOut 5s linear infinite; /* Animación de desvanecimiento */
         }
 
         @keyframes showMessage {
@@ -348,32 +346,16 @@
 
 
 
-
-
-
-
-        //generacion de iconos
-
         // Array de rutas a los iconos de GPS
         const gpsIcons = [
-            'gpsicon.png',
+            'gpsicon.png'
+
         ];
 
         // Función para obtener una ruta de icono de GPS aleatoria
         function getRandomIcon() {
             const randomIndex = Math.floor(Math.random() * gpsIcons.length);
             return gpsIcons[randomIndex];
-        }
-
-        // Función para mostrar el mensaje "Location Found"
-        function showLocationFound() {
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.textContent = 'Location Found';
-            document.body.appendChild(messageElement);
-            setTimeout(() => {
-                document.body.removeChild(messageElement);
-            }, 5000); // Mostrar el mensaje durante 5 segundos
         }
 
         // Genera y coloca un icono de GPS aleatorio en intervalos de tiempo
@@ -385,7 +367,6 @@
                 document.querySelector('.background-container').appendChild(iconElement);
                 iconElement.addEventListener('animationend', () => {
                     document.querySelector('.background-container').removeChild(iconElement);
-                    showLocationFound();
                 });
             }, 5000); // Generar un icono cada 5 segundos
         }
@@ -395,7 +376,18 @@
 
 
 
-        //fin generacion de iconos
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
