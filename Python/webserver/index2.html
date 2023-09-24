@@ -499,7 +499,7 @@
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
 
-                if (marker) {
+                if (marker && locbut.innerText != 'Ahora puede hacer click sobre el mapa') {
                     locbut.innerText = "Presione para colorcar otro marcador";
                     // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
                     alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
@@ -507,14 +507,14 @@
                     return;
                 }
 
-                //if (marker) {
-                //    // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
-                //    map.removeLayer(marker);
-                //    if (circle != null || circle != undefined){
-                //        map.removeLayer(circle);
-                //    }
+                if (marker) {
+                    // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
+                    map.removeLayer(marker);
+                    if (circle != null || circle != undefined){
+                        map.removeLayer(circle);
+                    }
                     
-                //}
+                }
                 
                 rangeslider.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                 
