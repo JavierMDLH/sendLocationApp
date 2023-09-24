@@ -68,15 +68,6 @@
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
             background-color: white; /* Fondo blanco */
-            margin-left: 25%;
-        }
-
-
-        .background-container {
-            position: relative;
-            max-width: 1000px;
-            height: 100%;
-            background-color: white; /* Fondo blanco */
         }
 
         .gps-icon {
@@ -225,66 +216,64 @@
 </head>
 
 <body>
-    <div class="background-container">
-        <div class="navbar">
-            <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
-            <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
+    <div class="navbar">
+        <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
+        <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
+    </div>
+
+    <div id="data-box">
+        <h1>GPS Finder - Webserver</h1>
+        <div class="data-columns">
+            <div class="data-column">
+                <p class="headparam">Latitud:</p>
+                <span id="latitud"></span>
+            </div>
+            <div class="data-column">
+                <p class="headparam">Altitud:</p>
+                <span id="altitud"></span>
+            </div>
+        </div>
+        <div class="data-columns">
+            <div class="data-column">
+                <p class="headparam">Longitud:</p>
+                <span id="longitud"></span>
+            </div>
+            <div class="data-column">
+                <p class="headparam">Timestamp:</p>
+                <span id="timestamp"></span>
+            </div>
         </div>
 
-        <div id="data-box">
-            <h1>GPS Finder - Webserver</h1>
-            <div class="data-columns">
-                <div class="data-column">
-                    <p class="headparam">Latitud:</p>
-                    <span id="latitud"></span>
-                </div>
-                <div class="data-column">
-                    <p class="headparam">Altitud:</p>
-                    <span id="altitud"></span>
-                </div>
-            </div>
-            <div class="data-columns">
-                <div class="data-column">
-                    <p class="headparam">Longitud:</p>
-                    <span id="longitud"></span>
-                </div>
-                <div class="data-column">
-                    <p class="headparam">Timestamp:</p>
-                    <span id="timestamp"></span>
-                </div>
-            </div>
+    
 
-        
+        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
+        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
 
-            <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
-            <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
+        <div id="timestampDisplay"></div> 
 
-            <div id="timestampDisplay"></div> 
-
-            <!-- Agrega un contenedor para el mapa -->
-            <div id="map"></div>
-        
-            <!-- Botón para borrar polilíneas -->
-            <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-            <br>
-            <br>
+        <!-- Agrega un contenedor para el mapa -->
+        <div id="map"></div>
+    
+        <!-- Botón para borrar polilíneas -->
+        <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+        <br>
+        <br>
 
 
-            <!-- Agrega una tabla para mostrar los datos del servidor -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Latitud</th>
-                        <th>Longitud</th>
-                        <th>Altitud</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody id="data-table">
-                    <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-                </tbody>
-            </table>
-        </div>
+        <!-- Agrega una tabla para mostrar los datos del servidor -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th>Altitud</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -353,50 +342,6 @@
         socket.on('disconnect', function() {
             console.log('Desconectado del servidor WebSocket');
         });
-
-
-
-
-        // Array de rutas a los iconos de GPS
-        const gpsIcons = [
-            'gpsicon.png'
-
-        ];
-
-        // Función para obtener una ruta de icono de GPS aleatoria
-        function getRandomIcon() {
-            const randomIndex = Math.floor(Math.random() * gpsIcons.length);
-            return gpsIcons[randomIndex];
-        }
-
-        // Genera y coloca un icono de GPS aleatorio en intervalos de tiempo
-        function generateRandomIcons() {
-            setInterval(() => {
-                const iconElement = document.createElement('img');
-                iconElement.src = getRandomIcon();
-                iconElement.classList.add('gps-icon');
-                document.querySelector('.background-container').appendChild(iconElement);
-                iconElement.addEventListener('animationend', () => {
-                    document.querySelector('.background-container').removeChild(iconElement);
-                });
-            }, 5000); // Generar un icono cada 5 segundos
-        }
-
-        // Inicia la generación de iconos
-        generateRandomIcons();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
