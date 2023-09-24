@@ -60,13 +60,34 @@
 
         /* Estilos para el cuadro de datos */
         #data-box {
-            background-color: #ffffff;
+            background-color: #f2faff;
             border: 8px ridge #0056b3;
             border-radius: 20px;
             margin: 20px auto;
             max-width: 1000px;
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
+            background: url('gpsicon.png') repeat; /* Fondo con iconos de GPS repetidos */
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #007BFF;
+            opacity: 0;
+            animation: showMessage 5s ease-in-out infinite; /* Animación para mostrar el mensaje */
+        }
+
+        @keyframes showMessage {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
         }
 
         /* Estilos para el encabezado */
@@ -323,6 +344,56 @@
         socket.on('disconnect', function() {
             console.log('Desconectado del servidor WebSocket');
         });
+
+        //generacion de iconos
+
+        // Array de rutas a los iconos de GPS
+        const gpsIcons = [
+            'ruta-icono-gps1.png',
+            'ruta-icono-gps2.png',
+            'ruta-icono-gps3.png',
+            // Agrega más rutas de iconos si es necesario
+        ];
+
+        // Función para obtener una ruta de icono de GPS aleatoria
+        function getRandomIcon() {
+            const randomIndex = Math.floor(Math.random() * gpsIcons.length);
+            return gpsIcons[randomIndex];
+        }
+
+        // Función para mostrar el mensaje "Location Found"
+        function showLocationFound() {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.textContent = 'Location Found';
+            document.body.appendChild(messageElement);
+            setTimeout(() => {
+                document.body.removeChild(messageElement);
+            }, 5000); // Mostrar el mensaje durante 5 segundos
+        }
+
+        // Genera y coloca un icono de GPS aleatorio en intervalos de tiempo
+        function generateRandomIcons() {
+            setInterval(() => {
+                const iconElement = document.createElement('img');
+                iconElement.src = getRandomIcon();
+                iconElement.classList.add('gps-icon');
+                document.querySelector('.background-container').appendChild(iconElement);
+                iconElement.addEventListener('animationend', () => {
+                    document.querySelector('.background-container').removeChild(iconElement);
+                    showLocationFound();
+                });
+            }, 5000); // Generar un icono cada 5 segundos
+        }
+
+        // Inicia la generación de iconos
+        generateRandomIcons();
+
+
+
+        //fin generacion de iconos
+
+
 
         // Función para formatear la fecha
         function formatDate(timestamp) {
