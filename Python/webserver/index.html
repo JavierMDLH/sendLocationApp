@@ -70,6 +70,14 @@
             background-color: white; /* Fondo blanco */
         }
 
+        
+        .background-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: white; /* Fondo blanco */
+        }
+
         .gps-icon {
             position: absolute;
             top: 50%;
@@ -216,64 +224,66 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
-        <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
-    </div>
-
-    <div id="data-box">
-        <h1>GPS Finder - Webserver</h1>
-        <div class="data-columns">
-            <div class="data-column">
-                <p class="headparam">Latitud:</p>
-                <span id="latitud"></span>
-            </div>
-            <div class="data-column">
-                <p class="headparam">Altitud:</p>
-                <span id="altitud"></span>
-            </div>
-        </div>
-        <div class="data-columns">
-            <div class="data-column">
-                <p class="headparam">Longitud:</p>
-                <span id="longitud"></span>
-            </div>
-            <div class="data-column">
-                <p class="headparam">Timestamp:</p>
-                <span id="timestamp"></span>
-            </div>
+    <div class="background-container">
+        <div class="navbar">
+            <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
+            <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
         </div>
 
-    
+        <div id="data-box">
+            <h1>GPS Finder - Webserver</h1>
+            <div class="data-columns">
+                <div class="data-column">
+                    <p class="headparam">Latitud:</p>
+                    <span id="latitud"></span>
+                </div>
+                <div class="data-column">
+                    <p class="headparam">Altitud:</p>
+                    <span id="altitud"></span>
+                </div>
+            </div>
+            <div class="data-columns">
+                <div class="data-column">
+                    <p class="headparam">Longitud:</p>
+                    <span id="longitud"></span>
+                </div>
+                <div class="data-column">
+                    <p class="headparam">Timestamp:</p>
+                    <span id="timestamp"></span>
+                </div>
+            </div>
 
-        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
-        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
+        
 
-        <div id="timestampDisplay"></div> 
+            <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
+            <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
 
-        <!-- Agrega un contenedor para el mapa -->
-        <div id="map"></div>
-    
-        <!-- Botón para borrar polilíneas -->
-        <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-        <br>
-        <br>
+            <div id="timestampDisplay"></div> 
+
+            <!-- Agrega un contenedor para el mapa -->
+            <div id="map"></div>
+        
+            <!-- Botón para borrar polilíneas -->
+            <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+            <br>
+            <br>
 
 
-        <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Latitud</th>
-                    <th>Longitud</th>
-                    <th>Altitud</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-            </tbody>
-        </table>
+            <!-- Agrega una tabla para mostrar los datos del servidor -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Latitud</th>
+                        <th>Longitud</th>
+                        <th>Altitud</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table">
+                    <!-- Los datos del servidor se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
