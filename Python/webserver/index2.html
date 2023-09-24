@@ -527,7 +527,7 @@
 
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
-                
+
                 locbut.innerText = "Presione para colorcar otro marcador";
                 
             });
@@ -559,7 +559,7 @@
             // Cierra el popup después de 5 segundos (5000 milisegundos)
             setTimeout(function() {
                 marker.closePopup();
-            }, 3000);
+            }, 5000);
             circle.addTo(map);
 
             // Actualiza el cuadro de texto con el valor del rango
