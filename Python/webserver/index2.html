@@ -493,7 +493,7 @@
             if (marker) {
                 // Si ya existe un marcador, no se permite colocar otro
                 
-                return;
+                //return;
             }
 
             // Agrega un evento de clic al mapa para establecer el marcador
@@ -512,20 +512,10 @@
                 
                 // Crea un nuevo marcador en la ubicación donde se hizo clic
                 marker = L.marker(e.latlng).addTo(map);
+      
 
-                // Luego, puedes usar e.latlng para obtener la posición del marcador
-
-                // Obtener la posición actual del marcador en el mapa
-                
-
-                // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
-                //RadioKm = 1;
                 updatecirclevalue();
                 
-                
-               
-                
-
 
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
@@ -539,6 +529,7 @@
                 map.removeLayer(circle);
             }
 
+            // Obtener la posición actual del marcador en el mapa
             const marcador = marker.getLatLng();
             lat = marcador.lat;
             long = marcador.lng;
