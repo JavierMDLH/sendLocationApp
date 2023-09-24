@@ -500,8 +500,10 @@
             map.on('click', function (e) {
 
                 if (marker) {
+                    locbut.innerText = "Presione para colorcar otro marcador";
                     // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
                     alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
+                    
                     return;
                 }
 
