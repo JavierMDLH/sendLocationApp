@@ -534,6 +534,10 @@
         }
 
         function updatecirclevalue(){
+            
+            if (circle != null || circle != undefined){
+                map.removeLayer(circle);
+            }
 
             const marcador = marker.getLatLng();
             lat = marcador.lat;
