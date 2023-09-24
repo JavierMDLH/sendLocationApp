@@ -314,20 +314,14 @@
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
 
-                // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
                 socket.emit('Pagina1');
-
-                // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
             });
 
             pagina2Link.addEventListener("click", function(event) {
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
 
-                // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
                 socket.emit('Pagina2');
-
-                // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
             });
 
 
@@ -342,6 +336,41 @@
         socket.on('disconnect', function() {
             console.log('Desconectado del servidor WebSocket');
         });
+
+
+
+
+        // Array de rutas a los iconos de GPS
+        const gpsIcons = [
+            'gpsicon.png'
+
+        ];
+
+        // Función para obtener una ruta de icono de GPS aleatoria
+        function getRandomIcon() {
+            const randomIndex = Math.floor(Math.random() * gpsIcons.length);
+            return gpsIcons[randomIndex];
+        }
+
+        // Genera y coloca un icono de GPS aleatorio en intervalos de tiempo
+        function generateRandomIcons() {
+            setInterval(() => {
+                const iconElement = document.createElement('img');
+                iconElement.src = getRandomIcon();
+                iconElement.classList.add('gps-icon');
+                document.querySelector('#data-box').appendChild(iconElement);
+                iconElement.addEventListener('animationend', () => {
+                    document.querySelector('#data-box').removeChild(iconElement);
+                });
+            }, 5000); // Generar un icono cada 5 segundos
+        }
+
+        // Inicia la generación de iconos
+        generateRandomIcons();
+
+
+
+
 
 
 
