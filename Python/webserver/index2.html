@@ -2,6 +2,15 @@
 <html>
 <head>
     <title>JavierM</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+
+
     <!-- Vincula el archivo CSS externo -->
     <link rel="stylesheet" src="style.css"> 
 
@@ -279,6 +288,7 @@
             </button><br>
             <span class="tooltip-text">Presione para escoger la fecha final.</span>
 
+            <input type="range" id="rangeSlider" min="0" max="100" step="1" value="0">
         </div>
         
 
@@ -344,7 +354,7 @@
         let mostrarDatosNuevos = false;
         let marker; // Variable para almacenar el marcador
         let circle;
-        let slider2;
+        let rangeslider=document.getElementById('rangeSlider');
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
         let polylines =[];
@@ -501,19 +511,8 @@
                 circle.addTo(map);
 
                 // Agregar un control deslizante para cambiar el radio del círculo
-                slider2 = L.control.slider(function(value) {alert(value);}, {id:slider2, orientation: 'horizontal'}).addTo(map);
-                    //map.addControl(slider); // Agregar el control deslizante al mapa
-
-                    // Inicializar el control deslizante con el valor inicial del radio
-                    //slider.setValue(1000);
-
-                    //slider.on('input', function (e) {
-                     //   // Actualizar el radio del círculo cuando cambie el valor del control deslizante
-                    //    circle.setRadius(e.value);
-                    //    RadioKm = e.value;
-                    //});
-
-                    //slider.addTo(map);
+                
+                
 
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
