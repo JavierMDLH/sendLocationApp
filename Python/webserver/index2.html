@@ -557,6 +557,9 @@
             const valuerange = document.getElementById('rangeSliderValue');
             valuerange.innerText = `Radio de búsqueda en metros: ${rangeslider.value*1000}`;
 
+            // Agrega un event listener al slider para que se actualice cuando se mueva
+            rangeslider.addEventListener('input', updatecirclevalue);
+
         }
 
         
