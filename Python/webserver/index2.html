@@ -379,7 +379,7 @@
         let currentIndex = 0;
         let polyline = null;
         let polylineSegments = [];
-        const slider = document.getElementById('slider');
+        //const slider = document.getElementById('slider');
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
@@ -397,6 +397,7 @@
                 
         elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
         elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        rangeslider.style.display = 'none';
 
         // Cargar el archivo JSON
         fetch('./var.json')
@@ -501,7 +502,9 @@
                     }
                     
                 }
-
+                
+                rangeslider.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                
                 // Crea un nuevo marcador en la ubicación donde se hizo clic
                 marker = L.marker(e.latlng).addTo(map);
 
