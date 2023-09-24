@@ -70,23 +70,6 @@
             background-color: white; /* Fondo blanco */
         }
 
-        .gps-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            animation: fadeInOut 5s linear infinite; /* Animación de desvanecimiento */
-        }
-
-        @keyframes showMessage {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
 
         /* Estilos para el encabezado */
         #data-box h1 {
@@ -336,42 +319,6 @@
         socket.on('disconnect', function() {
             console.log('Desconectado del servidor WebSocket');
         });
-
-
-
-
-        // Array de rutas a los iconos de GPS
-        const gpsIcons = [
-            'gpsicon.png'
-
-        ];
-
-        // Función para obtener una ruta de icono de GPS aleatoria
-        function getRandomIcon() {
-            const randomIndex = Math.floor(Math.random() * gpsIcons.length);
-            return gpsIcons[randomIndex];
-        }
-
-        // Genera y coloca un icono de GPS aleatorio en intervalos de tiempo
-        function generateRandomIcons() {
-            setInterval(() => {
-                const iconElement = document.createElement('img');
-                iconElement.src = getRandomIcon();
-                iconElement.classList.add('gps-icon');
-                document.querySelector('#data-box').appendChild(iconElement);
-                iconElement.addEventListener('animationend', () => {
-                    document.querySelector('#data-box').removeChild(iconElement);
-                });
-            }, 5000); // Generar un icono cada 5 segundos
-        }
-
-        // Inicia la generación de iconos
-        generateRandomIcons();
-
-
-
-
-
 
 
 
