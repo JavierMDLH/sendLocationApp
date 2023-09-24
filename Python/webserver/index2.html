@@ -526,8 +526,6 @@
                 setTimeout(function() {
                     marker.closePopup();
                 }, 5000);
-                circle.addTo(map);
-      
 
                 updatecirclevalue();
                 
@@ -562,6 +560,7 @@
             }).addTo(map);
 
             
+            circle.addTo(map);
 
             // Actualiza el cuadro de texto con el valor del rango
             const valuerange = document.getElementById('rangeSliderValue');
