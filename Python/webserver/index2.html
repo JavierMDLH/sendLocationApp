@@ -339,9 +339,11 @@
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
         <br>
         
-
-        <div id="timestampDisplay"></div> 
-        
+        <div class="buttons">
+            <div id="timestampDisplay"></div>         
+            <div id="rangeSliderValue"></div>
+            
+        </div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div><br>
@@ -534,7 +536,13 @@
                 marker.bindPopup("Esta es tú area de búsqueda").openPopup();;
                 circle.addTo(map);
 
-                // Agregar un control deslizante para cambiar el radio del círculo
+                // Actualiza el cuadro de texto con el valor del rango
+                const valuerange = document.getElementById('rangeSliderValue');
+                if (data.length > 0) {
+                    valuerange.innerText = `Radio de búsqueda en metros: ${rangeslider.value}`;
+                } else {
+                    valuerange.innerText = '';
+                }
                 
 
 
