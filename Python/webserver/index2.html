@@ -470,6 +470,19 @@
                 // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
                 RadioKm = 1;
 
+
+                // Calcular las coordenadas del círculo que representa un área de 1 km alrededor del marcador
+                const circle = L.circle([lat, long], {
+                    color: 'blue', // Color del borde del círculo
+                    fillColor: 'blue', // Color de relleno del círculo
+                    fillOpacity: 0.5, // Opacidad del relleno del círculo
+                    radius: 1000 // Radio en metros (representa 1 km)
+                }).addTo(map);
+
+                // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
+                marker.bindPopup("Este es tú marcador");
+                circle.addTo(map);
+
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
                 
