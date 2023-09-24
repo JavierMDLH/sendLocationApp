@@ -10,6 +10,11 @@
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Agrega la biblioteca Leaflet Slider-->
+    <link rel="stylesheet" href="ruta/leaflet-slider.css">
+    <script src="ruta/leaflet-slider.js"></script>
+
     <!-- Agrega la biblioteca FLatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -489,14 +494,17 @@
                 circle.addTo(map);
 
                 // Agregar un control deslizante para cambiar el radio del círculo
-                    const slider = L.control.range({
+                    const slider = L.control.sliderControl({
                         position: 'topright',
-                        min: 0, // Valor mínimo del radio
-                        max: 5000, // Valor máximo del radio (en metros)
+                        layer: circle, // Capa asociada al control deslizante
+                        follow: true, // El control deslizante sigue al círculo
                         step: 100, // Incremento del radio
-                        value: 1000, // Valor inicial del radio
-                        title: 'Radio (metros)' // Título del control deslizante
+                        range: true // Si es `true`, se permite un rango de valores
                     });
+                    map.addControl(slider); // Agregar el control deslizante al mapa
+
+                    // Inicializar el control deslizante con el valor inicial del radio
+                    slider.setValue(1000);
 
                     slider.on('input', function (e) {
                         // Actualizar el radio del círculo cuando cambie el valor del control deslizante
