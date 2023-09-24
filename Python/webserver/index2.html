@@ -338,6 +338,7 @@
         let mostrarDatosNuevos = false;
         let marker; // Variable para almacenar el marcador
         let circle;
+        let contslider;
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
         let polylines =[];
@@ -494,25 +495,27 @@
                 circle.addTo(map);
 
                 // Agregar un control deslizante para cambiar el radio del círculo
-                    const slider = L.control.slider({
-                        position: 'topright',
-                        layer: circle, // Capa asociada al control deslizante
-                        follow: true, // El control deslizante sigue al círculo
-                        step: 100, // Incremento del radio
-                        range: true // Si es `true`, se permite un rango de valores
-                    });
-                    map.addControl(slider); // Agregar el control deslizante al mapa
+                contslider = L.control.slider(                     
+                    {
+                        max: 5000,
+                        value: 5,
+                        step: 100,
+                        size: '250px',
+                        orientation:'vertical',
+                        id: 'slider'
+                    }).addTo(map);
+                    //map.addControl(slider); // Agregar el control deslizante al mapa
 
                     // Inicializar el control deslizante con el valor inicial del radio
-                    slider.setValue(1000);
+                    //slider.setValue(1000);
 
-                    slider.on('input', function (e) {
-                        // Actualizar el radio del círculo cuando cambie el valor del control deslizante
-                        circle.setRadius(e.value);
-                        RadioKm = e.value;
-                    });
+                    //slider.on('input', function (e) {
+                     //   // Actualizar el radio del círculo cuando cambie el valor del control deslizante
+                    //    circle.setRadius(e.value);
+                    //    RadioKm = e.value;
+                    //});
 
-                    slider.addTo(map);
+                    //slider.addTo(map);
 
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
