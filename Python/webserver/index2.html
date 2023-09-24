@@ -493,11 +493,17 @@
             if (marker) {
                 // Si ya existe un marcador, no se permite colocar otro
                 
-                //return;
+                return;
             }
 
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
+
+                if (marker) {
+                    // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
+                    alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
+                    return;
+                }
 
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
