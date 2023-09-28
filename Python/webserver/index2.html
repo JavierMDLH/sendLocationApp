@@ -2,12 +2,34 @@
 <html>
 <head>
     <title>JavierM</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+
+
     <!-- Vincula el archivo CSS externo -->
     <link rel="stylesheet" src="style.css"> 
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
     <!-- Agrega la biblioteca Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Agrega la biblioteca Leaflet Slider-->
+    <link rel="stylesheet" href="https://github.com/Eclipse1979/leaflet-slider/tree/master/example/leaflet/leaflet.css" />
+	<link rel="stylesheet" href="https://github.com/Eclipse1979/leaflet-slider/tree/master/dist/leaflet-slider.css"/>
+
+	<script src="https://github.com/Eclipse1979/leaflet-slider/tree/master/example/leaflet/leaflet.js"></script>
+	<script src="https://github.com/Eclipse1979/leaflet-slider/tree/master/dist/leaflet-slider.js"></script>
+
+
+
+
     <!-- Agrega la biblioteca FLatpickr -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -27,12 +49,17 @@
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
+            background-image: url('fondo.jpg'); /* ruta de imagen */
+            background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed; /* Fija la imagen en su lugar mientras se desplaza la página */
         }
 
         /* Estilos para el navbar */
         .navbar {
             background-color: #0056b3;
             overflow: hidden;
+            box-shadow: 0 0 20px rgb(255, 255, 255); /* Sombra del contenedor */
         }
 
         .navbar a {
@@ -55,14 +82,16 @@
 
         /* Estilos para el cuadro de datos */
         #data-box {
-            background-color: #ffffff;
-            border: 1px solid #dcdcdc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f1fbff;
+            border: 8px ridge #0056b3;
+            border-radius: 20px;
             margin: 20px auto;
-            max-width: 800px;
+            max-width: 1000px;
             padding: 20px;
+            box-shadow: 0 0 20px rgb(255, 255, 255); /* Sombra del contenedor */
+            background-color: white; /* Fondo blanco */
         }
+
 
         /* Estilos para el encabezado */
         #data-box h1 {
@@ -70,7 +99,10 @@
             color: #ffffff;
             text-align: center;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 50px;
+            max-width: 500px;
+            margin-left: 25%;
+            box-shadow: 0 0 15px rgba(0, 86, 179); /* Sombra del contenedor */
         }
 
         /* Estilos para la tabla de datos históricos */
@@ -95,6 +127,9 @@
             width: 100%;
             height: 400px;
             margin-top: 20px;
+            border: 5px inset #0056b3; /* Borde del contenedor */
+            border-radius: 30px; /* Borde redondeado */
+            box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
         }
 
 
@@ -140,7 +175,7 @@
             padding: 5px 15px;
             cursor: pointer;
             margin-top: 20px;
-           margin-left: 0px;
+            margin-left: auto;
             font-family: 'Merriweather', serif;
         }
 
@@ -152,7 +187,7 @@
             padding: 5px 15px;
             cursor: pointer;
             margin-top: 20px;
-            margin-left: 0px;
+            margin-left: auto;
             font-family: 'Merriweather', serif;
         }
 
@@ -172,11 +207,59 @@
         #locationSlider::-webkit-slider-thumb {
             width: 30px; /* Ajusta el ancho del control deslizante */
             height: 30px; /* Ajusta la altura del control deslizante */
-            background-color: #007BFF; /* Color de fondo del control deslizante */
+            background-color: #0056b3; /* Color de fondo del control deslizante */
             border: 2px solid #0056b3; /* Borde del control deslizante */
             border-radius: 50%; /* Borde redondeado para que parezca un círculo */
             cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
         }
+
+        /* Estilo para el tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 180px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Estilo personalizado para el slider2 */
+        #rangeSlider {
+            width: 280px; /* Ajusta el ancho del slider */
+            height: 20px; /* Ajusta la altura del slider*/
+        }
+
+        /* Estilo personalizado para el control deslizante del slider2 */
+        #rangeSlider::-webkit-slider-thumb {
+            width: 30px; /* Ajusta el ancho del control deslizante */
+            height: 30px; /* Ajusta la altura del control deslizante */
+            background-color: #0056b3; /* Color de fondo del control deslizante */
+            border: 2px solid #0056b3; /* Borde del control deslizante */
+            border-radius: 50%; /* Borde redondeado para que parezca un círculo */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
+        }
+        
+
+        
 
     </style>
 
@@ -192,7 +275,7 @@
     <div id="data-box">
         <h1>GPS Finder - Webserver</h1>
         
-        <button id="switch" class="toggleSwitch">Presione aquí para volver los datos en Tiempo Real</button>
+        <button id="switch" class="toggleSwitch">Presione aquí para volver a los datos en Tiempo Real</button>
 
         <!-- Elemento de entrada de fecha inicial -->
         <div class="button-container">
@@ -200,32 +283,67 @@
         </div>
         
         <!-- Botón para seleccionar fecha inicial -->
-        <button id="datePickerButton" class="date-button">
-            <i class="fas fa-calendar"></i> Seleccionar Fecha Inicial
-        </button>
+        <div  class="tooltip">
+            <button id="datePickerButton" class="date-button">
+                <i class="fas fa-calendar"></i> Seleccionar Fecha Inicial
+            </button>
+            <span class="tooltip-text">Presione para escoger la fecha inicial.</span>
+
+        </div>
+        
 
         <!-- Elemento de entrada de fecha final -->
         <div class="button-container">
-            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">
+            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">  
+        </div>
+        
+        <div class="buttons">
+            <!-- Botón para seleccionar fecha final -->
+            <div  class="tooltip">
+                <button id="datePickerButtonF" class="date-button-final">
+                    <i class="fas fa-calendar"></i> Seleccionar Fecha Final
+                </button><br>
+                <span class="tooltip-text">Presione para escoger la fecha final.</span>
+
+                
+            </div>
+            <div class="tooltip">
+                <input type="range" id="rangeSlider" min="0.1" max="5" step="0.1" value="1">
+                <span class="tooltip-text">Mueva esta barra para cambiar el radio de busqueda</span>
+            </div>
         </div>
 
-        <!-- Botón para seleccionar fecha final -->
-        <button id="datePickerButtonF" class="date-button-final">
-            <i class="fas fa-calendar"></i> Seleccionar Fecha Final
-        </button><br>
-
         <div class="buttons">
-            <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button>
-            <button id="buscarLocalizacionesButton" class="toggleSwitch"></i>Seleccionar área de búsqueda <i class="fas fa-map-marker-alt"></i></button>
-          </div>
+            <div  class="tooltip">
+                <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button>
+                <span class="tooltip-text">Al presionar, se realiza la búsqueda de datos en el fecha y el lugar indicados.</span>
+    
+            </div>
+            
+            
+            
+            
+            <div class="tooltip">
+            
+                <button id="buscarLocalizacionesButton" class="toggleSwitch"></i>Seleccionar área de búsqueda <i class="fas fa-map-marker-alt"></i></button>
+                <span class="tooltip-text">Al presionar, se habilita el mapa para que al dar click sobre el se muestre un marcador que indica el lugar de interés para hacer la consulta de datos.</span>
+            </div>
+        </div>
         
+        <div  class="tooltip">
+
+            <span class="tooltip-text">Al presionar, se habilita el mapa para que al dar click sobre el se muestre un marcador que indica el lugar de interés para hacer la consulta de datos.</span>
+
+        </div>
 
         <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
         <br>
         
-
-        <div id="timestampDisplay"></div> 
-        
+        <div class="buttons">
+            <div id="timestampDisplay"></div>         
+            <div id="rangeSliderValue"></div>
+            
+        </div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div><br>
@@ -238,7 +356,7 @@
 
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table>
+        <table id="reg-table">
             <thead>
                 <tr>
                     <th>Latitud</th>
@@ -258,23 +376,33 @@
         
         let mostrarDatosNuevos = false;
         let marker; // Variable para almacenar el marcador
+        let circle;
+        let rangeslider = document.getElementById('rangeSlider');
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
         let polylines =[];
         let currentIndex = 0;
         let polyline = null;
         let polylineSegments = [];
-        const slider = document.getElementById('slider');
+        //const slider = document.getElementById('slider');
         const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
+        let lat ;
+        let long ;
+        let RadioKm;
         
 
-        var elemento = document.getElementById('texto1');
-        //elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        var elemento = document.getElementById('texto1'); 
         var elemento1 = document.getElementById('locationSlider');
-        //elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        var elemento2 = document.getElementById('reg-table');
         
+
+        elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+        elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+        rangeslider.style.display = 'none';
 
         // Cargar el archivo JSON
         fetch('./var.json')
@@ -301,7 +429,6 @@
             // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
             socket.emit('Pagina1')
 
-            // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
         });
             
         pagina2Link.addEventListener("click", function(event) {
@@ -311,7 +438,6 @@
             // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
             socket.emit('Pagina2')
 
-            // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
         });
 
 
@@ -339,7 +465,7 @@
         }
 
         // Crea un mapa Leaflet
-        const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
+        const map = L.map('map').setView([10.963237, -74.799345], 12); // Latitud y longitud iniciales y nivel de zoom
 
         // Agrega una capa de mapa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -360,171 +486,95 @@
         }
 
         document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
+        const locbut = document.getElementById('buscarLocalizacionesButton');
 
         function buscarLocalizaciones() {
+            locbut.innerText = "Ahora puede hacer click sobre el mapa";
+            if (marker) {
+                // Si ya existe un marcador, no se permite colocar otro
+                
+                return;
+            }
 
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
+
+                if (marker && locbut.innerText != 'Ahora puede hacer click sobre el mapa') {
+                    locbut.innerText = "Presione para colorcar otro marcador";
+                    // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
+                    alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
+                    
+                    return;
+                }
+
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
                     map.removeLayer(marker);
+                    if (circle != null || circle != undefined){
+                        map.removeLayer(circle);
+                    }
+                    
                 }
-
+                
+                rangeslider.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                
                 // Crea un nuevo marcador en la ubicación donde se hizo clic
                 marker = L.marker(e.latlng).addTo(map);
+                // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
+                marker.bindPopup("Esta es tú area de búsqueda").openPopup();
+                // Cierra el popup después de 5 segundos (5000 milisegundos)
+                setTimeout(function() {
+                    marker.closePopup();
+                }, 5000);
 
-                // Luego, puedes usar e.latlng para obtener la posición del marcador
+                updatecirclevalue();
+                
+
+                // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
+                console.log('location', lat, long, RadioKm);
+
+                locbut.innerText = "Presione para colorcar otro marcador";
+                
             });
-            // Obtener la posición actual del marcador en el mapa
-            const marcador = marker.getLatLng();
-            const latitud = marcador.lat;
-            const longitud = marcador.lng;
-
-            // Definir un radio para el área de búsqueda (ajusta según tus necesidades)
-            const RadioKm = 1;
-
-            // Calcular los límites del área de búsqueda
-            const latitudMin = latitud - (RadioKm / 111.32); // Aproximadamente 111.32 km por grado de latitud
-            const latitudMax = latitud + (RadioKm / 111.32);
-            const longitudMin = longitud - (RadioKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
-            const longitudMax = longitud + (RadioKm / (111.32 * Math.cos(latitud * (Math.PI / 180))));
-
-            // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
-            socket.emit('location',latitud, longitud, RadioKm);
-            console.log('location',latitud, longitud, RadioKm);
-            console.log('Solicitud de ubicaciones enviado');
         }
 
-    
-        // Luego, puedes llamar a esta función cuando recibas los datos de la consulta de localizaciones, por ejemplo:
-        socket.on('places', function(formattedResults) {
-            console.log('Datos de localizaciones recibidos: ',formattedResults);
-
-
-            // Crear un array con objetos que contienen todos los valores
-            const formattedData = formattedResults.map(item => ({
-                latitud: item.latitud,
-                longitud: item.longitud,
-                altitud: item.altitud,
-                timestamp: formatTimestamp(item.timestamp),
-            }));
-
-            mostrarLocalizacionesEnTabla(formattedData);
-
-
-        });
-       
-
-        function mostrarLocalizacionesEnTabla(formattedData) {
-            console.log(formattedData[3]);
-            //formattedData[3]=formatTimestamp(formattedData[3]);
-            // Obtén la tabla donde deseas mostrar los datos
-            const table = document.getElementById('data-table');
-
-            // Borra todas las filas existentes en la tabla
-            while (table.rows.length > 0) {
-                table.deleteRow(0);
+        function updatecirclevalue(){
+            
+            if (circle != null || circle != undefined){
+                map.removeLayer(circle);
             }
 
-            // Itera a través de los datos y crea filas y celdas para cada valor
-            for (const item of formattedData) {
-                const newRow = document.createElement('tr');
+            // Obtener la posición actual del marcador en el mapa
+            const marcador = marker.getLatLng();
+            lat = marcador.lat;
+            long = marcador.lng;
 
-                // Crear celdas para latitud, longitud, altitud y timestamp
-                const latitudCell = document.createElement('td');
-                latitudCell.innerText = item.latitud;
-                newRow.appendChild(latitudCell);
+            RadioKm = rangeslider.value;
 
-                const longitudCell = document.createElement('td');
-                longitudCell.innerText = item.longitud;
-                newRow.appendChild(longitudCell);
+            // Calcular las coordenadas del círculo que representa un área de 1 km alrededor del marcador
+            circle = L.circle([lat, long], {
+                color: 'blue', // Color del borde del círculo
+                fillColor: 'blue', // Color de relleno del círculo
+                fillOpacity: 0.4, // Opacidad del relleno del círculo
+                radius: RadioKm*1040 // Radio en metros (representa 1 km)
+            }).addTo(map);
 
-                const altitudCell = document.createElement('td');
-                altitudCell.innerText = item.altitud;
-                newRow.appendChild(altitudCell);
+            
+            circle.addTo(map);
 
-                const timestampCell = document.createElement('td');
-                timestampCell.innerText = item.timestamp;
-                newRow.appendChild(timestampCell);
+            // Actualiza el cuadro de texto con el valor del rango
+            const valuerange = document.getElementById('rangeSliderValue');
+            valuerange.innerText = `Radio de búsqueda en metros: ${rangeslider.value*1000}`;
 
-                // Agrega la nueva fila en la parte superior de la tabla
-                if (table.rows.length > 0) {
-                    table.insertBefore(newRow, table.rows[0]);
-                } else {
-                    table.appendChild(newRow);
-                }
-
-                // Agrega el punto a la polilínea
-                const latitud = parseFloat(item.latitud);
-                const longitud = parseFloat(item.longitud);
-                polylines.push([latitud, longitud]);
-            }
-
-            function showRoute() {
-                // Reinicia la ruta
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.Polyline) {
-                        map.removeLayer(layer);
-                    }
-                });
-
-                // Obtiene la posición actual del slider
-                const locationSlider = document.getElementById('locationSlider');
-                const newPosition = parseInt(locationSlider.value);
-                const totalLocations = formattedData.length;
-
-                // Calcula el nuevo índice basado en la posición del slider
-                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
-
-                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
-
-                // Configura la opacidad de la polilínea (entre 30% y 100%)
-                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
-
-                polyline = L.polyline(latLngs, {
-                    color: 'blue',
-                    dashArray: '10, 10',
-                    opacity: opacity,
-                }).addTo(map);
-
-                // Actualiza el cuadro de texto con el timestamp del último punto
-                const timestampDisplay = document.getElementById('timestampDisplay');
-                if (formattedData.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${formattedData[newIndex].timestamp}`;
-                } else {
-                    timestampDisplay.innerText = '';
-                }
-
-                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
-                if (latLngs.length > 0) {
-                    const [latitud, longitud] = latLngs[latLngs.length - 1];
-                    if (marker) {
-                        // Si el marcador ya existe, mueve su posición
-                        marker.setLatLng([latitud, longitud]);
-                    } else {
-                        // Si el marcador no existe, créalo y añádalo al mapa
-                        marker = L.marker([latitud, longitud]).addTo(map);
-                    }
-                    map.setView([latitud, longitud]);
-                    console.log("marker en última posición");
-                }
-            }
-
-            // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
-            showRoute();
-
-            // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
-            const locationSlider = document.getElementById('locationSlider');
-            locationSlider.addEventListener('input', showRoute);
-
-
-
+            // Agrega un event listener al slider para que se actualice cuando se mueva
+            rangeslider.addEventListener('input', updatecirclevalue);
 
         }
 
         
 
+        
+    
         
         const but = document.getElementById('toggleSwitch');
         const pol = document.getElementById('erasePolyline')
@@ -552,29 +602,47 @@
                 alert('Ha establecido mal la ventana de Tiempo')
                 mostrarDatosNuevos =true;
             }else{
-                //borrarPolilineas();
-                alert('Ahora sólo verá los datos en la ventana de tiempo establecida')   
-                socket.emit('desactivar_switch', fechaInicial, fechaFinal );
-                but.innerText = 'Presione aquí para hacer otra consulta'; 
+                if (lat == 0 || lat ==undefined ||lat ==null ){
+                    alert('Debe seleccionar un área de busqueda')
+                }else{
+                       
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
+                    but.innerText = 'Presione aquí para hacer otra consulta'; 
+                    
+                    
+                    elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+
+                    elemento2.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    rangeslider.style.display = 'none';
+
+                }
                 
-                
-                elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
-                
-                elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
             }
  
         });
 
         
 
-        socket.on('update_data', function(data) {
-            console.log('Nuevos datos recibidos:', data);
-            updateDataOnPage(data);
-            updateDataTable(data);
-        });
+        
 
         socket.on('update_table', function(data) {
             console.log('Nueva Tabla Recibida');
+            if (data.length < 1){
+                
+                elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+                elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+
+                elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+
+                alert('No se encontraron registros asociados a la fecha y lugar establecidos ')
+            }else{
+                alert('Ahora sólo verá los datos en la ventana de tiempo establecida')
+                datePickerButtonF.scrollIntoView({ behavior: 'smooth' }); // El desplazamiento será suave
+            }
             console.log(data);
             
             
@@ -727,36 +795,6 @@
         }
 
 
-        
-
-        function updateDataTable(data) {
-            data[3]=formatDate(data[3]);
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Crea una nueva fila de datos
-            const newRow = document.createElement('tr');
-
-            // Itera a través de los datos y crea celdas para cada valor
-            for (const value of data) {
-                const cell = document.createElement('td');
-                cell.innerText = value;
-                newRow.appendChild(cell);
-            }
-
-            // Agrega la nueva fila en la parte superior de la tabla
-            if (table.rows.length > 0) {
-                table.insertBefore(newRow, table.rows[0]);
-            } else {
-                table.appendChild(newRow);
-            }
-
-            // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 100;
-            while (table.rows.length > maxRows) {
-                table.deleteRow(maxRows);
-            }
-        }
 
         // Función para borrar las polilíneas
         function borrarPolilineas() {

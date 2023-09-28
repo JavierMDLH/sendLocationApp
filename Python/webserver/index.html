@@ -27,12 +27,17 @@
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
+            background-image: url('fondo.jpg'); /* ruta de imagen */
+            background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            background-attachment: fixed; /* Fija la imagen en su lugar mientras se desplaza la página */
         }
 
         /* Estilos para el navbar */
         .navbar {
             background-color: #0056b3;
             overflow: hidden;
+            box-shadow: 0 0 20px rgb(255, 255, 255); /* Sombra del contenedor */
         }
 
         .navbar a {
@@ -55,14 +60,16 @@
 
         /* Estilos para el cuadro de datos */
         #data-box {
-            background-color: #ffffff;
-            border: 1px solid #dcdcdc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f1fbff;
+            border: 8px ridge #0056b3;
+            border-radius: 20px;
             margin: 20px auto;
-            max-width: 800px;
+            max-width: 1000px;
             padding: 20px;
+            box-shadow: 0 0 20px rgb(255, 255, 255); /* Sombra del contenedor */
+            background-color: white; /* Fondo blanco */
         }
+
 
         /* Estilos para el encabezado */
         #data-box h1 {
@@ -70,7 +77,10 @@
             color: #ffffff;
             text-align: center;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 50px;
+            max-width: 500px;
+            margin-left: 25%;
+            box-shadow: 0 0 15px rgba(0, 86, 179); /* Sombra del contenedor */
         }
 
         /* Estilos para la tabla de datos históricos */
@@ -95,6 +105,9 @@
             width: 100%;
             height: 400px;
             margin-top: 20px;
+            border: 5px inset #0056b3; /* Borde del contenedor */
+            border-radius: 30px; /* Borde redondeado */
+            box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
         }
 
 
@@ -167,6 +180,19 @@
         }
 
 
+        .headparam{
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            max-width: 145px;
+            font-family: 'Merriweather', serif;
+            box-shadow: 0 0 15px rgba(0, 86, 179); /* Sombra del contenedor */
+
+        }
+
+
     </style>
 
     
@@ -182,21 +208,21 @@
         <h1>GPS Finder - Webserver</h1>
         <div class="data-columns">
             <div class="data-column">
-                <p>Latitud:</p>
+                <p class="headparam">Latitud:</p>
                 <span id="latitud"></span>
             </div>
             <div class="data-column">
-                <p>Altitud:</p>
+                <p class="headparam">Altitud:</p>
                 <span id="altitud"></span>
             </div>
         </div>
         <div class="data-columns">
             <div class="data-column">
-                <p>Longitud:</p>
+                <p class="headparam">Longitud:</p>
                 <span id="longitud"></span>
             </div>
             <div class="data-column">
-                <p>Timestamp:</p>
+                <p class="headparam">Timestamp:</p>
                 <span id="timestamp"></span>
             </div>
         </div>
@@ -212,9 +238,9 @@
         <div id="map"></div>
     
         <!-- Botón para borrar polilíneas -->
-        <button id ="erasePolyline" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-
-        
+        <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+        <br>
+        <br>
 
 
         <!-- Agrega una tabla para mostrar los datos del servidor -->
@@ -271,20 +297,14 @@
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
 
-                // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
                 socket.emit('Pagina1');
-
-                // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
             });
 
             pagina2Link.addEventListener("click", function(event) {
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
 
-                // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
                 socket.emit('Pagina2');
-
-                // Puedes reemplazar el console.log con la lógica que deseas ejecutar.
             });
 
 
@@ -299,6 +319,9 @@
         socket.on('disconnect', function() {
             console.log('Desconectado del servidor WebSocket');
         });
+
+
+
 
         // Función para formatear la fecha
         function formatDate(timestamp) {

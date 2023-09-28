@@ -119,14 +119,17 @@ io.on('connection', (socket) => {
     console.log('Mostrar datos nuevos desactivado');
   });
 
-  socket.on('desactivar_switch',(fechaInicial, fechaFinal) => {
+  socket.on('desactivar_switch',(fechaInicial, fechaFinal,lat,long,RadioKm) => {
       mostrarDatosNuevos = false;
       fechaInicial = fechaInicial;
       fechaFinal = fechaFinal;
+      lat = lat;
+      long = long;
+      RadioKm = RadioKm;
       console.log('Mostrar datos nuevos desactivado');
       console.log('Consulta rango de tiempo');
       // Obtener datos dentro del rango de fechas especificado
-      obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal, (err, data) => {
+      obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm, (err, data) => {
         if (err) {
           console.error('Error al obtener datos desde la base de datos:', err);
           return;
@@ -268,10 +271,25 @@ function buscarLocalizacionesEnArea(latitud, longitud, radioKm, callback) {
 
 
 
-function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,callback){
+function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,callback){
   // Si mostrarDatosNuevos está desactivado, obtener datos dentro del rango de fechas
-  const consulta = 'SELECT Latitud, Longitud, Altitud, Timestamp FROM datos WHERE Timestamp BETWEEN ? AND ? ORDER BY Timestamp';
-  const valores = [fechaInicial, fechaFinal];
+  // Convertir el radio de kilómetros a grados aproximados (1 grado de latitud ~ 111.32 km)
+  const radioGrados = RadioKm / 111.32;
+
+  // Calcular los límites del área de búsqueda
+  const latitudMin = lat - radioGrados;
+  const latitudMax = lat + radioGrados;
+  const longitudMin = long - (radioGrados / Math.cos(lat * (Math.PI / 180)));
+  const longitudMax = long + (radioGrados / Math.cos(lat * (Math.PI / 180)));
+
+  const consulta = `SELECT Latitud, Longitud, Altitud, Timestamp 
+  FROM datos 
+  WHERE Timestamp BETWEEN ? AND ? 
+    AND Latitud BETWEEN ? AND ? 
+    AND Longitud BETWEEN ? AND ? 
+  ORDER BY Timestamp;`;
+
+  const valores = [fechaInicial, fechaFinal,latitudMin,latitudMax,longitudMin,longitudMax];
   console.log('Fecha inicial: ',fechaInicial);
   console.log('Fecha final: ',fechaFinal);
   db.query(consulta, valores, (err, results) => {
