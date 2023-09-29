@@ -691,8 +691,27 @@
 
                         // Si la diferencia de tiempo es menor o igual a 20 segundos, traza la polilínea
                         if (timeDifference <= 20) {
-                            // Resto del código para trazar la polilínea y actualizar el marcador
-                            // ...
+                            // Configura la opacidad de la polilínea (entre 30% y 100%)
+                            const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
+
+                            polyline = L.polyline(latLngs, {
+                                color: 'blue',
+                                dashArray: '10, 10',
+                                opacity: opacity,
+                            }).addTo(map);
+
+                            // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
+                            if (latLngs.length > 0) {
+                                const [latitud, longitud] = latLngs[latLngs.length - 1];
+                                if (marker) {
+                                    // Si el marcador ya existe, mueve su posición
+                                    marker.setLatLng([latitud, longitud]);
+                                } else {
+                                    // Si el marcador no existe, créalo y añádalo al mapa
+                                    marker = L.marker([latitud, longitud]).addTo(map);
+                                }
+                                map.setView([latitud, longitud]);
+                            }
                         } else {
                             // Si la diferencia de tiempo es mayor a 20 segundos, no traza la polilínea
                             // Puedes agregar aquí cualquier otra lógica que desees para manejar esta situación
