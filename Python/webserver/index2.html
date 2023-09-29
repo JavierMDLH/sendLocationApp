@@ -679,6 +679,11 @@
                 // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
                 const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
+
+                newtimestmap = data[newIndex].timestamp;
+
+                console.log('newtimestmap: ',newtimestmap)
+
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
 
@@ -709,6 +714,7 @@
                     map.setView([latitud, longitud]);
                     console.log("marker en última posición");
                 }
+                lastTimestamp = newtimestmap;
             }
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
