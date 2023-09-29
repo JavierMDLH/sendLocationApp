@@ -680,10 +680,11 @@
                 const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
 
-                //newtimestmap = new Date(data[newIndex].timestamp);
+                newtimestmap2 = new Date(data[newIndex].timestamp);
                 newtimestmap = data[newIndex].timestamp;
 
                 console.log('newtimestmap: ',newtimestmap)
+                console.log('newtimestmap2: ',newtimestmap2)
 
                 const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
 
