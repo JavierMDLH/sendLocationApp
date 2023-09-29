@@ -680,7 +680,8 @@
                 const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
 
-                newtimestmap = new Date(data[newIndex].timestamp);
+                //newtimestmap = new Date(data[newIndex].timestamp);
+                newtimestmap = data[newIndex].timestamp;
 
                 console.log('newtimestmap: ',newtimestmap)
 
