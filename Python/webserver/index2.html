@@ -794,6 +794,8 @@
 
                     // Configura la fecha máxima para la fecha inicial
                     datePickerInput._flatpickr.set('maxDate', fechaFinal);
+                    // Configura la fecha mínima para la fecha final siempre después o igual al 15 de septiembre de 2023
+                    datePickerInputF._flatpickr.set('minDate', "2023-09-15");
                     datePickerInputF.value = dateStr;
                 }
             };
