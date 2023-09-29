@@ -679,7 +679,7 @@
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
                 // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                var latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
 
                 //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
