@@ -253,7 +253,6 @@
 <body>
     <div class="navbar">
         <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
-       
     </div>
 
     <div id="data-box">
@@ -403,7 +402,6 @@
 
         // Obtener el enlace Página 1 y 2 por su id
         const pagina1Link = document.getElementById("Pagina1");
-        const pagina2Link = document.getElementById("Pagina2");
 
         // Agrega un event listener para el evento "click"
         pagina1Link.addEventListener("click", function(event) {
@@ -412,15 +410,6 @@
 
             // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
             socket.emit('Pagina1')
-
-        });
-            
-        pagina2Link.addEventListener("click", function(event) {
-            // Evita que el enlace siga su enlace predeterminado
-            //event.preventDefault();
-
-            // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
-            socket.emit('Pagina2')
 
         });
 
