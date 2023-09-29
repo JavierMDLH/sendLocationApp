@@ -764,7 +764,7 @@
                     // Verifica si la fecha inicial es null
                     if (fechaInicial === null || fechaInicial == undefined) {
                         // No establece una fecha mínima para la fecha final si la fecha inicial es null
-                        datePickerInputF._flatpickr.set('minDate', minDate);
+                        datePickerInputF._flatpickr.set('minDate', "2023-09-15");
                     } else {
                         // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
                         if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
