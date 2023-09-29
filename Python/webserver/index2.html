@@ -259,21 +259,24 @@
         <h1>GPS Finder - Webserver</h1>
         
         <div class="data-columns">
+            <div class="data-column">
+                <div class="button-container">
+                    <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
+                </div>
+            </div>
+
             
-            <div class="button-container">
-                <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
+            <div class="data-column">
+
+                <!-- Botón para seleccionar fecha inicial -->
+                <div  class="tooltip">
+                    <button id="datePickerButton" class="date-button">
+                        <i class="fas fa-calendar"></i> 
+                    </button>
+                    <span class="tooltip-text">Presione para escoger la fecha inicial.</span>
+                </div>
             </div>
             
-            <!-- Botón para seleccionar fecha inicial -->
-            <div  class="tooltip">
-                <button id="datePickerButton" class="date-button">
-                    <i class="fas fa-calendar"></i> 
-                </button>
-                <span class="tooltip-text">Presione para escoger la fecha inicial.</span>
-    
-            </div>
-    
-    
         </div>
         <!-- Elemento de entrada de fecha inicial -->
         
