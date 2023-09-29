@@ -683,6 +683,33 @@
                 newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
                 newtimestmap = data[newIndex].timestamp;
 
+                // Divide la cadena en partes
+                const partes = newtimestmap2.split(/[\/, :]/);
+
+                // Ajusta el formato del mes (resta 1 porque los meses en JavaScript van de 0 a 11)
+                const mes = parseInt(partes[1]) - 1;
+
+                // Extrae la hora y los minutos
+                const horaMinutos = partes[3].split(":");
+                const hora = parseInt(horaMinutos[0]);
+                const minutos = parseInt(horaMinutos[1]);
+
+                // Obtiene "AM" o "PM" y ajusta la hora si es necesario
+                const amPm = partes[5];
+                if (amPm === "p. m." && hora < 12) {
+                    hora += 12;
+                } else if (amPm === "a. m." && hora === 12) {
+                    hora = 0;
+                }
+
+                // Obtiene el año, el día y los segundos
+                const año = parseInt(partes[2]);
+                const día = parseInt(partes[0]);
+                const segundos = parseInt(partes[6]);
+
+                // Crea un objeto de fecha válido
+                const newtimestmap2 = new Date(año, mes, día, hora, minutos, segundos);
+
                 console.log('newtimestmap: ',newtimestmap)
                 console.log('newtimestmap2: ',newtimestmap2)
 
