@@ -401,6 +401,7 @@
         let long ;
         let RadioKm;
         let lastTimestamp = null;
+        let newtimestmap;
         
 
         var elemento = document.getElementById('texto1'); 
@@ -707,7 +708,7 @@
                 
 
                 // Crea un objeto de fecha válido
-                const newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
+                newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
 
                 console.log('newtimestmap: ',newtimestmap)
                 console.log("lastTimestamp: ",lastTimestamp)
