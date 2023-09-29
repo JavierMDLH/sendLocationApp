@@ -707,10 +707,10 @@
                 
 
                 // Crea un objeto de fecha válido
-                const newtimestmap2 = new Date(año, mes, día, hora, minutos, segundos);
+                const newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
 
                 console.log('newtimestmap: ',newtimestmap)
-                console.log('newtimestmap2: ',newtimestmap2)
+                console.log("lastTimestamp: ",lastTimestamp)
 
                 const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
 
