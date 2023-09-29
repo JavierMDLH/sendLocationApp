@@ -731,6 +731,14 @@
                             opacity: opacity,
                         }).addTo(map);
                     }
+                    else{
+                            polyline = L.polyline(latLngs, {
+                            color: 'blue',
+                            dashArray: '10, 10',
+                            opacity: 0,
+                        }).addTo(map);
+
+                    }
                 }
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
