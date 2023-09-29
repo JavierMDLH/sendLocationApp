@@ -677,62 +677,38 @@
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
-                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                // Crea una lista para almacenar las coordenadas válidas de la polilínea
+                const latLngs = [];
 
+                for (let i = 0; i <= newIndex; i++) {
+                    const latitud = parseFloat(data[i].latitud);
+                    const longitud = parseFloat(data[i].longitud);
+                    const timestamp = data[i].timestamp;
 
-                //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
-                newtimestmap = data[newIndex].timestamp;
-
-                // Divide la cadena en partes
-                const partes = newtimestmap.split(/[\/, :]/);
-
-                // Ajusta el formato del mes (resta 1 porque los meses en JavaScript van de 0 a 11)
-                const mes = parseInt(partes[1]) - 1;
-                // Extrae la hora y los minutos
-                var hora = parseInt(partes[4]);
-                const minutos = parseInt(partes[5]);
-
-                // Obtiene "AM" o "PM" y ajusta la hora si es necesario
-                const amPm = partes[7];
-                if (amPm.includes("p")) {
-                    hora = hora + 12;
-                    
-                }
-
-                // Obtiene el año, el día y los segundos
-                const año = parseInt(partes[2]);
-                const día = parseInt(partes[0]);
-                const segundos = parseInt(partes[6]);
-                
-
-                // Crea un objeto de fecha válido
-                newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
-
-                console.log('newtimestmap: ',newtimestmap)
-                console.log("lastTimestamp: ",lastTimestamp)
-                if (newIndex>1){
-                    const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
-                    console.log('diferenciaSegundos: ',diferenciaSegundos)
-
-                    if (diferenciaSegundos>250){
-
-                        return
-
+                    // Verifica si la diferencia de tiempo entre dos puntos consecutivos es mayor que 250 segundos
+                    if (i > 0) {
+                        const segundosEntrePuntos = Math.abs(timestamp - data[i - 1].timestamp) / 1000;
+                        if (segundosEntrePuntos > 250) {
+                            // La diferencia es mayor que 250 segundos, no agregamos el punto problemático
+                            continue;
+                        }
                     }
 
+                    const latLng = [latitud, longitud];
+                    latLngs.push(latLng);
                 }
-                
-                
 
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
 
-                polyline = L.polyline(latLngs, {
-                    color: 'blue',
-                    dashArray: '10, 10',
-                    opacity: opacity,
-                }).addTo(map);
+                // Crea la polilínea con todas las coordenadas válidas
+                if (latLngs.length > 0) {
+                    polyline = L.polyline(latLngs, {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: opacity,
+                    }).addTo(map);
+                }
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
@@ -743,19 +719,16 @@
                 }
 
                 // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
-                if (latLngs.length > 0) {
-                    const [latitud, longitud] = latLngs[latLngs.length - 1];
-                    if (marker) {
-                        // Si el marcador ya existe, mueve su posición
-                        marker.setLatLng([latitud, longitud]);
-                    } else {
-                        // Si el marcador no existe, créalo y añádalo al mapa
-                        marker = L.marker([latitud, longitud]).addTo(map);
-                    }
-                    map.setView([latitud, longitud]);
-                    console.log("marker en última posición");
+                const [latitud, longitud] = latLngs[latLngs.length - 1];
+                if (marker) {
+                    // Si el marcador ya existe, mueve su posición
+                    marker.setLatLng([latitud, longitud]);
+                } else {
+                    // Si el marcador no existe, créalo y añádalo al mapa
+                    marker = L.marker([latitud, longitud]).addTo(map);
                 }
-                lastTimestamp = newtimestmap;
+                map.setView([latitud, longitud]);
+                console.log("marker en última posición");
             }
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
