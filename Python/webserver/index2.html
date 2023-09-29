@@ -829,8 +829,8 @@
                 minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
                 maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
-                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
                     const fechaFinal = new Date(dateStr);
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
 
                     // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
                     if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
