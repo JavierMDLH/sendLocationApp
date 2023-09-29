@@ -83,22 +83,6 @@
             box-shadow: 0 0 15px rgba(79, 79, 79); /* Sombra del contenedor */
         }
 
-        /* Estilos para la tabla de datos históricos */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #dcdcdc;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #efbb1b;
-            color: #000000;
-        }
 
         /* Estilos para el mapa */
         #map {
@@ -243,20 +227,7 @@
         <br>
 
 
-        <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Latitud</th>
-                    <th>Longitud</th>
-                    <th>Altitud</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-            </tbody>
-        </table>
+       
     </div>
 
     <script>
@@ -372,7 +343,7 @@
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
             updateDataOnPage(data);
-            updateDataTable(data);
+  
         });
 
         
@@ -442,34 +413,7 @@
             }
         }
 
-        function updateDataTable(data) {
-            data[3]=formatDate(data[3]);
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Crea una nueva fila de datos
-            const newRow = document.createElement('tr');
-
-            // Itera a través de los datos y crea celdas para cada valor
-            for (const value of data) {
-                const cell = document.createElement('td');
-                cell.innerText = value;
-                newRow.appendChild(cell);
-            }
-
-            // Agrega la nueva fila en la parte superior de la tabla
-            if (table.rows.length > 0) {
-                table.insertBefore(newRow, table.rows[0]);
-            } else {
-                table.appendChild(newRow);
-            }
-
-            // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 100;
-            while (table.rows.length > maxRows) {
-                table.deleteRow(maxRows);
-            }
-        }
+        
 
         // Función para borrar las polilíneas
         function borrarPolilineas() {
