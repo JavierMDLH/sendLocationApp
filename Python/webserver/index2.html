@@ -762,7 +762,7 @@
                     const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
 
                     // Verifica si la fecha inicial es null
-                    if (fechaInicial === null) {
+                    if (fechaInicial === null || fechaInicial == undefined) {
                         // No establece una fecha mínima para la fecha final si la fecha inicial es null
                         datePickerInputF._flatpickr.set('minDate', null);
                     } else {
