@@ -677,25 +677,31 @@
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
-                // Crea una lista para almacenar las coordenadas válidas de la polilínea
+                // Crea una lista para almacenar las coordenadas de la polilínea
                 const latLngs = [];
+                let shouldAddPoint = true;
 
                 for (let i = 0; i <= newIndex; i++) {
                     const latitud = parseFloat(data[i].latitud);
                     const longitud = parseFloat(data[i].longitud);
                     const timestamp = data[i].timestamp;
 
-                    // Verifica si la diferencia de tiempo entre dos puntos consecutivos es mayor que 250 segundos
                     if (i > 0) {
-                        const segundosEntrePuntos = Math.abs(timestamp - data[i - 1].timestamp) / 1000;
+                        // Calcula la diferencia de tiempo entre dos puntos consecutivos en segundos
+                        const segundosEntrePuntos = Math.abs(new Date(timestamp) - new Date(data[i - 1].timestamp)) / 1000;
+                        
                         if (segundosEntrePuntos > 250) {
                             // La diferencia es mayor que 250 segundos, no agregamos el punto problemático
-                            continue;
+                            shouldAddPoint = false;
+                        } else {
+                            shouldAddPoint = true;
                         }
                     }
 
-                    const latLng = [latitud, longitud];
-                    latLngs.push(latLng);
+                    if (shouldAddPoint) {
+                        const latLng = [latitud, longitud];
+                        latLngs.push(latLng);
+                    }
                 }
 
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
@@ -730,6 +736,7 @@
                 map.setView([latitud, longitud]);
                 console.log("marker en última posición");
             }
+
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
             showRoute();
