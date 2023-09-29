@@ -679,6 +679,7 @@
                 const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
                 // Verifica si la diferencia de tiempo entre el nuevo punto y el último punto es menor o igual a 20 segundos
+                console.log("data[newIndex].timestamp: ",data[newIndex].timestamp)
                 const lastTimestamp = data.length > 0 ? new Date(data[newIndex].timestamp).getTime() : 0;
                 const prevTimestamp = newIndex > 0 ? new Date(data[newIndex - 1].timestamp).getTime() : 0;
                 console.log("lastTimestamp: ",lastTimestamp)
