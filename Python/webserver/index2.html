@@ -663,13 +663,6 @@
             let previousLatLngs = [];
 
             function showRoute() {
-                // Reinicia la ruta
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.Polyline) {
-                        map.removeLayer(layer);
-                    }
-                });
-
                 // Obtiene la posición actual del slider
                 const locationSlider = document.getElementById('locationSlider');
                 const newPosition = parseInt(locationSlider.value);
@@ -677,10 +670,6 @@
 
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
-
-                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                var latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
-
 
                 //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
                 newtimestmap = data[newIndex].timestamp;
@@ -698,40 +687,48 @@
                 const amPm = partes[7];
                 if (amPm.includes("p")) {
                     hora = hora + 12;
-                    
                 }
 
                 // Obtiene el año, el día y los segundos
                 const año = parseInt(partes[2]);
                 const día = parseInt(partes[0]);
                 const segundos = parseInt(partes[6]);
-                
 
                 // Crea un objeto de fecha válido
                 newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
 
-                console.log('newtimestmap: ',newtimestmap)
-                console.log("lastTimestamp: ",lastTimestamp)
-                
-                
-                
+                console.log('newtimestmap: ', newtimestmap);
+                console.log("lastTimestamp: ", lastTimestamp);
 
-                // Configura la opacidad de la polilínea (entre 30% y 100%)
-                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
-
+                // Si la diferencia de segundos es mayor que 250, elimina la polilínea anterior
                 if (newIndex > 1) {
                     const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
                     console.log('diferenciaSegundos: ', diferenciaSegundos);
 
-                    if (diferenciaSegundos <= 250) {
-                        // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
-                        polyline = L.polyline(latLngs, {
-                            color: 'blue',
-                            dashArray: '10, 10',
-                            opacity: opacity,
-                        }).addTo(map);
+                    if (diferenciaSegundos > 250) {
+                        map.eachLayer(function (layer) {
+                            if (layer instanceof L.Polyline) {
+                                map.removeLayer(layer);
+                            }
+                        });
+
+                        // Almacena los puntos anteriores en previousLatLngs
+                        previousLatLngs = polylines.slice(0, newIndex).map(([latitud, longitud]) => [latitud, longitud]);
                     }
                 }
+
+                // Crea una nueva polilínea que incluye los puntos actuales y, si es necesario, los puntos anteriores
+                const latLngs = [...previousLatLngs, ...polylines.slice(newIndex + 1)].map(([latitud, longitud]) => [latitud, longitud]);
+
+                // Configura la opacidad de la polilínea (entre 30% y 100%)
+                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
+
+                // Agrega la polilínea al mapa
+                polyline = L.polyline(latLngs, {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: opacity,
+                }).addTo(map);
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
@@ -756,6 +753,7 @@
                 }
                 lastTimestamp = newtimestmap;
             }
+
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
             showRoute();
