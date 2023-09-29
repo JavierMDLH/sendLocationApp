@@ -717,11 +717,7 @@
 
                     if (diferenciaSegundos>250){
 
-                        polyline = L.polyline(latLngs, {
-                        color: 'blue',
-                        dashArray: '10, 10',
-                        opacity: 0,
-                        }).addTo(map);
+                        map.removeLayer(polyline);
 
                     }
 
