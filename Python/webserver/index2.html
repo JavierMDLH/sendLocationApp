@@ -711,17 +711,7 @@
 
                 console.log('newtimestmap: ',newtimestmap)
                 console.log("lastTimestamp: ",lastTimestamp)
-                if (newIndex>1){
-                    const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
-                    console.log('diferenciaSegundos: ',diferenciaSegundos)
-
-                    if (diferenciaSegundos>250){
-
-                        map.removeLayer(polyline);
-
-                    }
-
-                }
+                
                 
                 
 
@@ -733,6 +723,19 @@
                     dashArray: '10, 10',
                     opacity: opacity,
                 }).addTo(map);
+
+
+                if (newIndex>1){
+                    const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
+                    console.log('diferenciaSegundos: ',diferenciaSegundos)
+
+                    if (diferenciaSegundos>250){
+
+                        map.removeLayer(polyline);
+
+                    }
+
+                }
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
