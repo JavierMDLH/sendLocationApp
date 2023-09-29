@@ -212,17 +212,14 @@
         </div>
 
     
-
-        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
-        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
-
+         <!-- Botón para borrar polilíneas -->
+         <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
       
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
     
-        <!-- Botón para borrar polilíneas -->
-        <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+       
     
 
 
@@ -318,16 +315,8 @@
             return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
         }
         
-        const but = document.getElementById('toggleSwitch');
+        
         const pol = document.getElementById('erasePolyline')
-
-        // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
-        document.getElementById('toggleSwitch').addEventListener('click', () => {
-            socket.emit('Pagina2');
-            // Redirige a la página deseada
-            window.location.href = '/index2.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
-            
-        });
 
         
 
