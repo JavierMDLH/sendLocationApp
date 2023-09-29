@@ -695,7 +695,7 @@
                 // Obtiene "AM" o "PM" y ajusta la hora si es necesario
                 const amPm = partes[7];
                 console.log("amPm:",amPm,"l")
-                if (amPm == " p. m. ") {
+                if (amPm.includes("p")) {
                     hora = hora + 12;
                     
                 }
