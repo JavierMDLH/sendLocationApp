@@ -336,21 +336,6 @@
 
          
 
-
-        <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table id="reg-table">
-            <thead>
-                <tr>
-                    <th>Latitud</th>
-                    <th>Longitud</th>
-                    <th>Altitud</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-            </tbody>
-        </table>
     </div>
 
     <script>
@@ -627,41 +612,12 @@
 
         function updateDataTablereg(data) {
             // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Borra todas las filas existentes en la tabla
-            while (table.rows.length > 0) {
-                table.deleteRow(0);
-            }
+           
 
 
             // Itera a través de los datos y crea filas y celdas para cada valor
             for (const item of data) {
-                const newRow = document.createElement('tr');
-
-                // Crear celdas para latitud, longitud, altitud y timestamp
-                const latitudCell = document.createElement('td');
-                latitudCell.innerText = item.latitud;
-                newRow.appendChild(latitudCell);
-
-                const longitudCell = document.createElement('td');
-                longitudCell.innerText = item.longitud;
-                newRow.appendChild(longitudCell);
-
-                const altitudCell = document.createElement('td');
-                altitudCell.innerText = item.altitud;
-                newRow.appendChild(altitudCell);
-
-                const timestampCell = document.createElement('td');
-                timestampCell.innerText = item.timestamp;
-                newRow.appendChild(timestampCell);
-
-                // Agrega la nueva fila en la parte superior de la tabla
-                if (table.rows.length > 0) {
-                    table.insertBefore(newRow, table.rows[0]);
-                } else {
-                    table.appendChild(newRow);
-                }
+                
 
                 // Agrega el punto a la polilínea
                 const latitud = parseFloat(item.latitud);
