@@ -758,25 +758,25 @@
                 minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
                 maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
-                    const fechaInicial = new Date(dateStr);
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
                     const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
 
-                    // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
-                    if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
-                        // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
-                        fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
-                        datePickerInput._flatpickr.setDate(fechaInicial);
-                    }
+                    // Verifica si la fecha inicial es null
+                    if (fechaInicial === null) {
+                        // No establece una fecha mínima para la fecha final si la fecha inicial es null
+                        datePickerInputF._flatpickr.set('minDate', null);
+                    } else {
+                        // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
+                        if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                            // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
+                            fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
+                            datePickerInput._flatpickr.setDate(fechaInicial);
+                        }
 
-                    // Configura la fecha mínima para la fecha final
-                    
-                    // Configura la fecha mínima para la fecha final siempre después o igual al 15 de septiembre de 2023
-                    datePickerInputF._flatpickr.set('minDate', "2023-09-15");
-                    if (fechaInicial == null || fechaInicial ==undefined){
+                        // Configura la fecha mínima para la fecha final como la fecha inicial
                         datePickerInputF._flatpickr.set('minDate', fechaInicial);
                     }
-                    
-                    
+
                     datePickerInput.value = dateStr;
                 }
             };
@@ -789,17 +789,17 @@
                 minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
                 maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
-                    const fechaFinal = new Date(dateStr);
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
                     const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
 
                     // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
-                    if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                    if (fechaInicial && fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
                         // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha final
                         fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
                         datePickerInputF._flatpickr.setDate(fechaFinal);
                     }
 
-                    // Configura la fecha máxima para la fecha inicial
+                    // Configura la fecha máxima para la fecha inicial como el día actual
                     datePickerInput._flatpickr.set('maxDate', fechaFinal);
                     datePickerInputF.value = dateStr;
                 }
@@ -820,6 +820,8 @@
                 datePickerInput._flatpickr.open();
             });
         });
+
+
 
     </script>
 </body>
