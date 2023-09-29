@@ -662,89 +662,89 @@
 
 
             function showRoute() {
-                // Reinicia la ruta
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.Polyline) {
-                        map.removeLayer(layer);
-                    }
-                });
+            // Reinicia la ruta
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Polyline) {
+                    map.removeLayer(layer);
+                }
+            });
 
-                // Obtiene la posición actual del slider
-                const locationSlider = document.getElementById('locationSlider');
-                const newPosition = parseInt(locationSlider.value);
-                const totalLocations = data.length;
+            // Obtiene la posición actual del slider
+            const locationSlider = document.getElementById('locationSlider');
+            const newPosition = parseInt(locationSlider.value);
+            const totalLocations = data.length;
 
-                // Calcula el nuevo índice basado en la posición del slider
-                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
+            // Calcula el nuevo índice basado en la posición del slider
+            const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
-                // Crea una lista para almacenar las coordenadas de la polilínea
-                const latLngs = [];
-                let shouldCreateNewPolyline = true; // Indica si se debe crear una nueva polilínea
-                let currentPolyline = null;
+            // Crea una lista para almacenar las coordenadas de la polilínea
+            const latLngs = [];
+            let shouldCreateNewPolyline = true; // Indica si se debe crear una nueva polilínea
+            let currentPolyline = null;
 
-                for (let i = 0; i <= newIndex; i++) {
-                    const latitud = parseFloat(data[i].latitud);
-                    const longitud = parseFloat(data[i].longitud);
-                    const timestamp = data[i].timestamp;
+            for (let i = 0; i <= newIndex; i++) {
+                const latitud = parseFloat(data[i].latitud);
+                const longitud = parseFloat(data[i].longitud);
+                const timestamp = data[i].timestamp;
 
-                    if (i > 0) {
-                        // Calcula la diferencia de tiempo entre dos puntos consecutivos en segundos
-                        const segundosEntrePuntos = Math.abs(new Date(timestamp) - new Date(data[i - 1].timestamp)) / 1000;
+                if (i > 0) {
+                    // Calcula la diferencia de tiempo entre dos puntos consecutivos en segundos
+                    const segundosEntrePuntos = Math.abs(new Date(timestamp) - new Date(data[i - 1].timestamp)) / 1000;
 
-                        if (segundosEntrePuntos > 250) {
-                            // La diferencia es mayor que 250 segundos, no agregamos el punto problemático
-                            shouldCreateNewPolyline = true;
-                        } else {
-                            shouldCreateNewPolyline = false;
-                        }
-                    }
-
-                    if (shouldCreateNewPolyline) {
-                        // Crea una nueva polilínea y agrega las coordenadas válidas a la lista
-                        if (latLngs.length > 0) {
-                            currentPolyline = L.polyline(latLngs, {
-                                color: 'blue',
-                                dashArray: '10, 10',
-                                opacity: opacity,
-                            }).addTo(map);
-                        }
-                        latLngs.length = 0; // Limpia la lista de coordenadas
-                    }
-
-                    if (!shouldCreateNewPolyline) {
-                        // Agrega coordenadas válidas a la lista actual
-                        const latLng = [latitud, longitud];
-                        latLngs.push(latLng);
+                    if (segundosEntrePuntos > 250) {
+                        // La diferencia es mayor que 250 segundos, no agregamos el punto problemático
+                        shouldCreateNewPolyline = true;
+                    } else {
+                        shouldCreateNewPolyline = false;
                     }
                 }
 
-                // Configura la opacidad de la última polilínea creada (entre 30% y 100%)
-                if (currentPolyline) {
-                    currentPolyline.setStyle({
-                        opacity: opacity,
-                    });
+                if (shouldCreateNewPolyline) {
+                    // Crea una nueva polilínea y agrega las coordenadas válidas a la lista
+                    if (latLngs.length > 0) {
+                        currentPolyline = L.polyline(latLngs, {
+                            color: 'blue',
+                            dashArray: '10, 10',
+                            opacity: opacity,
+                        }).addTo(map);
+                    }
+                    latLngs.length = 0; // Limpia la lista de coordenadas
                 }
 
-                // Actualiza el cuadro de texto con el timestamp del último punto
-                const timestampDisplay = document.getElementById('timestampDisplay');
-                if (data.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
-                } else {
-                    timestampDisplay.innerText = '';
+                if (!shouldCreateNewPolyline) {
+                    // Agrega coordenadas válidas a la lista actual
+                    const latLng = [latitud, longitud];
+                    latLngs.push(latLng);
                 }
-
-                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
-                const [latitud, longitud] = latLngs[latLngs.length - 1];
-                if (marker) {
-                    // Si el marcador ya existe, mueve su posición
-                    marker.setLatLng([latitud, longitud]);
-                } else {
-                    // Si el marcador no existe, créalo y añádalo al mapa
-                    marker = L.marker([latitud, longitud]).addTo(map);
-                }
-                map.setView([latitud, longitud]);
-                console.log("marker en última posición");
             }
+
+            // Configura la opacidad de la última polilínea creada (entre 30% y 100%)
+            if (currentPolyline) {
+                currentPolyline.setStyle({
+                    opacity: opacity,
+                });
+            }
+
+            // Actualiza el cuadro de texto con el timestamp del último punto
+            const timestampDisplay = document.getElementById('timestampDisplay');
+            if (data.length > 0) {
+                timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
+            } else {
+                timestampDisplay.innerText = '';
+            }
+
+            // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
+            const [latitud, longitud] = latLngs[latLngs.length - 1];
+            if (marker) {
+                // Si el marcador ya existe, mueve su posición
+                marker.setLatLng([latitud, longitud]);
+            } else {
+                // Si el marcador no existe, créalo y añádalo al mapa
+                marker = L.marker([latitud, longitud]).addTo(map);
+            }
+            map.setView([latitud, longitud]);
+            console.log("marker en última posición");
+        }
 
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
