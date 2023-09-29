@@ -337,20 +337,6 @@
          
 
 
-        <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table id="reg-table">
-            <thead>
-                <tr>
-                    <th>Latitud</th>
-                    <th>Longitud</th>
-                    <th>Altitud</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-            </tbody>
-        </table>
     </div>
 
     <script>
@@ -377,13 +363,13 @@
 
         var elemento = document.getElementById('texto1'); 
         var elemento1 = document.getElementById('locationSlider');
-        var elemento2 = document.getElementById('reg-table');
+        
         
 
         elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
                 
         elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
-        elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+     
         rangeslider.style.display = 'none';
 
         // Cargar el archivo JSON
@@ -578,8 +564,6 @@
                     elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                     
                     elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
-
-                    elemento2.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                     
                     rangeslider.style.display = 'none';
 
@@ -600,8 +584,6 @@
                 elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
                 
                 elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
-
-                elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
 
                 alert('No se encontraron registros asociados a la fecha y lugar establecidos ')
             }else{
