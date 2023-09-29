@@ -713,18 +713,20 @@
                 console.log("lastTimestamp: ",lastTimestamp)
                 if (newIndex>1){
                     const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
-                console.log('diferenciaSegundos: ',diferenciaSegundos)
+                    console.log('diferenciaSegundos: ',diferenciaSegundos)
+
+                    if (diferenciaSegundos>250){
+
+                        polyline = L.polyline(latLngs, {
+                        color: 'blue',
+                        dashArray: '10, 10',
+                        opacity: 0,
+                        }).addTo(map);
+
+                    }
 
                 }
-                if (diferenciaSegundos>250){
-
-                    polyline = L.polyline(latLngs, {
-                    color: 'blue',
-                    dashArray: '10, 10',
-                    opacity: 0,
-                }).addTo(map);
-
-                }
+                
                 
 
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
