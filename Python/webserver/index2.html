@@ -739,7 +739,7 @@
                         previousLatLngs = polylines.slice(0, newIndex).map(([latitud, longitud]) => [latitud, longitud]);
 
                         // Obtiene la nueva polilínea que incluye todos los puntos desde newIndex + 1 hasta el final
-                        const latLngs = polylines.slice(newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                        latLngs = polylines.slice(newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
                     }
 
