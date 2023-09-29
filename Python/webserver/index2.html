@@ -712,10 +712,12 @@
 
                 console.log('newtimestmap: ',newtimestmap)
                 console.log("lastTimestamp: ",lastTimestamp)
-
-                const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
-
+                if (newIndex>1){
+                    const diferenciaSegundos = Math.abs((newtimestmap-lastTimestamp) / 1000);
                 console.log('diferenciaSegundos: ',diferenciaSegundos)
+
+                }
+                
 
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
