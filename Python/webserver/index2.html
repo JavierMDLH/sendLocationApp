@@ -679,13 +679,6 @@
                 // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
                 const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
-                newTimestamp = data[newIndex].timestamp;
-
-                if (newIndex>0){
-                    console.log('lastTimestamp',lastTimestamp.getMinutes())
-                    console.log('Diferencia', newTimestamp-lastTimestamp)
-                }
-                
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
 
@@ -716,8 +709,6 @@
                     map.setView([latitud, longitud]);
                     console.log("marker en última posición");
                 }
-                lastTimestamp = data[newIndex].timestamp;
-                console.log('lastTimestamp: ',lastTimestamp)
             }
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
@@ -726,6 +717,9 @@
             // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
             const locationSlider = document.getElementById('locationSlider');
             locationSlider.addEventListener('input', showRoute);
+
+
+
 
             }
 
