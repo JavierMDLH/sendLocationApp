@@ -688,24 +688,23 @@
 
                 // Ajusta el formato del mes (resta 1 porque los meses en JavaScript van de 0 a 11)
                 const mes = parseInt(partes[1]) - 1;
-
                 // Extrae la hora y los minutos
-                const horaMinutos = partes[3].split(":");
-                const hora = parseInt(horaMinutos[0]);
-                const minutos = parseInt(horaMinutos[1]);
+                var hora = parseInt(partes[4]);
+                const minutos = parseInt(partes[5]);
 
                 // Obtiene "AM" o "PM" y ajusta la hora si es necesario
-                const amPm = partes[5];
-                if (amPm === "p. m." && hora < 12) {
-                    hora += 12;
-                } else if (amPm === "a. m." && hora === 12) {
-                    hora = 0;
+                const amPm = partes[7];
+                print(amPm)
+                if (amPm == "p.m.") {
+                    hora = hora + 12;
+                    
                 }
 
                 // Obtiene el año, el día y los segundos
                 const año = parseInt(partes[2]);
                 const día = parseInt(partes[0]);
                 const segundos = parseInt(partes[6]);
+                
 
                 // Crea un objeto de fecha válido
                 const newtimestmap2 = new Date(año, mes, día, hora, minutos, segundos);
