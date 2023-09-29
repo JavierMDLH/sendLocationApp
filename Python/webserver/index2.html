@@ -661,6 +661,7 @@
             }
 
             let previousLatLngs = [];
+            index1 = 0;
 
             function showRoute() {
                 // Reinicia la ruta
@@ -679,7 +680,7 @@
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
                 // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                var latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                var latLngs = polylines.slice(index1, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
 
                 //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
@@ -732,12 +733,8 @@
                         }).addTo(map);
                     }
                     else{
-                            polyline = L.polyline(latLngs, {
-                            color: 'blue',
-                            dashArray: '10, 10',
-                            opacity: 0,
-                        }).addTo(map);
-
+                        index1 = newIndex;
+                        
                     }
                 }
 
