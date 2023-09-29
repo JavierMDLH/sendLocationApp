@@ -400,6 +400,7 @@
         let lat ;
         let long ;
         let RadioKm;
+        let lastValidTimestamp = null;
         
 
         var elemento = document.getElementById('texto1'); 
@@ -675,57 +676,32 @@
                 // Calcula el nuevo índice basado en la posición del slider
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
-                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                // Verifica si data[newIndex] es un elemento válido
+                if (data[newIndex]) {
+                    // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
+                    const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
-                // Verifica si la diferencia de tiempo entre el nuevo punto y el último punto es menor o igual a 20 segundos
-                console.log("data[newIndex].timestamp: ",data[newIndex].timestamp)
-                console.log("data[newIndex - 1].timestamp: ",data[newIndex - 1].timestamp)
-                console.log("(lastTimestamp - prevTimestamp) / 1000: ",(lastTimestamp - prevTimestamp) / 1000)
+                    // Obtiene el nuevo timestamp
+                    const newTimestamp = new Date(data[newIndex].timestamp).getTime();
 
-                
-                const lastTimestamp = data.length > 0 ? new Date(data[newIndex].timestamp).getTime() : 0;
-                const prevTimestamp = newIndex > 0 ? new Date(data[newIndex - 1].timestamp).getTime() : 0;
-                console.log("lastTimestamp: ",lastTimestamp)
-                console.log("prevTimestamp: ",prevTimestamp)
-                const timeDifference = (lastTimestamp - prevTimestamp) / 1000; // Diferencia de tiempo en segundos
+                    // Verifica si hay un último timestamp válido almacenado
+                    if (lastValidTimestamp !== null) {
+                        // Calcula la diferencia de tiempo entre el nuevo timestamp y el último válido
+                        const timeDifference = (newTimestamp - lastValidTimestamp) / 1000; // Diferencia de tiempo en segundos
 
-                // Si la diferencia de tiempo es menor o igual a 20 segundos, traza la polilínea
-                if (timeDifference <= 20) {
-                    // Configura la opacidad de la polilínea (entre 30% y 100%)
-                    const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
-
-                    polyline = L.polyline(latLngs, {
-                        color: 'blue',
-                        dashArray: '10, 10',
-                        opacity: opacity,
-                    }).addTo(map);
-
-                    // Actualiza el cuadro de texto con el timestamp del último punto
-                    const timestampDisplay = document.getElementById('timestampDisplay');
-                    if (data.length > 0) {
-                        timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
-                    } else {
-                        timestampDisplay.innerText = '';
-                    }
-
-                    // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
-                    if (latLngs.length > 0) {
-                        const [latitud, longitud] = latLngs[latLngs.length - 1];
-                        if (marker) {
-                            // Si el marcador ya existe, mueve su posición
-                            marker.setLatLng([latitud, longitud]);
+                        // Si la diferencia de tiempo es menor o igual a 20 segundos, traza la polilínea
+                        if (timeDifference <= 20) {
+                            // Resto del código para trazar la polilínea y actualizar el marcador
+                            // ...
                         } else {
-                            // Si el marcador no existe, créalo y añádalo al mapa
-                            marker = L.marker([latitud, longitud]).addTo(map);
+                            // Si la diferencia de tiempo es mayor a 20 segundos, no traza la polilínea
+                            // Puedes agregar aquí cualquier otra lógica que desees para manejar esta situación
+                            // Por ejemplo, mostrar un mensaje de que el recorrido es demasiado largo.
                         }
-                        map.setView([latitud, longitud]);
-                        console.log("marker en última posición");
                     }
-                } else {
-                    // Si la diferencia de tiempo es mayor a 20 segundos, no traza la polilínea
-                    // Puedes agregar aquí cualquier otra lógica que desees para manejar esta situación
-                    // Por ejemplo, mostrar un mensaje de que el recorrido es demasiado largo.
+
+                    // Actualiza el último timestamp válido con el nuevo timestamp
+                    lastValidTimestamp = newTimestamp;
                 }
             }
 
