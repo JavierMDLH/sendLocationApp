@@ -680,11 +680,11 @@
                 const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
 
 
-                newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
+                //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
                 newtimestmap = data[newIndex].timestamp;
 
                 // Divide la cadena en partes
-                const partes = newtimestmap2.split(/[\/, :]/);
+                const partes = newtimestmap.split(/[\/, :]/);
 
                 // Ajusta el formato del mes (resta 1 porque los meses en JavaScript van de 0 a 11)
                 const mes = parseInt(partes[1]) - 1;
