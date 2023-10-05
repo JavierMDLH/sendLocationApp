@@ -79,7 +79,7 @@ udpServer.on('message', (message, remote) => {
   const hora = received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '');
 
   // Obtén el año, mes y día de la cadena original
-  const anio = "20" + hora.slice(4, 6);
+  const anio = hora.slice(4, 8);
   const mes = hora.slice(2, 4);
   const dia = hora.slice(0, 2);
 
