@@ -491,11 +491,17 @@
 
         function buscarLocalizaciones() {
             locbut.innerText = "Ahora puede hacer click sobre el mapa";
-            if (marker) {
+            if (but.innerText =='Presione aquí para hacer otra consulta'){
+
+            }else{
+                if (marker) {
                 // Si ya existe un marcador, no se permite colocar otro
                 
                 return;
             }
+            }
+            
+            
 
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
