@@ -618,7 +618,7 @@
 
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
-            if (but.innerText =='Presione aquí para hacer otra consulta'){
+            if (but.innerText =='Nueva consulta'){
                 borrarPolilineas();
             } 
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
@@ -639,7 +639,7 @@
                     RadioKm = 0; 
 
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
-                    but.innerText = 'Presione aquí para hacer otra consulta'; 
+                    but.innerText = 'Nueva consulta'; 
                     
                     
                     elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
@@ -652,7 +652,7 @@
                 }else{
                        
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
-                    but.innerText = 'Presione aquí para hacer otra consulta'; 
+                    but.innerText = 'Nueva consulta'; 
                     
                     
                     elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
