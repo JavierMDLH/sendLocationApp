@@ -292,6 +292,8 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,cal
     console.log('Datos filtrados por localizacion')
     consulta += ` AND Latitud BETWEEN ? AND ? AND Longitud BETWEEN ? AND ?`;
     valores.push(latitudMin, latitudMax, longitudMin, longitudMax);
+  }else{
+    console.log('Datos filtrados solo por tiempo')
   }
 
   consulta += ` ORDER BY Timestamp;`;
