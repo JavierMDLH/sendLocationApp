@@ -431,6 +431,8 @@
         let RadioKm;
         let lastTimestamp = null;
         let newtimestmap;
+        let fechaFinal;
+        let fechaInicial;
         
 
         var elemento = document.getElementById('texto1'); 
@@ -826,7 +828,7 @@
         
 
         function ocultarloc() {
-            console.log('datePickerInput111.value',fechaInicial.length)
+            console.log('fechaInicial.value',fechaInicial.length)
             if (fechaFinal.length !== undefined){
                 console.log('datePickerInput.value',datePickerInput.value)
                 //locbut.style.display = 'block';
@@ -935,7 +937,7 @@
                     // Verifica si ambas fechas están seleccionadas
                     console.log('fechaInicial: ', fechaInicial);
                     console.log('fechaFinal: ', fechaFinal);
-                    if (fechaInicial !== undefined && fechaFinal !== undefined) {
+                    if (fechaInicial.length !== undefined && fechaFinal.length !== undefined) {
                         ocultarloc(); // Llama a la función cuando ambas fechas están seleccionadas
                     }
 
