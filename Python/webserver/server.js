@@ -97,7 +97,7 @@ udpServer.on('message', (message, remote) => {
       return;
     }
 
-    console.log('Datos insertados en la base de datos correctamente.',fecha_hora);
+    console.log('Datos insertados en la base de datos correctamente.',nueva_fecha_hora);
     console.log('mostrar datos nuevos: ',mostrarDatosNuevos);
     if (mostrarDatosNuevos){
       // Emitir un evento a todos los clientes cuando haya nuevos datos
