@@ -414,7 +414,7 @@
         
         let mostrarDatosNuevos = false;
         let marker; // Variable para almacenar el marcador
-        let rectangle;
+        let circle;
         let rangeslider = document.getElementById('rangeSlider');
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
@@ -546,8 +546,8 @@
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
                     map.removeLayer(marker);
-                    if (rectangle != null || rectangle != undefined){
-                        map.removeLayer(rectangle);
+                    if (circle != null || circle != undefined){
+                        map.removeLayer(circle);
                     }
                     
                 }
@@ -571,8 +571,8 @@
 
         function updatecirclevalue(){
             
-            if (rectangle != null || rectangle != undefined){
-                map.removeLayer(rectangle);
+            if (circle != null || circle != undefined){
+                map.removeLayer(circle);
             }
 
             // Obtener la posición actual del marcador en el mapa
@@ -582,24 +582,16 @@
 
             RadioKm = rangeslider.value;
 
-            // Calcular los límites del área de búsqueda en coordenadas rectangulares
-            const latitudMin = lat - (RadioKm / 111.32);
-            const latitudMax = lat + (RadioKm / 111.32);
-            const longitudMin = long - (RadioKm / (111.32 * Math.cos(lat * (Math.PI / 180))));
-            const longitudMax = long + (RadioKm / (111.32 * Math.cos(lat * (Math.PI / 180))));
+            // Calcular las coordenadas del círculo que representa un área de 1 km alrededor del marcador
+            circle = L.circle([lat, long], {
+                color: 'blue', // Color del borde del círculo
+                fillColor: 'blue', // Color de relleno del círculo
+                fillOpacity: 0.4, // Opacidad del relleno del círculo
+                radius: RadioKm*1040 // Radio en metros (representa 1 km)
+            }).addTo(map);
 
-            // Crear un rectángulo y agregarlo al mapa
-            rectangle = L.rectangle(
-                [
-                    [latitudMin, longitudMin],
-                    [latitudMax, longitudMax]
-                ],
-                {
-                    color: 'blue', // Color del borde del rectángulo
-                    fillColor: 'blue', // Color de relleno del rectángulo
-                    fillOpacity: 0.4 // Opacidad del relleno del rectángulo
-                }
-            ).addTo(map);
+            
+            //circle.addTo(map);
 
             // Actualiza el cuadro de texto con el valor del rango
             const valuerange = document.getElementById('rangeSliderValue');
