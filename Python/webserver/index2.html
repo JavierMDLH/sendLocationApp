@@ -592,6 +592,7 @@
             const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
             const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
             console.log('Fecha inicial',fechaInicial);
+            console.log('Fecha final',fechaFinal);
             if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
                 alert('Ha establecido mal la ventana de Tiempo')
                 mostrarDatosNuevos =true;
