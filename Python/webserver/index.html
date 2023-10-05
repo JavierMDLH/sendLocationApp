@@ -55,7 +55,7 @@
         }
 
         .navbar a:hover {
-            background-color: #efbb1b;
+            background-color: #efba1bc6;
         }
 
         /* Estilos para el cuadro de datos */
@@ -83,22 +83,6 @@
             box-shadow: 0 0 15px rgba(79, 79, 79); /* Sombra del contenedor */
         }
 
-        /* Estilos para la tabla de datos históricos */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #dcdcdc;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #efbb1b;
-            color: #000000;
-        }
 
         /* Estilos para el mapa */
         #map {
@@ -192,6 +176,10 @@
 
         }
 
+        .navbutton{
+            background-color: #efbb1b;
+        }
+
 
     </style>
 
@@ -200,23 +188,25 @@
 
 <body>
     <div class="navbar">
-        <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
-        <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
+       
+        <a class="navbutton" id="Pagina2" href="index2.html">Datos Históricos</a>
     </div>
 
     <div id="data-box">
-        <h1>GPS Finder - Webserver</h1>
+        <!--<h1>MapMyDrive </h1>   -->
+       
+
         <div class="data-columns">
+            <div class="data-column">
+                <img src="logo.jpg">
+            </div>
             <div class="data-column">
                 <p class="headparam">Latitud:</p>
                 <span id="latitud"></span>
             </div>
-            <div class="data-column">
-                <p class="headparam">Altitud:</p>
-                <span id="altitud"></span>
-            </div>
-        </div>
-        <div class="data-columns">
+            
+        
+        
             <div class="data-column">
                 <p class="headparam">Longitud:</p>
                 <span id="longitud"></span>
@@ -228,35 +218,18 @@
         </div>
 
     
-
-        <!-- Agregar un botón para cambiar el estado de mostrarDatosNuevos -->
-        <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver solo los datos en una ventana de Tiempo</button>
-
-        <div id="timestampDisplay"></div> 
+         <!-- Botón para borrar polilíneas -->
+         <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+      
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
     
-        <!-- Botón para borrar polilíneas -->
-        <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-        <br>
-        <br>
+       
+    
 
 
-        <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table>
-            <thead>
-                <tr>
-                    <th>Latitud</th>
-                    <th>Longitud</th>
-                    <th>Altitud</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-            </tbody>
-        </table>
+       
     </div>
 
     <script>
@@ -271,7 +244,6 @@
         let polyline = null;
         let polylineSegments = [];
        
-        const timestampDisplay = document.getElementById('timestamp');
         let animationInterval;
         let isSliding = false;
 
@@ -289,17 +261,10 @@
             });
 
             // Obtener el enlace Página 1 y 2 por su id
-            const pagina1Link = document.getElementById("Pagina1");
+            
             const pagina2Link = document.getElementById("Pagina2");
 
-            // Agrega un event listener para el evento "click"
-            pagina1Link.addEventListener("click", function(event) {
-                // Evita que el enlace siga su enlace predeterminado
-                //event.preventDefault();
-
-                socket.emit('Pagina1');
-            });
-
+           
             pagina2Link.addEventListener("click", function(event) {
                 // Evita que el enlace siga su enlace predeterminado
                 //event.preventDefault();
@@ -356,23 +321,14 @@
             return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
         }
         
-        const but = document.getElementById('toggleSwitch');
+        
         const pol = document.getElementById('erasePolyline')
-
-        // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
-        document.getElementById('toggleSwitch').addEventListener('click', () => {
-            socket.emit('Pagina2');
-            // Redirige a la página deseada
-            window.location.href = '/index2.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
-            
-        });
 
         
 
         socket.on('update_data', function(data) {
             console.log('Nuevos datos recibidos:', data);
             updateDataOnPage(data);
-            updateDataTable(data);
         });
 
         
@@ -406,7 +362,7 @@
             console.log('Actualizando datos en la página:', data);
             document.getElementById('latitud').innerText = data[0];
             document.getElementById('longitud').innerText = data[1];
-            document.getElementById('altitud').innerText = data[2];
+            //document.getElementById('altitud').innerText = data[2];
             document.getElementById('timestamp').innerText = formatDate(data[3]);
 
             // Actualiza la ubicación en el mapa
@@ -442,34 +398,7 @@
             }
         }
 
-        function updateDataTable(data) {
-            data[3]=formatDate(data[3]);
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Crea una nueva fila de datos
-            const newRow = document.createElement('tr');
-
-            // Itera a través de los datos y crea celdas para cada valor
-            for (const value of data) {
-                const cell = document.createElement('td');
-                cell.innerText = value;
-                newRow.appendChild(cell);
-            }
-
-            // Agrega la nueva fila en la parte superior de la tabla
-            if (table.rows.length > 0) {
-                table.insertBefore(newRow, table.rows[0]);
-            } else {
-                table.appendChild(newRow);
-            }
-
-            // Limita la cantidad de filas en la tabla, eliminando las más antiguas si es necesario
-            const maxRows = 100;
-            while (table.rows.length > maxRows) {
-                table.deleteRow(maxRows);
-            }
-        }
+        
 
         // Función para borrar las polilíneas
         function borrarPolilineas() {

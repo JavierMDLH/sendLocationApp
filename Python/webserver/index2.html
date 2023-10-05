@@ -77,6 +77,10 @@
         }
 
         .navbar a:hover {
+            background-color: #efba1bc6;
+        }
+
+        .navbutton{
             background-color: #efbb1b;
         }
 
@@ -105,22 +109,6 @@
             box-shadow: 0 0 15px rgba(79, 79, 79); /* Sombra del contenedor */
         }
 
-        /* Estilos para la tabla de datos históricos */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #dcdcdc;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #efbb1b;
-            color: #000000;
-        }
 
         /* Estilos para el mapa */
         #map {
@@ -131,6 +119,30 @@
             border-radius: 30px; /* Borde redondeado */
             box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
         }
+
+         /* Estilos para los datos en dos columnas */
+         .data-columns {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .data-column {
+            flex-basis: 230px; /* Ancho de las columnas */
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+        }
+
+        .data-column1 {
+            flex-basis: 230px; /* Ancho de las columnas */
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        
 
 
 
@@ -148,7 +160,7 @@
             color: #3b3939;
             font-family: 'Merriweather', serif;
             margin-top: 20px;
-            width: 25%;
+            width: 75%;
             padding: 5px;
             box-sizing: border-box;
         }
@@ -186,7 +198,7 @@
             border-radius: 15px;
             padding: 5px 15px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             margin-left: auto;
             font-family: 'Merriweather', serif;
         }
@@ -258,6 +270,17 @@
             cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
         }
         
+        .button1 {
+            background-color: #efbb1b;
+            color: #000000;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-left: 35px;
+            font-family: 'Merriweather', serif;
+        }
 
         
 
@@ -268,66 +291,82 @@
 
 <body>
     <div class="navbar">
-        <a id="Pagina1" href="index.html">Datos en Tiempo Real</a>
-        <a id="Pagina2" href="index2.html">Datos en ventana de Tiempo</a>
+        <a class="navbutton" id="Pagina1" href="index.html">Datos en Tiempo Real</a>
     </div>
 
+    
+
     <div id="data-box">
-        <h1>GPS Finder - Webserver</h1>
+        <!--<h1>MapMyDrive </h1>   -->
+        <div class="data-columns">
+            <div class="data-column">
+                <img src="logo.jpg">
+            </div>
         
-        <button id="switch" class="toggleSwitch">Presione aquí para volver a los datos en Tiempo Real</button>
-
-        <!-- Elemento de entrada de fecha inicial -->
-        <div class="button-container">
-            <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
-        </div>
         
-        <!-- Botón para seleccionar fecha inicial -->
-        <div  class="tooltip">
-            <button id="datePickerButton" class="date-button">
-                <i class="fas fa-calendar"></i> Seleccionar Fecha Inicial
-            </button>
-            <span class="tooltip-text">Presione para escoger la fecha inicial.</span>
+            <div class="data-column">
+                <!-- Elemento de entrada de fecha inicial -->
+                <div class="button-container">
+                    <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
+                </div>
+                <!-- Botón para seleccionar fecha inicial -->
+                <div  class="tooltip">
+                    <button id="datePickerButton" class="date-button">
+                        <i class="fas fa-calendar"></i> 
+                    </button>
+                    <span class="tooltip-text">Presione para escoger la fecha inicial.</span>
+                </div>
 
-        </div>
-        
+            </div>
 
-        <!-- Elemento de entrada de fecha final -->
-        <div class="button-container">
-            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">  
-        </div>
-        
-        <div class="buttons">
-            <!-- Botón para seleccionar fecha final -->
-            <div  class="tooltip">
-                <button id="datePickerButtonF" class="date-button-final">
-                    <i class="fas fa-calendar"></i> Seleccionar Fecha Final
-                </button><br>
-                <span class="tooltip-text">Presione para escoger la fecha final.</span>
 
+            <div class="data-column">
+
+                <!-- Elemento de entrada de fecha final -->
+                <div class="button-container">
+                    <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">  
+                </div>
+                
+                <div class="buttons">
+                    <!-- Botón para seleccionar fecha final -->
+                    <div  class="tooltip">
+                        <button id="datePickerButtonF" class="date-button-final">
+                            <i class="fas fa-calendar"></i> 
+                        </button><br>
+                        <span class="tooltip-text">Presione para escoger la fecha final.</span>
+
+                        
+                    </div>
+                    
+                </div>
                 
             </div>
-            <div class="tooltip">
-                <input type="range" id="rangeSlider" min="0.1" max="5" step="0.1" value="1">
-                <span class="tooltip-text">Mueva esta barra para cambiar el radio de busqueda</span>
-            </div>
+
+            
         </div>
+        
+        
+        
+
+        
 
         <div class="buttons">
             <div  class="tooltip">
-                <button id="toggleSwitch" class="toggleSwitch">Presione aquí para ver los datos en la ventana de tiempo</button>
+                <button id="toggleSwitch" class="button1">Buscar Datos </button>
                 <span class="tooltip-text">Al presionar, se realiza la búsqueda de datos en el fecha y el lugar indicados.</span>
     
             </div>
             
-            
-            
-            
-            <div class="tooltip">
+            <div class= "buttons" class="tooltip">
             
                 <button id="buscarLocalizacionesButton" class="toggleSwitch"></i>Seleccionar área de búsqueda <i class="fas fa-map-marker-alt"></i></button>
                 <span class="tooltip-text">Al presionar, se habilita el mapa para que al dar click sobre el se muestre un marcador que indica el lugar de interés para hacer la consulta de datos.</span>
             </div>
+
+            
+            
+            
+            
         </div>
         
         <div  class="tooltip">
@@ -344,6 +383,19 @@
             <div id="rangeSliderValue"></div>
             
         </div>
+        <div class="data-column1">
+
+            <div class="data-column">
+                <div class="tooltip">
+                    <input type="range" id="rangeSlider" min="0.1" max="5" step="0.1" value="1">
+                    <span class="tooltip-text">Mueva esta barra para cambiar el radio de busqueda</span>
+                </div>
+    
+                
+    
+            </div>
+
+        </div>
 
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div><br>
@@ -355,20 +407,6 @@
          
 
 
-        <!-- Agrega una tabla para mostrar los datos del servidor -->
-        <table id="reg-table">
-            <thead>
-                <tr>
-                    <th>Latitud</th>
-                    <th>Longitud</th>
-                    <th>Altitud</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Los datos del servidor se agregarán aquí dinámicamente -->
-            </tbody>
-        </table>
     </div>
 
     <script>
@@ -391,18 +429,25 @@
         let lat ;
         let long ;
         let RadioKm;
+        let lastTimestamp = null;
+        let newtimestmap;
+        let fechaFinal;
+        let fechaInicial;
         
 
         var elemento = document.getElementById('texto1'); 
         var elemento1 = document.getElementById('locationSlider');
-        var elemento2 = document.getElementById('reg-table');
+        let locbut = document.getElementById('buscarLocalizacionesButton');
+        
         
 
         elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
                 
         elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
-        elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+     
         rangeslider.style.display = 'none';
+
+        locbut.style.display = 'block';
 
         // Cargar el archivo JSON
         fetch('./var.json')
@@ -419,7 +464,6 @@
 
         // Obtener el enlace Página 1 y 2 por su id
         const pagina1Link = document.getElementById("Pagina1");
-        const pagina2Link = document.getElementById("Pagina2");
 
         // Agrega un event listener para el evento "click"
         pagina1Link.addEventListener("click", function(event) {
@@ -428,15 +472,6 @@
 
             // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
             socket.emit('Pagina1')
-
-        });
-            
-        pagina2Link.addEventListener("click", function(event) {
-            // Evita que el enlace siga su enlace predeterminado
-            //event.preventDefault();
-
-            // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
-            socket.emit('Pagina2')
 
         });
 
@@ -482,30 +517,36 @@
             const minuto = partes[4];
             const segundo = '00'; 
 
-            return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
+            return `${anio}${mes}${dia}${hora}${minuto}${segundo}`;
         }
 
         document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
-        const locbut = document.getElementById('buscarLocalizacionesButton');
+        
 
         function buscarLocalizaciones() {
-            locbut.innerText = "Ahora puede hacer click sobre el mapa";
-            if (marker) {
+            locbut.innerText = "Haga click sobre el mapa";
+            if (but.innerText =='Nueva consulta'){
+
+            }else{
+                if (marker) {
                 // Si ya existe un marcador, no se permite colocar otro
                 
                 return;
             }
+            }
+            
+            
 
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
 
-                if (marker && locbut.innerText != 'Ahora puede hacer click sobre el mapa') {
-                    locbut.innerText = "Presione para colorcar otro marcador";
-                    // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
-                    alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
-                    
-                    return;
-                }
+                //if (marker && but.innerText != 'Presione aquí para hacer otra consulta') {
+                //    locbut.innerText = "Presione para colorcar otro marcador";
+                //    // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
+                //    alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
+                //    
+                //    return;
+                //}
 
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
@@ -520,12 +561,7 @@
                 
                 // Crea un nuevo marcador en la ubicación donde se hizo clic
                 marker = L.marker(e.latlng).addTo(map);
-                // También puedes vincular el círculo al marcador, de modo que se mueva junto con él
-                marker.bindPopup("Esta es tú area de búsqueda").openPopup();
-                // Cierra el popup después de 5 segundos (5000 milisegundos)
-                setTimeout(function() {
-                    marker.closePopup();
-                }, 5000);
+               
 
                 updatecirclevalue();
                 
@@ -556,11 +592,11 @@
                 color: 'blue', // Color del borde del círculo
                 fillColor: 'blue', // Color de relleno del círculo
                 fillOpacity: 0.4, // Opacidad del relleno del círculo
-                radius: RadioKm*1040 // Radio en metros (representa 1 km)
+                radius: RadioKm*1300 // Radio en metros (representa 1 km)
             }).addTo(map);
 
             
-            circle.addTo(map);
+            
 
             // Actualiza el cuadro de texto con el valor del rango
             const valuerange = document.getElementById('rangeSliderValue');
@@ -576,20 +612,13 @@
         
     
         
-        const but = document.getElementById('toggleSwitch');
-        const pol = document.getElementById('erasePolyline')
 
-        document.getElementById('switch').addEventListener('click', () => {
-            // Redirige a la página deseada
-            socket.emit('Pagina1');
-            window.location.href = '/index.html'; // Reemplaza 'nueva_pagina.html' con la URL de la página a la que deseas redirigir
-            
- 
-        });
+        const pol = document.getElementById('erasePolyline')
+        const but = document.getElementById('toggleSwitch')
 
         // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
         document.getElementById('toggleSwitch').addEventListener('click', () => {
-            if (but.innerText =='Presione aquí para hacer otra consulta'){
+            if (but.innerText =='Nueva consulta'){
                 borrarPolilineas();
             } 
             // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
@@ -598,23 +627,37 @@
             const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
             const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
             console.log('Fecha inicial',fechaInicial);
+            console.log('Fecha final',fechaFinal);
             if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
                 alert('Ha establecido mal la ventana de Tiempo')
                 mostrarDatosNuevos =true;
             }else{
                 if (lat == 0 || lat ==undefined ||lat ==null ){
-                    alert('Debe seleccionar un área de busqueda')
-                }else{
-                       
+                    
+                    lat = 0;
+                    long = 0;
+                    RadioKm = 0; 
+
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
-                    but.innerText = 'Presione aquí para hacer otra consulta'; 
+                    but.innerText = 'Nueva consulta'; 
                     
                     
                     elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                     
                     elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    rangeslider.style.display = 'none';
 
-                    elemento2.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+
+                }else{
+                       
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
+                    but.innerText = 'Nueva consulta'; 
+                    
+                    
+                    elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                     
                     rangeslider.style.display = 'none';
 
@@ -636,11 +679,9 @@
                 
                 elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
 
-                elemento2.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
-
                 alert('No se encontraron registros asociados a la fecha y lugar establecidos ')
             }else{
-                alert('Ahora sólo verá los datos en la ventana de tiempo establecida')
+                //alert('Ahora sólo verá los datos en la ventana de tiempo establecida')
                 datePickerButtonF.scrollIntoView({ behavior: 'smooth' }); // El desplazamiento será suave
             }
             console.log(data);
@@ -661,49 +702,17 @@
         
 
         function updateDataTablereg(data) {
-            // Obtén la tabla
-            const table = document.getElementById('data-table');
-
-            // Borra todas las filas existentes en la tabla
-            while (table.rows.length > 0) {
-                table.deleteRow(0);
-            }
-
 
             // Itera a través de los datos y crea filas y celdas para cada valor
             for (const item of data) {
-                const newRow = document.createElement('tr');
-
-                // Crear celdas para latitud, longitud, altitud y timestamp
-                const latitudCell = document.createElement('td');
-                latitudCell.innerText = item.latitud;
-                newRow.appendChild(latitudCell);
-
-                const longitudCell = document.createElement('td');
-                longitudCell.innerText = item.longitud;
-                newRow.appendChild(longitudCell);
-
-                const altitudCell = document.createElement('td');
-                altitudCell.innerText = item.altitud;
-                newRow.appendChild(altitudCell);
-
-                const timestampCell = document.createElement('td');
-                timestampCell.innerText = item.timestamp;
-                newRow.appendChild(timestampCell);
-
-                // Agrega la nueva fila en la parte superior de la tabla
-                if (table.rows.length > 0) {
-                    table.insertBefore(newRow, table.rows[0]);
-                } else {
-                    table.appendChild(newRow);
-                }
-
                 // Agrega el punto a la polilínea
                 const latitud = parseFloat(item.latitud);
                 const longitud = parseFloat(item.longitud);
                 polylines.push([latitud, longitud]);
             }
 
+            let previousLatLngs = [];
+            index1 = 0;
 
             function showRoute() {
                 // Reinicia la ruta
@@ -722,16 +731,63 @@
                 const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
 
                 // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
-                const latLngs = polylines.slice(0, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+                var latLngs = polylines.slice(index1, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+
+
+                //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
+                newtimestmap = data[newIndex].timestamp;
+                console.log('timestamp: ',data[newIndex].timestamp);
+                // Divide la cadena en partes
+                const partes = newtimestmap.split(/[\/, :]/);
+                console.log('partes',partes);
+                // Ajusta el formato del mes (resta 1 porque los meses en JavaScript van de 0 a 11)
+                const mes = parseInt(partes[1]) - 1;
+                // Extrae la hora y los minutos
+                var hora = parseInt(partes[4]);
+                const minutos = parseInt(partes[5]);
+
+                // Obtiene "AM" o "PM" y ajusta la hora si es necesario
+                const amPm = partes[7];
+                if (amPm.includes("p")) {
+                    hora = hora + 12;
+                    
+                }
+
+                // Obtiene el año, el día y los segundos
+                const año = parseInt(partes[2]);
+                const día = parseInt(partes[0]);
+                const segundos = parseInt(partes[6]);
+                
+
+                // Crea un objeto de fecha válido
+                newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
+
+                console.log('newtimestmap: ',newtimestmap)
+                console.log("lastTimestamp: ",lastTimestamp)
+                
+                
+                
 
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
 
-                polyline = L.polyline(latLngs, {
-                    color: 'blue',
-                    dashArray: '10, 10',
-                    opacity: opacity,
-                }).addTo(map);
+                if (newIndex > 1) {
+                    const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
+                    console.log('diferenciaSegundos: ', diferenciaSegundos);
+
+                    if (diferenciaSegundos <= 600) {
+                        // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
+                        polyline = L.polyline(latLngs, {
+                            color: 'blue',
+                            dashArray: '10, 10',
+                            opacity: opacity,
+                        }).addTo(map);
+                    }
+                    else{
+                        index1 = newIndex;
+                        
+                    }
+                }
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
@@ -754,6 +810,7 @@
                     map.setView([latitud, longitud]);
                     console.log("marker en última posición");
                 }
+                lastTimestamp = newtimestmap;
             }
 
             // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
@@ -768,12 +825,27 @@
 
         }
 
+        
+
+        function ocultarloc() {
+            console.log('fechaInicial.value',fechaInicial)
+            if (fechaInicial !== undefined){
+                console.log('datePickerInput.value',datePickerInput.value)
+                //locbut.style.display = 'block';
+
+            }
+        }
+
+        // Llamando a la función para que se ejecute siempre
+        ocultarloc();
+
+
 
 
         function formatTimestamp(timestamp) {
-            const day = timestamp.slice(0, 2);
-            const month = timestamp.slice(2, 4);
-            const year = timestamp.slice(4, 8);
+            const day = timestamp.slice(6, 8);
+            const month = timestamp.slice(4, 6);
+            const year = timestamp.slice(0, 4);
             const hours = timestamp.slice(8, 10);
             const minutes = timestamp.slice(10, 12);
             const seconds = timestamp.slice(12, 14);
@@ -836,23 +908,32 @@
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
-                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                altFormat: "d/m/Y H:i", // Formato de fecha y hora para la visualización
                 minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
                 maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
-                    const fechaInicial = new Date(dateStr);
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
                     const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
 
-                    // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
-                    if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
-                        // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
-                        fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
-                        datePickerInput._flatpickr.setDate(fechaInicial);
+                    // Verifica si la fecha inicial es null
+                    if (fechaInicial === null || fechaInicial == undefined) {
+                        // No establece una fecha mínima para la fecha final si la fecha inicial es null
+                        datePickerInputF._flatpickr.set('minDate', "2023-09-15");
+                    } else {
+                        // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
+                        if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                            // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
+                            fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
+                            datePickerInput._flatpickr.setDate(fechaInicial);
+                        }
+
+                        // Configura la fecha mínima para la fecha final como la fecha inicial
+                        datePickerInputF._flatpickr.set('minDate', fechaInicial);
                     }
 
-                    // Configura la fecha mínima para la fecha final
-                    datePickerInputF._flatpickr.set('minDate', fechaInicial);
                     datePickerInput.value = dateStr;
+
+
                 }
             };
 
@@ -860,23 +941,25 @@
                 enableTime: true,
                 dateFormat: "Y-m-d H:i", // Formato de fecha y hora
                 altInput: true, // Habilita la visualización de la fecha y hora seleccionada
-                altFormat: "F j, Y H:i", // Formato de fecha y hora para la visualización
+                altFormat: "d/m/Y H:i", // Formato de fecha y hora para la visualización
                 minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
                 maxDate: "today", // Fecha máxima permitida (día actual)
                 onClose: function(selectedDates, dateStr, instance) {
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
                     const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
-                    const fechaFinal = new Date(dateStr);
 
                     // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
-                    if (fechaInicial && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                    if (fechaInicial && fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
                         // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha final
                         fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
                         datePickerInputF._flatpickr.setDate(fechaFinal);
                     }
 
-                    // Configura la fecha máxima para la fecha inicial
+                    // Configura la fecha máxima para la fecha inicial como el día actual
                     datePickerInput._flatpickr.set('maxDate', fechaFinal);
                     datePickerInputF.value = dateStr;
+
+
                 }
             };
 
@@ -893,8 +976,12 @@
             });
             datePickerButton.addEventListener('click', function () {
                 datePickerInput._flatpickr.open();
+                
+                
             });
         });
+
+
 
     </script>
 </body>
