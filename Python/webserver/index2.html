@@ -435,6 +435,7 @@
 
         var elemento = document.getElementById('texto1'); 
         var elemento1 = document.getElementById('locationSlider');
+        let locbut = document.getElementById('buscarLocalizacionesButton');
         
         
 
@@ -443,6 +444,8 @@
         elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
      
         rangeslider.style.display = 'none';
+
+        locbut.style.display = 'none';
 
         // Cargar el archivo JSON
         fetch('./var.json')
@@ -516,7 +519,7 @@
         }
 
         document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
-        const locbut = document.getElementById('buscarLocalizacionesButton');
+        
 
         function buscarLocalizaciones() {
             locbut.innerText = "Ahora puede hacer click sobre el mapa";
@@ -591,7 +594,7 @@
             }).addTo(map);
 
             
-            //circle.addTo(map);
+            
 
             // Actualiza el cuadro de texto con el valor del rango
             const valuerange = document.getElementById('rangeSliderValue');
