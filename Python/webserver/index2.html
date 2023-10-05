@@ -414,7 +414,7 @@
         
         let mostrarDatosNuevos = false;
         let marker; // Variable para almacenar el marcador
-        let circle;
+        let rectangle;
         let rangeslider = document.getElementById('rangeSlider');
         let previousPoint; // Variable para almacenar el punto anterior
         let opacity = 1; // Inicialmente, opacidad al 100%
@@ -546,8 +546,8 @@
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
                     map.removeLayer(marker);
-                    if (circle != null || circle != undefined){
-                        map.removeLayer(circle);
+                    if (rectangle != null || rectangle != undefined){
+                        map.removeLayer(rectangle);
                     }
                     
                 }
@@ -571,8 +571,8 @@
 
         function updatecirclevalue(){
             
-            if (circle != null || circle != undefined){
-                map.removeLayer(circle);
+            if (rectangle != null || rectangle != undefined){
+                map.removeLayer(rectangle);
             }
 
             // Obtener la posición actual del marcador en el mapa
@@ -589,7 +589,7 @@
             const longitudMax = long + (RadioKm / (111.32 * Math.cos(lat * (Math.PI / 180))));
 
             // Crear un rectángulo y agregarlo al mapa
-            const rectangle = L.rectangle(
+            rectangle = L.rectangle(
                 [
                     [latitudMin, longitudMin],
                     [latitudMax, longitudMax]
