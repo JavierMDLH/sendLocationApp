@@ -76,12 +76,20 @@ udpServer.on('message', (message, remote) => {
   const longitud = received_data.split('Longitud ')[1].split(',')[0];
   const altitud = received_data.split('Altitud ')[1].split(',')[0];
   
-  const fecha_hora = received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '');
+  const hora = received_data.split('Hora: ')[1].trim().replace(/[^0-9]/g, '');
+
+  // Obtén el año, mes y día de la cadena original
+  const anio = "20" + hora.slice(4, 6);
+  const mes = hora.slice(2, 4);
+  const dia = hora.slice(0, 2);
+
+  // Crea la nueva cadena con el formato deseado
+  const nueva_fecha_hora = anio + mes + dia + hora.slice(6);
 
 
   // Ejemplo de inserción en la base de datos
   const consulta = 'INSERT INTO datos (Latitud, Longitud, Altitud, Timestamp) VALUES (?, ?, ?, ?)';
-  const valores = [latitud, longitud, altitud, fecha_hora];
+  const valores = [latitud, longitud, altitud, nueva_fecha_hora];
 
   db.query(consulta, valores, (err, results) => {
     if (err) {
