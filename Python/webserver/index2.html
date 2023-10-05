@@ -823,12 +823,20 @@
 
         }
 
-        console.log('datePickerInput.value11',datePickerInput.value)
-        if (datePickerInputF.value){
+        
+
+        function ocultarloc() {
+            if (datePickerInputF.value){
             console.log('datePickerInput.value',datePickerInput.value)
             //locbut.style.display = 'block';
 
         }
+        }
+
+        // Llamando a la función para que se ejecute siempre
+        ocultarloc();
+
+
 
 
         function formatTimestamp(timestamp) {
