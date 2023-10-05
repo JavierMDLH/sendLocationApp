@@ -740,7 +740,7 @@
                     const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
                     console.log('diferenciaSegundos: ', diferenciaSegundos);
 
-                    if (diferenciaSegundos <= 250) {
+                    if (diferenciaSegundos <= 350) {
                         // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
                         polyline = L.polyline(latLngs, {
                             color: 'blue',
