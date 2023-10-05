@@ -930,6 +930,13 @@
                     }
 
                     datePickerInput.value = dateStr;
+
+
+                    // Verifica si ambas fechas están seleccionadas
+                    if (fechaInicial !== null && fechaFinal !== null) {
+                        ocultarloc(); // Llama a la función cuando ambas fechas están seleccionadas
+                    }
+
                 }
             };
 
@@ -954,6 +961,12 @@
                     // Configura la fecha máxima para la fecha inicial como el día actual
                     datePickerInput._flatpickr.set('maxDate', fechaFinal);
                     datePickerInputF.value = dateStr;
+
+
+                    // Verifica si ambas fechas están seleccionadas
+                    if (fechaInicial !== null && fechaFinal !== null) {
+                        ocultarloc(); // Llama a la función cuando ambas fechas están seleccionadas
+                    }
                 }
             };
 
@@ -970,11 +983,8 @@
             });
             datePickerButton.addEventListener('click', function () {
                 datePickerInput._flatpickr.open();
-                if (datePickerInput.value){
-                    if (datePickerInputF.value){
-                        locbut.style.display = 'block';
-                    }
-                }
+                
+                
             });
         });
 
