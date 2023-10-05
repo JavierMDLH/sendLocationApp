@@ -282,24 +282,16 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,cal
   const longitudMin = long - (radioGrados / Math.cos(lat * (Math.PI / 180)));
   const longitudMax = long + (radioGrados / Math.cos(lat * (Math.PI / 180)));
 
-  let consulta = `SELECT Latitud, Longitud, Altitud, Timestamp 
+  const consulta = `SELECT Latitud, Longitud, Altitud, Timestamp 
   FROM datos 
-  WHERE Timestamp BETWEEN ? AND ?`;
+  WHERE Timestamp BETWEEN ? AND ? 
+    AND Latitud BETWEEN ? AND ? 
+    AND Longitud BETWEEN ? AND ? 
+  ORDER BY Timestamp;`;
 
-  const valores = [fechaInicial, fechaFinal];
-
-  if (RadioKm > 0) {
-    console.log('Datos filtrados por localizacion')
-    consulta += ` AND Latitud BETWEEN ? AND ? AND Longitud BETWEEN ? AND ?`;
-    valores.push(latitudMin, latitudMax, longitudMin, longitudMax);
-  }else{
-    console.log('Datos filtrados solo por tiempo')
-  }
-
-  consulta += ` ORDER BY Timestamp;`;
-
-  console.log('Fecha inicial: ', fechaInicial);
-  console.log('Fecha final: ', fechaFinal);
+  const valores = [fechaInicial, fechaFinal,latitudMin,latitudMax,longitudMin,longitudMax];
+  console.log('Fecha inicial: ',fechaInicial);
+  console.log('Fecha final: ',fechaFinal);
   db.query(consulta, valores, (err, results) => {
     if (err) {
       callback(err, null);
