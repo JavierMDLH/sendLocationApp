@@ -524,8 +524,8 @@
         
 
         function buscarLocalizaciones() {
-            locbut.innerText = "Ahora puede hacer click sobre el mapa";
-            if (but.innerText =='Presione aquí para hacer otra consulta'){
+            locbut.innerText = "Haga click sobre el mapa";
+            if (but.innerText =='Nueva consulta'){
 
             }else{
                 if (marker) {
@@ -934,13 +934,6 @@
                     datePickerInput.value = dateStr;
 
 
-                    // Verifica si ambas fechas están seleccionadas
-                    console.log('fechaInicial: ', fechaInicial);
-                    console.log('fechaFinal: ', fechaFinal);
-                    if (fechaInicial.length !== undefined && fechaFinal.length !== undefined) {
-                        ocultarloc(); // Llama a la función cuando ambas fechas están seleccionadas
-                    }
-
                 }
             };
 
@@ -967,10 +960,6 @@
                     datePickerInputF.value = dateStr;
 
 
-                    // Verifica si ambas fechas están seleccionadas
-                    if (fechaInicial !== undefined && fechaFinal !== undefined) {
-                        ocultarloc(); // Llama a la función cuando ambas fechas están seleccionadas
-                    }
                 }
             };
 
