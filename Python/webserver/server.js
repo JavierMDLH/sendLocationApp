@@ -289,6 +289,7 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,cal
   const valores = [fechaInicial, fechaFinal];
 
   if (RadioKm > 0) {
+    console.log('Datos filtrados por localizacion')
     consulta += ` AND Latitud BETWEEN ? AND ? AND Longitud BETWEEN ? AND ?`;
     valores.push(latitudMin, latitudMax, longitudMin, longitudMax);
   }
