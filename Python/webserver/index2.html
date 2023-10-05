@@ -961,6 +961,11 @@
             });
             datePickerButton.addEventListener('click', function () {
                 datePickerInput._flatpickr.open();
+                if (datePickerInput.value){
+                    if (datePickerInputF.value){
+                        locbut.style.display = 'block';
+                    }
+                }
             });
         });
 
