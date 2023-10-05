@@ -672,6 +672,7 @@
         
 
         socket.on('update_table', function(data) {
+            locationSlider.value=0;
             console.log('Nueva Tabla Recibida');
             if (data.length < 1){
                 
