@@ -778,9 +778,9 @@
 
 
         function formatTimestamp(timestamp) {
-            const day = timestamp.slice(0, 2);
-            const month = timestamp.slice(2, 4);
-            const year = timestamp.slice(4, 8);
+            const day = timestamp.slice(6, 8);
+            const month = timestamp.slice(4, 6);
+            const year = timestamp.slice(0, 4);
             const hours = timestamp.slice(8, 10);
             const minutes = timestamp.slice(10, 12);
             const seconds = timestamp.slice(12, 14);
