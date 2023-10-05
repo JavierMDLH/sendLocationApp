@@ -84,7 +84,7 @@ udpServer.on('message', (message, remote) => {
   const dia = hora.slice(0, 2);
 
   // Crea la nueva cadena con el formato deseado
-  const nueva_fecha_hora = anio + mes + dia + hora.slice(6);
+  const nueva_fecha_hora = anio + mes + dia + hora.slice(8);
 
 
   // Ejemplo de inserción en la base de datos
