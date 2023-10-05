@@ -282,16 +282,21 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,cal
   const longitudMin = long - (radioGrados / Math.cos(lat * (Math.PI / 180)));
   const longitudMax = long + (radioGrados / Math.cos(lat * (Math.PI / 180)));
 
-  const consulta = `SELECT Latitud, Longitud, Altitud, Timestamp 
+  let consulta = `SELECT Latitud, Longitud, Altitud, Timestamp 
   FROM datos 
-  WHERE Timestamp BETWEEN ? AND ? 
-    AND Latitud BETWEEN ? AND ? 
-    AND Longitud BETWEEN ? AND ? 
-  ORDER BY Timestamp;`;
+  WHERE Timestamp BETWEEN ? AND ?`;
 
-  const valores = [fechaInicial, fechaFinal,latitudMin,latitudMax,longitudMin,longitudMax];
-  console.log('Fecha inicial: ',fechaInicial);
-  console.log('Fecha final: ',fechaFinal);
+  const valores = [fechaInicial, fechaFinal];
+
+  if (radioKm > 0) {
+    consulta += ` AND Latitud BETWEEN ? AND ? AND Longitud BETWEEN ? AND ?`;
+    valores.push(latitudMin, latitudMax, longitudMin, longitudMax);
+  }
+
+  consulta += ` ORDER BY Timestamp;`;
+
+  console.log('Fecha inicial: ', fechaInicial);
+  console.log('Fecha final: ', fechaFinal);
   db.query(consulta, valores, (err, results) => {
     if (err) {
       callback(err, null);
@@ -308,4 +313,5 @@ function obtenerDatosEnRangoDesdeDB(fechaInicial,fechaFinal,lat,long,RadioKm,cal
 
     callback(null, data);
   });
+
 }  

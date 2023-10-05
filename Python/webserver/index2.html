@@ -598,7 +598,22 @@
                 mostrarDatosNuevos =true;
             }else{
                 if (lat == 0 || lat ==undefined ||lat ==null ){
-                    alert('Debe seleccionar un área de busqueda')
+                    
+                    lat = 0;
+                    long = 0;
+                    RadioKm = 0; 
+
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
+                    but.innerText = 'Presione aquí para hacer otra consulta'; 
+                    
+                    
+                    elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    rangeslider.style.display = 'none';
+
+
                 }else{
                        
                     socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
