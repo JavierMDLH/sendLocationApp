@@ -752,11 +752,14 @@
                 const minutos = parseInt(partes[5]);
 
                 // Obtiene "AM" o "PM" y ajusta la hora si es necesario
-                const amPm = partes[7];
-                if (amPm.includes("p")) {
-                    hora = hora + 12;
-                    
+                if (partes[7]){
+                    const amPm = partes[7];
+                    if (amPm.includes("p")) {
+                        hora = hora + 12;
+                    }
                 }
+                
+                
 
                 // Obtiene el año, el día y los segundos
                 const año = parseInt(partes[2]);
