@@ -779,23 +779,29 @@
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
 
-                if (newIndex > 1) {
-                    const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
-                    console.log('diferenciaSegundos: ', diferenciaSegundos);
+                //if (newIndex > 1) {
+                //    const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
+                //    console.log('diferenciaSegundos: ', diferenciaSegundos);
 
-                    if (diferenciaSegundos <= 6000) {
-                        // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
-                        polyline = L.polyline(latLngs, {
-                            color: 'blue',
-                            dashArray: '10, 10',
-                            opacity: opacity,
-                        }).addTo(map);
-                    }
-                    else{
-                        index1 = newIndex;
+                //    if (diferenciaSegundos <= 6000) {
+                //        // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
+                //        polyline = L.polyline(latLngs, {
+                //            color: 'blue',
+                //            dashArray: '10, 10',
+                //            opacity: opacity,
+                //        }).addTo(map);
+                //    }
+                //    else{
+                //        index1 = newIndex;
                         
-                    }
-                }
+                //    }
+                //}
+
+                polyline = L.polyline(latLngs, {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: opacity,
+                }).addTo(map);
 
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
