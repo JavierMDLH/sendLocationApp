@@ -40,7 +40,6 @@
 .button1 {
   background-color: #efbb1b;
   color: #000000;
-  border: none;
   border-radius: 15px;
   padding: 5px 15px;
   cursor: pointer;
@@ -51,7 +50,6 @@
 .toggleSwitch {
   background-color: #efbb1b;
   color: #000000;
-  border: none;
   border-radius: 15px;
   padding: 5px 15px;
   cursor: pointer;
@@ -151,10 +149,4 @@ justify-content: space-between;
   padding: 5px 15px;
   cursor: pointer;
   margin-top: 20px;
-}
-
-.timestamp {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
 }
