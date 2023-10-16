@@ -20,3 +20,146 @@
     font-size: 1.5rem;
   }
 }
+
+/* Estilo personalizado para el slider2 */
+#rangeSlider {
+  width: 280px; /* Ajusta el ancho del slider */
+  height: 20px; /* Ajusta la altura del slider*/
+}
+
+/* Estilo personalizado para el control deslizante del slider2 */
+#rangeSlider::-webkit-slider-thumb {
+  width: 30px; /* Ajusta el ancho del control deslizante */
+  height: 30px; /* Ajusta la altura del control deslizante */
+  background-color: #3b3939; /* Color de fondo del control deslizante */
+  border: 2px solid #3b3939; /* Borde del control deslizante */
+  border-radius: 50%; /* Borde redondeado para que parezca un círculo */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
+}
+
+.button1 {
+  background-color: #efbb1b;
+  color: #000000;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: 35px;
+  font-family: 'Merriweather', serif;
+}
+
+.toggleSwitch {
+  background-color: #efbb1b;
+  color: #000000;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: auto;
+  font-family: 'Merriweather', serif;
+}
+
+.buttons {
+display: flex;
+justify-content: space-between;
+
+}
+
+/* Estilo personalizado para el slider */
+#locationSlider {
+  width: 100%; /* Ajusta el ancho del slider */
+  height: 20px; /* Ajusta la altura del slider*/
+}
+
+/* Estilo personalizado para el control deslizante del slider */
+#locationSlider::-webkit-slider-thumb {
+  width: 30px; /* Ajusta el ancho del control deslizante */
+  height: 30px; /* Ajusta la altura del control deslizante */
+  background-color: #3b3939; /* Color de fondo del control deslizante */
+  border: 2px solid #3b3939; /* Borde del control deslizante */
+  border-radius: 50%; /* Borde redondeado para que parezca un círculo */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el control deslizante */
+}
+
+/* Estilos para el mapa */
+#map {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+  border: 5px inset #3b3939; /* Borde del contenedor */
+  border-radius: 30px; /* Borde redondeado */
+  box-shadow: 0 0 20px rgba(0, 86, 179); /* Sombra del contenedor */
+}
+
+/* Estilos para los datos en dos columnas */
+.data-columns {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.data-column {
+  flex-basis: 230px; /* Ancho de las columnas */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+}
+
+.data-column1 {
+  flex-basis: 230px; /* Ancho de las columnas */
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+
+
+
+
+/* Estilos para los botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.date-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #3b3939;
+  color: #3b3939;
+  font-family: 'Merriweather', serif;
+  margin-top: 20px;
+  width: 75%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.date-button {
+  background-color: #efbb1b;
+  color: #000000;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  margin-right: auto;
+  font-family: 'Merriweather', serif;
+}
+
+/* Estilos para el botón de Fecha Final */
+.date-button-final {
+  background-color: #efbb1b;
+  color: #000000;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 15px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: auto;
+  font-family: 'Merriweather', serif;
+}
