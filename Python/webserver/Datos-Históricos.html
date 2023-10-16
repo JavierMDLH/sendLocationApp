@@ -562,7 +562,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                 // Actualiza el cuadro de texto con el timestamp del último punto
                 const timestampDisplay = document.getElementById('timestampDisplay');
                 if (data.length > 0) {
-                    timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
+                    timestampDisplay.innerText = "Timestamp:\n"+ data[newIndex].timestamp;
                 } else {
                     timestampDisplay.innerText = '';
                 }
