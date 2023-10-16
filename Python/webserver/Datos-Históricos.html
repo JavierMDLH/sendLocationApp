@@ -174,9 +174,9 @@
           <div class="u-container-layout u-container-layout-7">
 
             <div id="map"></div><br>
-            <p id="texto1">Mueva este cursor para desplazarse a lo largo del recorrido</p>
+            <!--<p id="texto1">Mueva este cursor para desplazarse a lo largo del recorrido</p>
        
-            <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
+            <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">  -->
 
           </div>
         </div>
@@ -549,23 +549,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                 // Configura la opacidad de la polilínea (entre 30% y 100%)
                 const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
 
-                //if (newIndex > 1) {
-                //    const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
-                //    console.log('diferenciaSegundos: ', diferenciaSegundos);
-
-                //    if (diferenciaSegundos <= 6000) {
-                //        // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
-                //        polyline = L.polyline(latLngs, {
-                //            color: 'blue',
-                //            dashArray: '10, 10',
-                //            opacity: opacity,
-                //        }).addTo(map);
-                //    }
-                //    else{
-                //        index1 = newIndex;
-                        
-                //    }
-                //}
+               
 
                 polyline = L.polyline(latLngs, {
                     color: 'blue',
@@ -609,19 +593,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
 
         }
 
-        
 
-        function ocultarloc() {
-            console.log('fechaInicial.value',fechaInicial)
-            if (fechaInicial !== undefined){
-                console.log('datePickerInput.value',datePickerInput.value)
-                //locbut.style.display = 'block';
-
-            }
-        }
-
-        // Llamando a la función para que se ejecute siempre
-        ocultarloc();
 
 
 
