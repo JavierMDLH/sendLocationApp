@@ -17777,7 +17777,7 @@ p {
 .u-accordion:not([class*="u-align-"]),
 .u-repeater-item:not([class*="u-align-"]),
 .u-container-style:not([class*="u-align-"]) {
-  text-align: left;
+  text-align: -webkit-center;
 }
 .u-nav:not([class*="u-align-"]) .u-nav {
   text-align: left;
