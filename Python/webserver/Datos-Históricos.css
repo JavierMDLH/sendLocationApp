@@ -38,7 +38,7 @@
 }
 
 .button1 {
-  background-color: #efbb1b;
+  background-color: #ffffff;
   color: #000000;
   border-radius: 15px;
   padding: 5px 15px;
@@ -48,7 +48,7 @@
 }
 
 .toggleSwitch {
-  background-color: #efbb1b;
+  background-color: #ffffff;
   color: #000000;
   border-radius: 15px;
   padding: 5px 15px;
@@ -136,7 +136,7 @@ justify-content: space-between;
 }
 
 .date-button {
-  background-color: #efbb1b;
+  background-color: #ffffff;
   color: #000000;
   border-radius: 15px;
   padding: 5px 15px;
@@ -146,7 +146,7 @@ justify-content: space-between;
 
 /* Estilos para el botón de Fecha Final */
 .date-button-final {
-  background-color: #efbb1b;
+  background-color: #ffffff;
   color: #000000;
   border-radius: 15px;
   padding: 5px 15px;
