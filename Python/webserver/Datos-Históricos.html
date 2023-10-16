@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="es"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Bienvenido a la sección de datos historicos​">
+    <meta name="description" content="">
+    <title>Datos Históricos</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="Datos-Históricos.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 5.19.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster:400">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <!-- Agrega la biblioteca Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Agrega la biblioteca FLatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Agrega la etiqueta link para el ícono (favicon) -->
+    <link rel="icon" href="favicon64.png" type="image/x-icon">
+    
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/logo.jpg"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Datos Históricos">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-path-to-root="./" class="u-body u-xl-mode" data-lang="es"><header class="u-clearfix u-header u-header" id="sec-94c8"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="200" data-image-height="105">
+          <img src="images/logo.jpg" class="u-logo-image u-logo-image-1">
+        </a>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Datos-en-tiempo-Real.html" style="padding: 10px 20px;">Datos en Tiempo Real</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Datos-Históricos.html" style="padding: 10px 20px;">Datos Históricos</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Información.html" style="padding: 10px 20px;">Información</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Datos-en-tiempo-Real.html">Datos en Tiempo Real</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Datos-Históricos.html">Datos Históricos</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Información.html">Información</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="sec-69e3">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-custom-font u-font-lobster u-text u-text-default u-text-1">Bienvenido a la sección de datos historicos<span style="font-size: 1.875rem;"></span>
+          <br>
+        </h2>
+        <h3 class="u-custom-font u-font-lobster u-text u-text-default u-text-2">Ahora podrá seleccionar una fecha y hora para observar el recorrido del vehículo, además podrá agregarle un filtro para seleccionar un área especifica, ¡Fantástico!</h3>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="sec-8a81">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-col">
+              <div class="u-size-30">
+                <div class="u-layout-row">
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-1">
+                    <div class="u-container-layout u-container-layout-1">
+
+                      <div class="data-column">
+                        <!-- Elemento de entrada de fecha inicial -->
+                        <div class="button-container">
+                            <input id="datePickerInput" class="date-input" placeholder="Fecha y Hora Inicial">
+                        </div>
+                        <!-- Botón para seleccionar fecha inicial -->
+                        <div  class="tooltip">
+                            <button id="datePickerButton" class="date-button">
+                                <i class="fas fa-calendar"></i> 
+                            </button>
+                           <!-- <span class="tooltip-text">Presione para escoger la fecha inicial.</span> -->
+                        </div>
+        
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2">
+
+                      <div class="data-column">
+
+                        <!-- Elemento de entrada de fecha final -->
+                        <div class="button-container">
+                            <input id="datePickerInputF" class="date-input" placeholder="Fecha y Hora Final">  
+                        </div>
+                        
+                        <div class="buttons">
+                            <!-- Botón para seleccionar fecha final -->
+                            <div  class="tooltip">
+                                <button id="datePickerButtonF" class="date-button-final">
+                                    <i class="fas fa-calendar"></i> 
+                                </button><br>
+                                <!-- <span class="tooltip-text">Presione para escoger la fecha final.</span>-->
+        
+                                
+                            </div>
+                            
+                        </div>
+                        
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-3">
+                    <div class="u-container-layout u-container-layout-3">
+
+                      <button id="toggleSwitch" class="button1">Buscar Datos </button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-size-30">
+                <div class="u-layout-row">
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-4">
+                    <div class="u-container-layout u-container-layout-4">
+
+                      <button id="buscarLocalizacionesButton" class="toggleSwitch"></i>Seleccionar área de búsqueda <i class="fas fa-map-marker-alt"></i></button>
+
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-5">
+                    <div class="u-container-layout u-container-layout-5">
+
+                      <input type="range" id="rangeSlider" min="0.1" max="5" step="0.1" value="1">
+                      <div id="rangeSliderValue"></div>
+
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-6">
+                    <div class="u-container-layout u-container-layout-6">
+
+                      <div id="timestampDisplay"></div> 
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-container-style u-expanded-width u-group u-shape-rectangle u-group-1">
+          <div class="u-container-layout u-container-layout-7">
+
+            <div id="map"></div><br>
+            <p id="texto1">Mueva este cursor para desplazarse a lo largo del recorrido</p>
+       
+            <input type="range" id="locationSlider" min="0" max="100" step="1" value="0">
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+
+const socket = io.connect('http://' + document.domain + ':' + location.port);
+        
+        let mostrarDatosNuevos = false;
+        let marker; // Variable para almacenar el marcador
+        let circle;
+        let rangeslider = document.getElementById('rangeSlider');
+        let previousPoint; // Variable para almacenar el punto anterior
+        let opacity = 1; // Inicialmente, opacidad al 100%
+        let polylines =[];
+        let currentIndex = 0;
+        let polyline = null;
+        let polylineSegments = [];
+        //const slider = document.getElementById('slider');
+        const timestampDisplay = document.getElementById('timestamp');
+        let animationInterval;
+        let isSliding = false;
+        let lat ;
+        let long ;
+        let RadioKm;
+        let lastTimestamp = null;
+        let newtimestmap;
+        let fechaFinal;
+        let fechaInicial;
+        
+
+        var elemento = document.getElementById('texto1'); 
+        var elemento1 = document.getElementById('locationSlider');
+        let locbut = document.getElementById('buscarLocalizacionesButton');
+        
+        
+
+        elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+        elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+     
+        rangeslider.style.display = 'none';
+
+        locbut.style.display = 'block';
+
+        // Cargar el archivo JSON
+        fetch('./var.json')
+            .then(response => response.json())
+            .then(data => {
+                // Acceder a los datos del archivo JSON
+                console.log(data.NAME);
+                // Acceder al valor "NAME" y establecerlo como título de la pestaña
+                document.title = data.NAME;
+            })
+            .catch(error => {
+                console.error('Error al cargar el archivo JSON:', error);
+            });
+
+        // Obtener el enlace Página 1 y 2 por su id
+        const pagina1Link = document.getElementById("Pagina1");
+
+        // Agrega un event listener para el evento "click"
+        pagina1Link.addEventListener("click", function(event) {
+            // Evita que el enlace siga su enlace predeterminado
+            //event.preventDefault();
+
+            // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
+            socket.emit('Pagina1')
+
+        });
+
+
+
+        socket.on('connect', function() {
+            console.log('Conectado al servidor WebSocket');
+            //mostrarDatosNuevos = false;
+            //socket.emit('Pagina2');
+        });
+    
+        socket.on('disconnect', function() {
+            console.log('Desconectado del servidor WebSocket');
+        });
+
+        // Función para formatear la fecha
+        function formatDate(timestamp) {
+            const año = timestamp.substring(4, 8);
+            const mes = timestamp.substring(2, 4);
+            const dia = timestamp.substring(0, 2);
+            const hora = timestamp.substring(8, 10);
+            const minutos = timestamp.substring(10, 12);
+            const segundos = timestamp.substring(12, 14);
+
+            return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
+        }
+
+        // Crea un mapa Leaflet
+        const map = L.map('map').setView([10.963237, -74.799345], 12); // Latitud y longitud iniciales y nivel de zoom
+
+        // Agrega una capa de mapa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss' Hora de DayPicker
+        function convertirFecha(fecha) {
+            const partes = fecha.split(/[- :]/);
+            const anio = partes[0]; 
+            const mes = partes[1];
+            const dia = partes[2];
+            const hora = partes[3];
+            const minuto = partes[4];
+            const segundo = '00'; 
+
+            return `${anio}${mes}${dia}${hora}${minuto}${segundo}`;
+        }
+
+        document.getElementById('buscarLocalizacionesButton').addEventListener('click', buscarLocalizaciones);
+        
+
+        function buscarLocalizaciones() {
+            locbut.innerText = "Haga click sobre el mapa";
+            if (but.innerText =='Nueva consulta'){
+
+            }else{
+                if (marker) {
+                // Si ya existe un marcador, no se permite colocar otro
+                
+                return;
+            }
+            }
+            
+            
+
+            // Agrega un evento de clic al mapa para establecer el marcador
+            map.on('click', function (e) {
+
+                //if (marker && but.innerText != 'Presione aquí para hacer otra consulta') {
+                //    locbut.innerText = "Presione para colorcar otro marcador";
+                //    // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
+                //    alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
+                //    
+                //    return;
+                //}
+
+                if (marker) {
+                    // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
+                    map.removeLayer(marker);
+                    if (circle != null || circle != undefined){
+                        map.removeLayer(circle);
+                    }
+                    
+                }
+                
+                rangeslider.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+                // Crea un nuevo marcador en la ubicación donde se hizo clic
+                marker = L.marker(e.latlng).addTo(map);
+               
+
+                updatecirclevalue();
+                
+
+                // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
+                console.log('location', lat, long, RadioKm);
+
+                locbut.innerText = "Presione para colorcar otro marcador";
+                
+            });
+        }
+
+        function updatecirclevalue(){
+            
+            if (circle != null || circle != undefined){
+                map.removeLayer(circle);
+            }
+
+            // Obtener la posición actual del marcador en el mapa
+            const marcador = marker.getLatLng();
+            lat = marcador.lat;
+            long = marcador.lng;
+
+            RadioKm = rangeslider.value;
+
+            // Calcular las coordenadas del círculo que representa un área de 1 km alrededor del marcador
+            circle = L.circle([lat, long], {
+                color: 'blue', // Color del borde del círculo
+                fillColor: 'blue', // Color de relleno del círculo
+                fillOpacity: 0.4, // Opacidad del relleno del círculo
+                radius: RadioKm*1300 // Radio en metros (representa 1 km)
+            }).addTo(map);
+
+            
+            
+
+            // Actualiza el cuadro de texto con el valor del rango
+            const valuerange = document.getElementById('rangeSliderValue');
+            valuerange.innerText = `Radio de búsqueda en metros: ${rangeslider.value*1000}`;
+
+            // Agrega un event listener al slider para que se actualice cuando se mueva
+            rangeslider.addEventListener('input', updatecirclevalue);
+
+        }
+
+        
+
+        
+    
+        
+
+        const pol = document.getElementById('erasePolyline')
+        const but = document.getElementById('toggleSwitch')
+
+        // En el cliente, emite estos eventos cuando se activa o desactiva el toggleswitch
+        document.getElementById('toggleSwitch').addEventListener('click', () => {
+            if (but.innerText =='Nueva consulta'){
+                borrarPolilineas();
+            } 
+            // Cambiar el estado de mostrarDatosNuevos y enviar una señal al servidor
+            //mostrarDatosNuevos = false;
+            // Si se desactiva, enviar una señal al servidor para dejar de mostrar datos nuevos
+            const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
+            const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
+            console.log('Fecha inicial',fechaInicial);
+            console.log('Fecha final',fechaFinal);
+            if ((fechaFinal.length !== 14) || (fechaInicial.length !== 14)){
+                alert('Ha establecido mal la ventana de Tiempo')
+                mostrarDatosNuevos =true;
+            }else{
+                if (lat == 0 || lat ==undefined ||lat ==null ){
+                    
+                    lat = 0;
+                    long = 0;
+                    RadioKm = 0; 
+
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
+                    but.innerText = 'Nueva consulta'; 
+                    
+                    
+                    elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    rangeslider.style.display = 'none';
+
+
+                }else{
+                       
+                    socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
+                    but.innerText = 'Nueva consulta'; 
+                    
+                    
+                    elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                    
+                    rangeslider.style.display = 'none';
+
+                }
+                
+            }
+ 
+        });
+
+        
+
+        
+
+        socket.on('update_table', function(data) {
+            locationSlider.value=0;
+            console.log('Nueva Tabla Recibida');
+            if (data.length < 1){
+                
+                elemento.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+                elemento1.style.display = 'none'; // Cambia 'none' a 'block' para mostrar el elemento
+
+                alert('No se encontraron registros asociados a la fecha y lugar establecidos ')
+            }else{
+                //alert('Ahora sólo verá los datos en la ventana de tiempo establecida')
+                datePickerButtonF.scrollIntoView({ behavior: 'smooth' }); // El desplazamiento será suave
+            }
+            console.log(data);
+            
+            
+            // Crear un array con objetos que contienen todos los valores
+            const formattedData = data.map(item => ({
+                latitud: item.latitud,
+                longitud: item.longitud,
+                altitud: item.altitud,
+                timestamp: formatTimestamp(item.timestamp),
+            }));
+
+            // Actualizar la tabla con los datos formateados
+            updateDataTablereg(formattedData);
+        });
+
+        
+
+        function updateDataTablereg(data) {
+
+            // Itera a través de los datos y crea filas y celdas para cada valor
+            for (const item of data) {
+                // Agrega el punto a la polilínea
+                const latitud = parseFloat(item.latitud);
+                const longitud = parseFloat(item.longitud);
+                polylines.push([latitud, longitud]);
+            }
+
+            let previousLatLngs = [];
+            index1 = 0;
+
+            function showRoute() {
+                // Reinicia la ruta
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Polyline) {
+                        map.removeLayer(layer);
+                    }
+                });
+
+                // Obtiene la posición actual del slider
+                const locationSlider = document.getElementById('locationSlider');
+                const newPosition = parseInt(locationSlider.value);
+                const totalLocations = data.length;
+
+                // Calcula el nuevo índice basado en la posición del slider
+                const newIndex = Math.round((newPosition / 100) * (totalLocations - 1));
+
+                // Crea una nueva polilínea que incluye todos los puntos desde el inicio hasta el nuevo índice
+                var latLngs = polylines.slice(index1, newIndex + 1).map(([latitud, longitud]) => [latitud, longitud]);
+
+
+                //newtimestmap2 = new Date('"'+data[newIndex].timestamp+'"');
+                newtimestmap = data[newIndex].timestamp;
+                console.log('timestamp: ',data[newIndex].timestamp);
+                // Divide la cadena en partes
+                const partes = newtimestmap.split(/[\/, :]/);
+                console.log('partes',partes);
+                // Ajusta el formato del mes (resta 1 porque los meses en JavaScript van de 0 a 11)
+                const mes = parseInt(partes[1]) - 1;
+                // Extrae la hora y los minutos
+                var hora = parseInt(partes[4]);
+                const minutos = parseInt(partes[5]);
+
+                // Obtiene "AM" o "PM" y ajusta la hora si es necesario
+                if (partes[7]){
+                    const amPm = partes[7];
+                    if (amPm.includes("p")) {
+                        hora = hora + 12;
+                    }
+                }
+                
+                
+
+                // Obtiene el año, el día y los segundos
+                const año = parseInt(partes[2]);
+                const día = parseInt(partes[0]);
+                const segundos = parseInt(partes[6]);
+                
+
+                // Crea un objeto de fecha válido
+                newtimestmap = new Date(año, mes, día, hora, minutos, segundos);
+
+                console.log('newtimestmap: ',newtimestmap)
+                console.log("lastTimestamp: ",lastTimestamp)
+                
+                
+                
+
+                // Configura la opacidad de la polilínea (entre 30% y 100%)
+                const opacity = 0.3 + (0.7 * (1.0)); // Opacidad al 100%
+
+                //if (newIndex > 1) {
+                //    const diferenciaSegundos = Math.abs((newtimestmap - lastTimestamp) / 1000);
+                //    console.log('diferenciaSegundos: ', diferenciaSegundos);
+
+                //    if (diferenciaSegundos <= 6000) {
+                //        // Agrega la nueva polilínea al mapa solo si la diferencia de segundos es menor o igual a 250
+                //        polyline = L.polyline(latLngs, {
+                //            color: 'blue',
+                //            dashArray: '10, 10',
+                //            opacity: opacity,
+                //        }).addTo(map);
+                //    }
+                //    else{
+                //        index1 = newIndex;
+                        
+                //    }
+                //}
+
+                polyline = L.polyline(latLngs, {
+                    color: 'blue',
+                    dashArray: '10, 10',
+                    opacity: opacity,
+                }).addTo(map);
+
+                // Actualiza el cuadro de texto con el timestamp del último punto
+                const timestampDisplay = document.getElementById('timestampDisplay');
+                if (data.length > 0) {
+                    timestampDisplay.innerText = `Timestamp: ${data[newIndex].timestamp}`;
+                } else {
+                    timestampDisplay.innerText = '';
+                }
+
+                // Mueve el marcador a la última posición de la ruta después de actualizar la polilínea
+                if (latLngs.length > 0) {
+                    const [latitud, longitud] = latLngs[latLngs.length - 1];
+                    if (marker) {
+                        // Si el marcador ya existe, mueve su posición
+                        marker.setLatLng([latitud, longitud]);
+                    } else {
+                        // Si el marcador no existe, créalo y añádalo al mapa
+                        marker = L.marker([latitud, longitud]).addTo(map);
+                    }
+                    map.setView([latitud, longitud]);
+                    console.log("marker en última posición");
+                }
+                lastTimestamp = newtimestmap;
+            }
+
+            // Llama a showRoute cuando se recibe la data inicial para mostrar la ruta inmediatamente
+            showRoute();
+
+            // Configura el evento input del slider para actualizar la ruta y el marcador cuando se mueve
+            const locationSlider = document.getElementById('locationSlider');
+            locationSlider.addEventListener('input', showRoute);
+
+
+
+
+        }
+
+        
+
+        function ocultarloc() {
+            console.log('fechaInicial.value',fechaInicial)
+            if (fechaInicial !== undefined){
+                console.log('datePickerInput.value',datePickerInput.value)
+                //locbut.style.display = 'block';
+
+            }
+        }
+
+        // Llamando a la función para que se ejecute siempre
+        ocultarloc();
+
+
+
+
+        function formatTimestamp(timestamp) {
+            const day = timestamp.slice(6, 8);
+            const month = timestamp.slice(4, 6);
+            const year = timestamp.slice(0, 4);
+            const hours = timestamp.slice(8, 10);
+            const minutes = timestamp.slice(10, 12);
+            const seconds = timestamp.slice(12, 14);
+
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            const date = new Date(formattedDate);
+
+            const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+            };
+
+            return date.toLocaleString(undefined, options);
+        }
+
+
+
+        // Función para borrar las polilíneas
+        function borrarPolilineas() {
+            console.log('Borrando polilínea anterior...');
+            // Verifica si hay una polilínea anterior
+            for (let i = 0; i < polylines.length; i++) {
+                map.removeLayer(polyline);
+                polyline = polylines[i];
+                map.removeLayer(polyline);
+                //polyline = polylineSegments[i];
+                map.removeLayer(polyline);
+            }
+                
+            map.removeLayer(polyline);
+                
+            polylines = [];
+            polyline = null;
+
+            // Borra la polilínea principal
+            if (polyline) {
+                map.removeLayer(polyline);
+            }
+
+            // Borra los segmentos de la polilínea
+            for (const segment of polylineSegments) {
+                map.removeLayer(segment);
+            }
+            // Limpia el arreglo de segmentos
+            polylineSegments.length = 0;
+
+            
+        }
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const datePickerInput = document.getElementById('datePickerInput');
+            const datePickerInputF = document.getElementById('datePickerInputF');
+
+            const configInicial = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "d/m/Y H:i", // Formato de fecha y hora para la visualización
+                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
+                maxDate: "today", // Fecha máxima permitida (día actual)
+                onClose: function(selectedDates, dateStr, instance) {
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
+
+                    // Verifica si la fecha inicial es null
+                    if (fechaInicial === null || fechaInicial == undefined) {
+                        // No establece una fecha mínima para la fecha final si la fecha inicial es null
+                        datePickerInputF._flatpickr.set('minDate', "2023-09-15");
+                    } else {
+                        // Comprueba si la fecha final está a menos de 5 minutos de la fecha inicial
+                        if (fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                            // Si la fecha final está muy cerca de la fecha inicial, ajusta la fecha final
+                            fechaInicial.setMinutes(fechaInicial.getMinutes() - 5);
+                            datePickerInput._flatpickr.setDate(fechaInicial);
+                        }
+
+                        // Configura la fecha mínima para la fecha final como la fecha inicial
+                        datePickerInputF._flatpickr.set('minDate', fechaInicial);
+                    }
+
+                    datePickerInput.value = dateStr;
+
+
+                }
+            };
+
+            const configFinal = {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+                altInput: true, // Habilita la visualización de la fecha y hora seleccionada
+                altFormat: "d/m/Y H:i", // Formato de fecha y hora para la visualización
+                minDate: "2023-09-15", // Fecha mínima permitida (15 de septiembre de 2023)
+                maxDate: "today", // Fecha máxima permitida (día actual)
+                onClose: function(selectedDates, dateStr, instance) {
+                    const fechaFinal = datePickerInputF._flatpickr.selectedDates[0];
+                    const fechaInicial = datePickerInput._flatpickr.selectedDates[0];
+
+                    // Comprueba si la fecha inicial está a menos de 5 minutos de la fecha final
+                    if (fechaInicial && fechaFinal && fechaFinal.getTime() - fechaInicial.getTime() < 5 * 60 * 1000) {
+                        // Si la fecha inicial está muy cerca de la fecha final, ajusta la fecha final
+                        fechaFinal.setMinutes(fechaFinal.getMinutes() + 5);
+                        datePickerInputF._flatpickr.setDate(fechaFinal);
+                    }
+
+                    // Configura la fecha máxima para la fecha inicial como el día actual
+                    datePickerInput._flatpickr.set('maxDate', fechaFinal);
+                    datePickerInputF.value = dateStr;
+
+
+                }
+            };
+
+            const datePickerButton = document.getElementById('datePickerButton');
+            const datePickerButtonF = document.getElementById('datePickerButtonF');
+
+            // Inicializa Flatpickr en los elementos de entrada de fecha
+            flatpickr(datePickerInput, configInicial);
+            flatpickr(datePickerInputF, configFinal);
+
+            // Agrega el evento de clic al botón de Fecha Final
+            datePickerButtonF.addEventListener('click', function () {
+                datePickerInputF._flatpickr.open();
+            });
+            datePickerButton.addEventListener('click', function () {
+                datePickerInput._flatpickr.open();
+                
+                
+            });
+        });
+
+
+    </script>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-70b9"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1"></p>
+      </div></footer>
+   
+  
+</body></html>
