@@ -168,10 +168,10 @@
                   <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-6">
                     <div class="u-container-layout u-container-layout-6">
 
-                      <div class="data-column">
+                      
                         <div class="timestamp" id="timestampDisplay"></div> 
 
-                      </div>
+                      
 
                     </div>
                   </div>
@@ -316,13 +316,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
             // Agrega un evento de clic al mapa para establecer el marcador
             map.on('click', function (e) {
 
-                //if (marker && but.innerText != 'Presione aquí para hacer otra consulta') {
-                //    locbut.innerText = "Presione para colorcar otro marcador";
-                //    // Si ya existe un marcador, no permite colocar otro y muestra un mensaje
-                //    alert("Ya has colocado un marcador. Para colocar otro, Presione nuevamente el boton.");
-                //    
-                //    return;
-                //}
+              
 
                 if (marker) {
                     // Si ya existe un marcador, elimínalo antes de colocar uno nuevo
