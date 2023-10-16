@@ -369,7 +369,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
 
             // Actualiza el cuadro de texto con el valor del rango
             const valuerange = document.getElementById('rangeSliderValue');
-            valuerange.innerText = `Radio de búsqueda: ${rangeslider.value*1000}+m`;
+            valuerange.innerText = "Radio de búsqueda: "+rangeslider.value*1000+"m";
 
             // Agrega un event listener al slider para que se actualice cuando se mueva
             rangeslider.addEventListener('input', updatecirclevalue);
