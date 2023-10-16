@@ -7264,9 +7264,6 @@ section.u-image:not(.u-hover-box),
   flex: 1;
   max-width: 100%;
   transition-duration: inherit;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
 }
 .u-audio-main-layout-wrapper,
 .u-audio-main-layout-wrapper > *,
