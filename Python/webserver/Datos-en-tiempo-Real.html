@@ -158,6 +158,15 @@
   </div>
 
   <script>
+
+      // Crea un mapa Leaflet
+      const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
+
+      // Agrega una capa de mapa de OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
       const socket = io.connect('http://' + document.domain + ':' + location.port);
       
       let mostrarDatosNuevos = true;
@@ -225,13 +234,7 @@
           return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
       }
 
-      // Crea un mapa Leaflet
-      const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
-
-      // Agrega una capa de mapa de OpenStreetMap
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+      
 
       // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
       function convertirFecha(fecha) {
