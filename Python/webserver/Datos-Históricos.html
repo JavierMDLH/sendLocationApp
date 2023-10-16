@@ -78,6 +78,9 @@
         <h3 class="u-custom-font u-font-lobster u-text u-text-default u-text-2">Ahora podrá seleccionar una fecha y hora para observar el recorrido del vehículo, además podrá agregarle un filtro para seleccionar un área especifica, ¡Fantástico!</h3>
       </div>
     </section>
+
+
+
     <section class="u-clearfix u-section-2" id="sec-8a81">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
@@ -102,6 +105,8 @@
                         </div>
         
                       </div>
+
+
 
                     </div>
                   </div>
@@ -129,6 +134,8 @@
                         </div>
                         
                       </div>
+
+
 
                     </div>
                   </div>
@@ -160,11 +167,11 @@
                   </div>
                   <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-6">
                     <div class="u-container-layout u-container-layout-6">
+
                       <div class="data-column">
                         <div class="timestamp" id="timestampDisplay"></div> 
 
                       </div>
-                      
 
                     </div>
                   </div>
@@ -177,6 +184,13 @@
           <div class="u-container-layout u-container-layout-7">
 
             <div id="map"></div>
+            
+
+          </div>
+        </div>
+        <div class="u-container-style u-expanded-width u-group u-shape-rectangle u-group-2">
+          <div class="u-container-layout u-container-layout-8">
+
             <p id="texto1">Mueva este cursor para desplazarse a lo largo del recorrido</p>
             <input type="range" id="locationSlider" min="0" max="100" step="1" value="0"> 
 
@@ -184,6 +198,12 @@
         </div>
       </div>
     </section>
+
+
+
+
+
+
     <script>
 
 const socket = io.connect('http://' + document.domain + ':' + location.port);
