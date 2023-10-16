@@ -25,6 +25,7 @@
 #rangeSlider {
   width: 280px; /* Ajusta el ancho del slider */
   height: 20px; /* Ajusta la altura del slider*/
+  width: 80%;
 }
 
 /* Estilo personalizado para el control deslizante del slider2 */
