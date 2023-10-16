@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Bienvenido a la sección de datos historicos​">
     <meta name="description" content="">
-    <title>Datos Históricos</title>
+    <title>Map My Drive</title>
     <link rel="stylesheet" href="nicepage.css" media="screen">
     <link rel="stylesheet" href="Datos-Históricos.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
@@ -223,31 +223,11 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
 
         locbut.style.display = 'block';
 
-        // Cargar el archivo JSON
-        fetch('./var.json')
-            .then(response => response.json())
-            .then(data => {
-                // Acceder a los datos del archivo JSON
-                console.log(data.NAME);
-                // Acceder al valor "NAME" y establecerlo como título de la pestaña
-                document.title = data.NAME;
-            })
-            .catch(error => {
-                console.error('Error al cargar el archivo JSON:', error);
-            });
+        
 
-        // Obtener el enlace Página 1 y 2 por su id
-        const pagina1Link = document.getElementById("Pagina1");
+        
 
-        // Agrega un event listener para el evento "click"
-        pagina1Link.addEventListener("click", function(event) {
-            // Evita que el enlace siga su enlace predeterminado
-            //event.preventDefault();
-
-            // Aquí puedes emitir un evento personalizado o ejecutar la función que desees
-            socket.emit('Pagina1')
-
-        });
+        
 
 
 
