@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="es">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Bienvenido a la sección de datos en tiempo real">
+    <meta name="description" content="">
+    <title>MapmyDrive</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="Datos-en-tiempo-Real.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 5.19.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster:400">
+      
+    <!-- Agrega la biblioteca Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Agrega la etiqueta link para el ícono (favicon) -->
+    <link rel="icon" href="favicon64.png" type="image/x-icon">
+      
+      
+    <script type="application/ld+json">{
+    "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "",
+      "logo": "images/logo.jpg"
+    }</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Datos en tiempo Real">
+    <meta property="og:type" content="website">
+    <meta data-intl-tel-input-cdn-path="intlTelInput/">
+  </head>
+
+
+  <body data-path-to-root="./" class="u-body u-xl-mode" data-lang="es"><header class="u-clearfix u-header u-header" id="sec-94c8"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="200" data-image-height="105">
+          <img src="images/logo.jpg" class="u-logo-image u-logo-image-1">
+        </a>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+                    </g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Datos-en-tiempo-Real.html" style="padding: 10px 20px;">Datos en Tiempo Real</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Datos-Históricos.html" style="padding: 10px 20px;">Datos Históricos</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Información.html" style="padding: 10px 20px;">Información</a>
+                    </li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Datos-en-tiempo-Real.html">Datos en Tiempo Real</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Datos-Históricos.html">Datos Históricos</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Información.html">Información</a>
+                    </li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="sec-a7d8">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-custom-font u-font-lobster u-text u-text-default u-text-1">Bienvenido a la sección de datos en tiempo real<br>
+        </h2>
+        <h3 class="u-custom-font u-font-lobster u-text u-text-default u-text-2"> En el mapa de abajo se mostrara la ubicación actual</h3>
+      </div>
+    </section>
+
+    <section class="u-clearfix u-section-2" id="sec-818d">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-col">
+              <div class="u-size-30">
+                <div class="u-layout-row">
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-1">
+                    <div class="u-container-layout u-container-layout-1">
+
+                      <div class="data-column">
+                        <p class="headparam">Latitud:</p>
+                        <span id="latitud"></span>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2">
+                      <div class="data-column">
+                        <p class="headparam">Longitud:</p>
+                        <span id="longitud"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-3">
+                    <div class="u-container-layout u-container-layout-3">
+                      <div class="data-column">
+                        <p class="headparam">Timestamp:</p>
+                        <span id="timestamp"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-size-30">
+                <div class="u-layout-row">
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-4">
+                    <div class="u-container-layout u-container-layout-4">
+                      <!-- Botón para borrar polilíneas -->
+                      <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+                    </div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-5">
+                    <div class="u-container-layout u-container-layout-5"></div>
+                  </div>
+                  <div class="u-container-style u-layout-cell u-size-20 u-layout-cell-6">
+                    <div class="u-container-layout u-container-layout-6"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-container-style u-group u-shape-rectangle u-group-1">
+          <div class="u-container-layout u-container-layout-7">
+            <!-- Agrega un contenedor para el mapa -->
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <div id="data-box">
+      <!--<h1>MapMyDrive </h1>   -->
+     
+
+      <div class="data-columns">
+          
+          
+          
+      
+      
+          
+          
+      </div>
+
+
+      
+  </div>
+
+  <script>
+      const socket = io.connect('http://' + document.domain + ':' + location.port);
+      
+      let mostrarDatosNuevos = true;
+      let marker; // Variable para almacenar el marcador
+      let previousPoint; // Variable para almacenar el punto anterior
+      let opacity = 1; // Inicialmente, opacidad al 100%
+      let polylines =[];
+      let currentIndex = 0;
+      let polyline = null;
+      let polylineSegments = [];
+     
+      let animationInterval;
+      let isSliding = false;
+
+      // Cargar el archivo JSON
+      fetch('./var.json')
+          .then(response => response.json())
+          .then(data => {
+              // Acceder a los datos del archivo JSON
+              console.log(data.NAME);
+              // Acceder al valor "NAME" y establecerlo como título de la pestaña
+              document.title = data.NAME;
+          })
+          .catch(error => {
+              console.error('Error al cargar el archivo JSON:', error);
+          });
+
+          // Obtener el enlace Página 1 y 2 por su id
+          
+          const pagina2Link = document.getElementById("Pagina2");
+
+         
+          pagina2Link.addEventListener("click", function(event) {
+              // Evita que el enlace siga su enlace predeterminado
+              //event.preventDefault();
+
+              socket.emit('Pagina2');
+          });
+
+
+
+      socket.on('connect', function() {
+          socket.emit('Pagina1');
+          console.log('Conectado al servidor WebSocket');
+          //mostrarDatosNuevos = true;
+          
+      });
+  
+      socket.on('disconnect', function() {
+          console.log('Desconectado del servidor WebSocket');
+      });
+
+
+
+
+      // Función para formatear la fecha
+      function formatDate(timestamp) {
+          const año = timestamp.substring(4, 8);
+          const mes = timestamp.substring(2, 4);
+          const dia = timestamp.substring(0, 2);
+          const hora = timestamp.substring(8, 10);
+          const minutos = timestamp.substring(10, 12);
+          const segundos = timestamp.substring(12, 14);
+
+          return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
+      }
+
+      // Crea un mapa Leaflet
+      const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
+
+      // Agrega una capa de mapa de OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
+      function convertirFecha(fecha) {
+          const partes = fecha.split(/[- :]/);
+          const anio = partes[0]; 
+          const mes = partes[1];
+          const dia = partes[2];
+          const hora = partes[3];
+          const minuto = partes[4];
+          const segundo = '00'; 
+
+          return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
+      }
+      
+      
+      const pol = document.getElementById('erasePolyline')
+
+      
+
+      socket.on('update_data', function(data) {
+          console.log('Nuevos datos recibidos:', data);
+          updateDataOnPage(data);
+      });
+
+      
+
+      function formatTimestamp(timestamp) {
+          const day = timestamp.slice(0, 2);
+          const month = timestamp.slice(2, 4);
+          const year = timestamp.slice(4, 8);
+          const hours = timestamp.slice(8, 10);
+          const minutes = timestamp.slice(10, 12);
+          const seconds = timestamp.slice(12, 14);
+
+          const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+          const date = new Date(formattedDate);
+
+          const options = {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              second: "numeric",
+          };
+
+          return date.toLocaleString(undefined, options);
+      }
+
+
+      function updateDataOnPage(data) {
+          console.log('Actualizando datos en la página:', data);
+          document.getElementById('latitud').innerText = data[0];
+          document.getElementById('longitud').innerText = data[1];
+          //document.getElementById('altitud').innerText = data[2];
+          document.getElementById('timestamp').innerText = formatDate(data[3]);
+
+          // Actualiza la ubicación en el mapa
+          const latitud = parseFloat(data[0]);
+          const longitud = parseFloat(data[1]);
+
+          if (!marker) {
+              // Si no hay un marcador existente, crea uno nuevo
+              marker = L.marker([latitud, longitud]).addTo(map);
+          } else {
+              // Si hay un marcador existente, actualiza su ubicación
+              marker.setLatLng([latitud, longitud]);
+          }
+
+          if (previousPoint) {
+              // Crea una nueva polyline desde el punto anterior al punto actual
+              polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+              polylines.push(polyline);
+          }
+
+          // Almacena el punto actual como punto anterior para la próxima polyline
+          previousPoint = [latitud, longitud];
+
+          // Establece la vista del mapa en la nueva ubicación
+          map.setView([latitud, longitud]);
+
+          for (let i = 0; i < polylines.length - 1; i++) {
+              polyline = polylines[i];
+              const currentOpacity = polyline.options.opacity;
+              if (currentOpacity > 0) {
+                  polyline.setStyle({ opacity: currentOpacity - 0.02 });
+              }
+          }
+      }
+
+      
+
+      // Función para borrar las polilíneas
+      function borrarPolilineas() {
+          console.log('Borrando polilíneas...');  
+          for (let i = 0; i < polylines.length; i++) {     
+              polyline = polylines[i];
+              map.removeLayer(polyline);    
+          }       
+      }
+
+
+  </script>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-70b9"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1"></p>
+      </div></footer>
+    
+  
+  </body>
+
+</html>
