@@ -100,7 +100,7 @@ justify-content: space-between;
 .data-column {
   flex-basis: 230px; /* Ancho de las columnas */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-end;
 
 }
