@@ -303,7 +303,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
         
 
         function buscarLocalizaciones() {
-            locbut.style.display = 'block';
+            
             locbut.innerText = "Haga click sobre el mapa";
             if (but.innerText =='Nueva consulta'){
 
@@ -422,6 +422,8 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                     
                     rangeslider.style.display = 'none';
 
+                    locbut.style.display = 'block';
+
 
                 }else{
                        
@@ -434,6 +436,8 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                     elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                     
                     rangeslider.style.display = 'none';
+
+                    locbut.style.display = 'block';
 
                 }
                 
