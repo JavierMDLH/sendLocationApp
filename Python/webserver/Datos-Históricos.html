@@ -342,6 +342,12 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                 const fechaInicial = convertirFecha(document.getElementById('datePickerInput').value);
                 const fechaFinal = convertirFecha(document.getElementById('datePickerInputF').value);
 
+                const marcador = marker.getLatLng();
+                lat = marcador.lat;
+                long = marcador.lng;
+
+                RadioKm = rangeslider.value;
+
                 // Realizar una búsqueda en la base de datos (sustituye esto con tu lógica de consulta)
                 console.log('location', lat, long, RadioKm);
                 console.log('fechaInicial', fechaInicial, 'fechaFinal', fechaFinal);
