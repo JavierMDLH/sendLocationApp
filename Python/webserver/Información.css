@@ -1,4 +1,4 @@
- .u-section-1 {
+.u-section-1 {
   background-image: url("images/7289fdd29c7daba6cd79e45198102a54df0a3d89f71a36c01f30bfd2ec6ac86de53495557f54cbfd1bc252e8ca95fa3e9cbb2b6c761047360223d1_1280.jpg");
   background-position: 50% 50%;
 }
@@ -21,6 +21,8 @@
   letter-spacing: 4px;
   text-align: center;
   font-family: "Alex Brush";
+  text-transform: none;
+  font-weight: normal;
   margin: 0 -46px 0 0;
 }
 
@@ -55,8 +57,6 @@
 
   .u-section-1 .u-text-1 {
     font-size: 4.5rem;
-    text-transform: none;
-    font-weight: normal;
   }
 
   .u-section-1 .u-group-2 {
@@ -101,6 +101,8 @@
 
   .u-section-1 .u-group-2 {
     width: 540px;
+    margin-top: 20px;
+    margin-bottom: initial;
   }
 }
 
@@ -303,6 +305,7 @@
 
 .u-section-3 .u-text-1 {
   font-size: 3rem;
+  font-weight: normal;
   margin: 0;
 }
 
@@ -347,7 +350,6 @@
   }
 
   .u-section-3 .u-text-1 {
-    font-weight: normal;
     width: auto;
     margin-left: 28px;
     margin-right: 28px;
@@ -572,6 +574,7 @@
 
 .u-section-5 .u-text-1 {
   font-size: 3rem;
+  font-weight: normal;
   margin: 41px auto 0;
 }
 
@@ -612,10 +615,6 @@
     min-height: 354px;
   }
 
-  .u-section-5 .u-text-1 {
-    font-weight: normal;
-  }
-
   .u-section-5 .u-text-2 {
     margin-right: 618px;
     margin-left: 0;
@@ -648,49 +647,67 @@
 
 @media (max-width: 767px) {
   .u-section-5 .u-sheet-1 {
-    min-height: 203px;
+    min-height: 264px;
   }
 
   .u-section-5 .u-text-1 {
     font-size: 2.25rem;
   }
 
+  .u-section-5 .u-icon-1 {
+    margin-top: 0;
+    margin-left: 95px;
+  }
+
+  .u-section-5 .u-icon-2 {
+    margin-right: 72px;
+  }
+
   .u-section-5 .u-text-2 {
-    margin-right: 218px;
     font-size: 1rem;
+    width: auto;
+    margin-top: 23px;
+    margin-right: 284px;
+    margin-left: 23px;
   }
 
   .u-section-5 .u-text-3 {
     font-size: 1rem;
-    margin-left: 218px;
+    width: auto;
+    margin: -51px 9px 20px 316px;
   }
 }
 
 @media (max-width: 575px) {
   .u-section-5 .u-sheet-1 {
-    min-height: 128px;
+    min-height: 232px;
   }
 
   .u-section-5 .u-text-1 {
     font-size: 1.875rem;
-    margin-left: 0;
-    margin-right: 0;
+    width: auto;
+    margin-top: 18px;
   }
 
   .u-section-5 .u-icon-1 {
-    margin-left: 110px;
+    margin-top: -5px;
+    margin-left: 40px;
   }
 
   .u-section-5 .u-icon-2 {
-    margin-right: 111px;
+    margin-right: 31px;
   }
 
   .u-section-5 .u-text-2 {
-    margin-right: 18px;
+    margin-top: 0;
+    margin-right: 170px;
+    margin-left: 0;
   }
 
   .u-section-5 .u-text-3 {
-    margin-left: 18px;
+    margin-top: -76px;
+    margin-right: 0;
+    margin-left: 188px;
   }
 }
 
@@ -870,8 +887,8 @@
 .u-section-7 .u-image-3 {
   width: 180px;
   height: 180px;
-  background-image: url("images/ernesro.jpg");
-  background-position: 26.43% 50%;
+  background-image: url("images/WIN_20231016_01_35_46_Pro.jpg");
+  background-position: 50% 50%;
   margin: 0 auto;
 }
 
