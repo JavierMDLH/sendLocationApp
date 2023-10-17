@@ -971,6 +971,9 @@
 
                     // Configura la fecha máxima para la fecha inicial como el día actual
                     datePickerInput._flatpickr.set('maxDate', fechaFinal);
+                    if (fechaFinal==undefined){
+                        datePickerInput._flatpickr.set('maxDate', "today");
+                    }
                     datePickerInputF.value = dateStr;
 
 
