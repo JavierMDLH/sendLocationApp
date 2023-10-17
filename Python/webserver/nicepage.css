@@ -17777,7 +17777,7 @@ p {
 .u-accordion:not([class*="u-align-"]),
 .u-repeater-item:not([class*="u-align-"]),
 .u-container-style:not([class*="u-align-"]) {
-  text-align: -webkit-center;
+  text-align: left;
 }
 .u-nav:not([class*="u-align-"]) .u-nav {
   text-align: left;
@@ -41844,6 +41844,7 @@ a.u-link.u-text-hover-grey-90:hover {
 
 .u-header .u-nav-1 {
   font-size: 1rem;
+  letter-spacing: normal;
 }
 
 .u-header .u-nav-2 {
@@ -41858,13 +41859,13 @@ a.u-link.u-text-hover-grey-90:hover {
     width: auto;
     margin-top: -58px;
   }
-
-  .u-header .u-nav-1 {
-    letter-spacing: normal;
-  }
 }
 
-
+@media (max-width: 767px) {
+  .u-header .u-menu-1 {
+    margin-top: 20px;
+  }
+}
 
  .u-footer {
   background-image: none;
