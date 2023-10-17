@@ -246,7 +246,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
      
         rangeslider.style.display = 'none';
 
-        locbut.style.display = 'block';
+        locbut.style.display = 'none';
 
         
 
@@ -303,6 +303,7 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
         
 
         function buscarLocalizaciones() {
+            locbut.style.display = 'block';
             locbut.innerText = "Haga click sobre el mapa";
             if (but.innerText =='Nueva consulta'){
 
