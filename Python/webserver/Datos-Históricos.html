@@ -330,6 +330,10 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                     }
                     
                 }
+
+                if (but.innerText =='Nueva consulta'){
+                  borrarPolilineas();
+                }    
                 
                 rangeslider.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
                 
