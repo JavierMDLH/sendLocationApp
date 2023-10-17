@@ -344,6 +344,8 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                 console.log('location', lat, long, RadioKm);
 
                 locbut.innerText = "Haga click sobre el mapa";
+
+                socket.emit('desactivar_switch', fechaInicial, fechaFinal,lat, long, RadioKm );
                 
             });
         }
