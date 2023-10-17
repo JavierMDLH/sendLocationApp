@@ -471,6 +471,10 @@ const socket = io.connect('http://' + document.domain + ':' + location.port);
                 datePickerButtonF.scrollIntoView({ behavior: 'smooth' }); // El desplazamiento será suave
             }
             console.log(data);
+
+            elemento.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
+                
+            elemento1.style.display = 'block'; // Cambia 'none' a 'block' para mostrar el elemento
             
             
             // Crear un array con objetos que contienen todos los valores
