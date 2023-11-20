@@ -90,12 +90,20 @@
 
         // Crea y agrega un marcador a una ubicación específica
         var marker = L.marker([11.019333003765201, -74.85082301137982]).addTo(map);
-      
 
+        var restaurantes = [
+            { nombre: 'Bocas de Ceniza', lat: 11.020920422758872, lng: -74.85173581187154, descuento: 'Descuento 15% en postres y Bebidas' },
+            { nombre: 'Cafe Du Nord', lat: 11.019628006525995, lng: -74.85023193420321, descuento: '50% en Segundo platillo' },
+            // Agrega más restaurantes...
+        ];
       
-
+        // Itera sobre la lista de restaurantes y agrega marcadores con popups
+        for (var i = 0; i < restaurantes.length; i++) {
+            var restaurante = restaurantes[i];
+            var marker = L.marker([restaurante.lat, restaurante.lng]).addTo(map);
+            marker.bindPopup('<b>' + restaurante.nombre + '</b><br>' + restaurante.descuento).openPopup();
+        }
         
-
     </script>
 </body>
 </html>
