@@ -78,18 +78,7 @@
    
 
     <script>
-        const socket = io.connect('http://' + document.domain + ':' + location.port);   
-
-        socket.on('connect', function() {
-            socket.emit('Pagina1');
-            console.log('Conectado al servidor WebSocket');
-            //mostrarDatosNuevos = true;
-            
-        });
-    
-        socket.on('disconnect', function() {
-            console.log('Desconectado del servidor WebSocket');
-        });
+        
 
         // Crea un mapa Leaflet
         const map = L.map('map').setView([11.019145900000417, -74.85111679039876], 19); // Latitud y longitud iniciales y nivel de zoom
@@ -106,10 +95,6 @@
       
 
         
-        socket.on('update_data', function(data) {
-            console.log('Nuevos datos recibidos:', data);
-            updateDataOnPage(data);
-        });
 
     </script>
 </body>
