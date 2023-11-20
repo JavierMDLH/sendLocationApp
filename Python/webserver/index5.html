@@ -81,20 +81,20 @@
        // Crea iconos personalizados
         var iconoRestaurante = L.icon({
             iconUrl: 'restaurantes.png',
-            iconSize: [25, 41],
+            iconSize: [35, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34]
         });
 
         var iconoPersona = L.icon({
             iconUrl: 'persona.png',
-            iconSize: [25, 41],
+            iconSize: [39, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34]
         });
 
         // Crea un mapa Leaflet
-        const map = L.map('map').setView([11.019145900000417, -74.85111679039876], 19);
+        const map = L.map('map').setView([11.019935559804493, -74.85108726909156], 19);
 
         // Agrega una capa de mapa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -106,8 +106,12 @@
 
         var restaurantes = [
             { nombre: 'Bocas de Ceniza', lat: 11.020920422758872, lng: -74.85173581187154, descuento: 'Descuento 15% en postres y Bebidas' },
-            { nombre: 'Cafe Du Nord', lat: 11.019628006525995, lng: -74.85023193420321, descuento: '50% en Segundo platillo' },
-            // Agrega más restaurantes...
+            { nombre: 'Cafe Du Nord', lat: 11.019628006525995, lng: -74.85023193420321, descuento: '60% en Segundo platillo' },
+            { nombre: 'El Camión', lat: 11.018997806630223, lng: -74.84988567103223, descuento: '30% en Hamburguesas' },
+            { nombre: 'Restaurante 1966', lat: 11.018872992933467, lng: -74.85010884624204, descuento: '2x1 en Bebidas' },
+            { nombre: 'Du Nord Terrase', lat: 11.020336019340325, lng: -74.85057474102813, descuento: '40% en Waffles' },
+            
+             
         ];
 
         // Itera sobre la lista de restaurantes y agrega marcadores con popups
