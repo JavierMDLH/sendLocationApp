@@ -104,6 +104,19 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        // Obtener la ubicación actual del dispositivo
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            // Crear un marcador con la ubicación obtenida
+            const marker = L.marker([lat, lng]).addTo(map);
+            marker.bindPopup('Ubicación actual').openPopup(); // Opcional: muestra un mensaje emergente en el marcador
+            map.setView([lat, lng], 19); // Centra el mapa en la ubicación actual con un nivel de zoom específico
+        }, function(error) {
+            console.error('Error al obtener la ubicación:', error);
+        });
         
 
         socket.on('update_data', function(data) {
