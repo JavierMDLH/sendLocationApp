@@ -105,18 +105,35 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Obtener la ubicación actual del dispositivo
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
+        // Verificar si el navegador soporta la API de geolocalización
+        if ("geolocation" in navigator) {
+            // Si es compatible, muestra un mensaje al usuario solicitando permiso
+            const permissionMessage = "Esta página desea acceder a tu ubicación para mostrar información relevante. ¿Deseas permitir el acceso a tu ubicación?";
+            
+            if (confirm(permissionMessage)) {
+                // Si el usuario acepta, intenta obtener la ubicación
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
 
-            // Crear un marcador con la ubicación obtenida
-            const marker = L.marker([lat, lng]).addTo(map);
-            marker.bindPopup('Ubicación actual').openPopup(); // Opcional: muestra un mensaje emergente en el marcador
-            map.setView([lat, lng], 19); // Centra el mapa en la ubicación actual con un nivel de zoom específico
-        }, function(error) {
-            console.error('Error al obtener la ubicación:', error);
-        });
+                    // Crear un marcador con la ubicación obtenida
+                    const marker = L.marker([lat, lng]).addTo(map);
+                    marker.bindPopup('Ubicación actual').openPopup(); // Opcional: muestra un mensaje emergente en el marcador
+                    map.setView([lat, lng], 19); // Centra el mapa en la ubicación actual con un nivel de zoom específico
+                }, function(error) {
+                    console.error('Error al obtener la ubicación:', error);
+                });
+            } else {
+                // Si el usuario no acepta, proporciona una experiencia alternativa o mensaje
+                console.log("El usuario no ha permitido el acceso a la ubicación");
+                // Podrías mostrar un mensaje de que la ubicación no está disponible
+            }
+        } else {
+            // Si el navegador no es compatible con la geolocalización, proporciona una experiencia alternativa o mensaje
+            console.log("El navegador no soporta la geolocalización");
+            // Podrías mostrar un mensaje de que la geolocalización no está disponible
+        }
+
         
 
         socket.on('update_data', function(data) {
