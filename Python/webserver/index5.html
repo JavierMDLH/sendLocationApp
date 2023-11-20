@@ -78,7 +78,20 @@
    
 
     <script>
-        
+        // Crea iconos personalizados
+        var iconoRestaurante = L.icon({
+            iconUrl: 'C:/Users/Javier Mercado/Documents/Diseño/Proyecto2/Branch/sendLocationApp/Python/webserver/restaurantes.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
+        });
+
+        var iconoOtroLugar = L.icon({
+            iconUrl: 'C:/Users/Javier Mercado/Documents/Diseño/Proyecto2/Branch/sendLocationApp/Python/webserver/persona.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
+        });
 
         // Crea un mapa Leaflet
         const map = L.map('map').setView([11.019145900000417, -74.85111679039876], 19); // Latitud y longitud iniciales y nivel de zoom
@@ -100,7 +113,9 @@
         // Itera sobre la lista de restaurantes y agrega marcadores con popups
         for (var i = 0; i < restaurantes.length; i++) {
             var restaurante = restaurantes[i];
-            var marker = L.marker([restaurante.lat, restaurante.lng]).addTo(map);
+            var icono = (lugar.esRestaurante) ? iconoRestaurante : iconoOtroLugar; // Suponiendo que tengas una propiedad que identifique si es un restaurante
+
+            var marker = L.marker([restaurante.lat, restaurante.lng],{ icon: icono }).addTo(map);
             marker.bindPopup('<b>' + restaurante.nombre + '</b><br>' + restaurante.descuento).openPopup();
         }
         
