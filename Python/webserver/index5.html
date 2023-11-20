@@ -27,35 +27,7 @@
             background-color: #ffffff;
             margin: 0;
             padding: 0;
-            /*background-image: url('fondo.jpg'); /* ruta de imagen */
-            /*background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
-            /*background-repeat: no-repeat; /* Evita que la imagen se repita */
-            /*background-attachment: fixed; /* Fija la imagen en su lugar mientras se desplaza la página */
-        }
-
-        /* Estilos para el navbar */
-        .navbar {
-            background-color: #3b3a3a;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgb(79, 79, 79); /* Sombra del contenedor */
-        }
-
-        .navbar a {
-            display: inline-block;
-            font-size: 16px;
-            color: #ffffff;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            margin-right: 10px; /* Espacio entre elementos (ajusta según desees) */
-        }
-
-        .navbar a:last-child {
-            margin-right: 0; /* Elimina el margen derecho del último elemento */
-        }
-
-        .navbar a:hover {
-            background-color: #efba1bc6;
+       
         }
 
         /* Estilos para el cuadro de datos */
@@ -87,99 +59,11 @@
         /* Estilos para el mapa */
         #map {
             width: 100%;
-            height: 400px;
-            margin-top: 20px;
-            border: 5px inset #efbb1b; /* Borde del contenedor */
-            border-radius: 30px; /* Borde redondeado */
-            box-shadow: 0 0 20px rgba(79, 79, 79); /* Sombra del contenedor */
+            height:708px;
+            margin-top: 0px;
+     
+           
         }
-
-
-        /* Estilos para los datos en dos columnas */
-        .data-columns {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .data-column {
-            flex-basis: 48%; /* Ancho de las columnas */
-        }
-
-        /* Estilos para los botones */
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .date-input {
-            background-color: transparent;
-            border: none;
-            border-bottom: 1px solid #efbb1b;
-            color: #efbb1b;
-            font-family: 'Merriweather', serif;
-            margin-top: 20px;
-            width: 25%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-
-        .date-button {
-            background-color: #efbb1b;
-            color: #ffffff;
-            border: none;
-            border-radius: 15px;
-            padding: 5px 15px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: block;
-            margin-right: auto;
-            font-family: 'Merriweather', serif;
-        }
-
-        /* Estilos para el botón de Fecha Final */
-        .date-button-final {
-            background-color: #efbb1b;
-            color: #ffffff;
-            border: none;
-            border-radius: 15px;
-            padding: 5px 15px;
-            cursor: pointer;
-            margin-top: 20px;
-            margin-left: auto;
-            font-family: 'Merriweather', serif;
-        }
-
-        .toggleSwitch {
-            background-color: #efbb1b;
-            color: #000000;
-            border: none;
-            border-radius: 15px;
-            padding: 5px 15px;
-            cursor: pointer;
-            margin-top: 20px;
-            margin-left: auto;
-            font-family: 'Merriweather', serif;
-        }
-
-
-        .headparam{
-            background-color: #efbb1b;
-            color: #000000;
-            border: none;
-            border-radius: 15px;
-            padding: 5px 15px;
-            max-width: 145px;
-            font-family: 'Merriweather', serif;
-            box-shadow: 0 0 15px rgb(79, 79, 79); /* Sombra del contenedor */
-
-        }
-
-        .navbutton{
-            background-color: #efbb1b;
-        }
-
 
     </style>
 
@@ -187,50 +71,14 @@
 </head>
 
 <body>
-    <div class="navbar">
+    <div>
        
-        <a class="navbutton" id="Pagina2" href="index2.html">Datos Históricos</a>
+        <a class="navbutton" id="Pagina2" href=""></a>
     </div>
-
-    <div id="data-box">
-        <!--<h1>MapMyDrive </h1>   -->
-       
-
-        <div class="data-columns">
-            <div class="data-column">
-                <img src="logo.jpg">
-            </div>
-            <div class="data-column">
-                <p class="headparam">Latitud:</p>
-                <span id="latitud"></span>
-            </div>
-            
-        
-        
-            <div class="data-column">
-                <p class="headparam">Longitud:</p>
-                <span id="longitud"></span>
-            </div>
-            <div class="data-column">
-                <p class="headparam">Timestamp:</p>
-                <span id="timestamp"></span>
-            </div>
-        </div>
-
-    
-         <!-- Botón para borrar polilíneas -->
-         <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
-      
-
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
-    
        
-    
-
-
-       
-    </div>
+   
 
     <script>
         const socket = io.connect('http://' + document.domain + ':' + location.port);
