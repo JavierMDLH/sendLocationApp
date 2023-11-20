@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavierM</title>
+    <!-- Vincula el archivo CSS externo -->
+    <link rel="stylesheet" src="style.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <!-- Agrega la biblioteca Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Agrega la biblioteca FLatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+
+    <!-- Agrega la etiqueta link para el ícono (favicon) -->
+    <link rel="icon" href="favicon64.png" type="image/x-icon">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&display=swap');
+
+        /* Estilos generales */
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            /*background-image: url('fondo.jpg'); /* ruta de imagen */
+            /*background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+            /*background-repeat: no-repeat; /* Evita que la imagen se repita */
+            /*background-attachment: fixed; /* Fija la imagen en su lugar mientras se desplaza la página */
+        }
+
+        /* Estilos para el navbar */
+        .navbar {
+            background-color: #3b3a3a;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgb(79, 79, 79); /* Sombra del contenedor */
+        }
+
+        .navbar a {
+            display: inline-block;
+            font-size: 16px;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            margin-right: 10px; /* Espacio entre elementos (ajusta según desees) */
+        }
+
+        .navbar a:last-child {
+            margin-right: 0; /* Elimina el margen derecho del último elemento */
+        }
+
+        .navbar a:hover {
+            background-color: #efba1bc6;
+        }
+
+        /* Estilos para el cuadro de datos */
+        #data-box {
+            /*background-color: #f1fbff;*/
+            border: 8px ridge #efbb1b;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 1000px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgb(79, 79, 79); /* Sombra del contenedor */
+            background-color: #ffffff; /* Fondo blanco */
+        }
+
+
+        /* Estilos para el encabezado */
+        #data-box h1 {
+            background-color: #efbb1b;
+            color: #000000;
+            text-align: center;
+            padding: 10px;
+            border-radius: 50px;
+            max-width: 500px;
+            margin-left: 25%;
+            box-shadow: 0 0 15px rgba(79, 79, 79); /* Sombra del contenedor */
+        }
+
+
+        /* Estilos para el mapa */
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            border: 5px inset #efbb1b; /* Borde del contenedor */
+            border-radius: 30px; /* Borde redondeado */
+            box-shadow: 0 0 20px rgba(79, 79, 79); /* Sombra del contenedor */
+        }
+
+
+        /* Estilos para los datos en dos columnas */
+        .data-columns {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .data-column {
+            flex-basis: 48%; /* Ancho de las columnas */
+        }
+
+        /* Estilos para los botones */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .date-input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #efbb1b;
+            color: #efbb1b;
+            font-family: 'Merriweather', serif;
+            margin-top: 20px;
+            width: 25%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .date-button {
+            background-color: #efbb1b;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-right: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Estilos para el botón de Fecha Final */
+        .date-button-final {
+            background-color: #efbb1b;
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+        .toggleSwitch {
+            background-color: #efbb1b;
+            color: #000000;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-left: auto;
+            font-family: 'Merriweather', serif;
+        }
+
+
+        .headparam{
+            background-color: #efbb1b;
+            color: #000000;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 15px;
+            max-width: 145px;
+            font-family: 'Merriweather', serif;
+            box-shadow: 0 0 15px rgb(79, 79, 79); /* Sombra del contenedor */
+
+        }
+
+        .navbutton{
+            background-color: #efbb1b;
+        }
+
+
+    </style>
+
+    
+</head>
+
+<body>
+    <div class="navbar">
+       
+        <a class="navbutton" id="Pagina2" href="index2.html">Datos Históricos</a>
+    </div>
+
+    <div id="data-box">
+        <!--<h1>MapMyDrive </h1>   -->
+       
+
+        <div class="data-columns">
+            <div class="data-column">
+                <img src="logo.jpg">
+            </div>
+            <div class="data-column">
+                <p class="headparam">Latitud:</p>
+                <span id="latitud"></span>
+            </div>
+            
+        
+        
+            <div class="data-column">
+                <p class="headparam">Longitud:</p>
+                <span id="longitud"></span>
+            </div>
+            <div class="data-column">
+                <p class="headparam">Timestamp:</p>
+                <span id="timestamp"></span>
+            </div>
+        </div>
+
+    
+         <!-- Botón para borrar polilíneas -->
+         <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+      
+
+        <!-- Agrega un contenedor para el mapa -->
+        <div id="map"></div>
+    
+       
+    
+
+
+       
+    </div>
+
+    <script>
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+        
+        let mostrarDatosNuevos = true;
+        let marker; // Variable para almacenar el marcador
+        let previousPoint; // Variable para almacenar el punto anterior
+        let opacity = 1; // Inicialmente, opacidad al 100%
+        let polylines =[];
+        let currentIndex = 0;
+        let polyline = null;
+        let polylineSegments = [];
+       
+        let animationInterval;
+        let isSliding = false;
+
+        // Cargar el archivo JSON
+        fetch('./var.json')
+            .then(response => response.json())
+            .then(data => {
+                // Acceder a los datos del archivo JSON
+                console.log(data.NAME);
+                // Acceder al valor "NAME" y establecerlo como título de la pestaña
+                document.title = data.NAME;
+            })
+            .catch(error => {
+                console.error('Error al cargar el archivo JSON:', error);
+            });
+
+            // Obtener el enlace Página 1 y 2 por su id
+            
+            const pagina2Link = document.getElementById("Pagina2");
+
+           
+            pagina2Link.addEventListener("click", function(event) {
+                // Evita que el enlace siga su enlace predeterminado
+                //event.preventDefault();
+
+                socket.emit('Pagina2');
+            });
+
+
+
+        socket.on('connect', function() {
+            socket.emit('Pagina1');
+            console.log('Conectado al servidor WebSocket');
+            //mostrarDatosNuevos = true;
+            
+        });
+    
+        socket.on('disconnect', function() {
+            console.log('Desconectado del servidor WebSocket');
+        });
+
+
+
+
+        // Función para formatear la fecha
+        function formatDate(timestamp) {
+            const año = timestamp.substring(0, 4);
+            const mes = timestamp.substring(4, 6);
+            const dia = timestamp.substring(6, 8);
+            const hora = timestamp.substring(8, 10);
+            const minutos = timestamp.substring(10, 12);
+            const segundos = timestamp.substring(12, 14);
+
+            return `${dia}-${mes}-${año} ${hora}:${minutos}:${segundos}`;
+        }
+
+        // Crea un mapa Leaflet
+        const map = L.map('map').setView([10.963237, -74.799345], 17); // Latitud y longitud iniciales y nivel de zoom
+
+        // Agrega una capa de mapa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Función para convertir una fecha en formato 'YYYY-MM-DD HH:mm' a 'DDMMYYYYHHmmss'
+        function convertirFecha(fecha) {
+            const partes = fecha.split(/[- :]/);
+            const anio = partes[0]; 
+            const mes = partes[1];
+            const dia = partes[2];
+            const hora = partes[3];
+            const minuto = partes[4];
+            const segundo = '00'; 
+
+            return `${dia}${mes}${anio}${hora}${minuto}${segundo}`;
+        }
+        
+        
+        const pol = document.getElementById('erasePolyline')
+
+        
+
+        socket.on('update_data', function(data) {
+            console.log('Nuevos datos recibidos:', data);
+            updateDataOnPage(data);
+        });
+
+        
+
+        function formatTimestamp(timestamp) {
+            const day = timestamp.slice(0, 2);
+            const month = timestamp.slice(2, 4);
+            const year = timestamp.slice(4, 8);
+            const hours = timestamp.slice(8, 10);
+            const minutes = timestamp.slice(10, 12);
+            const seconds = timestamp.slice(12, 14);
+
+            const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+            const date = new Date(formattedDate);
+
+            const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+            };
+
+            return date.toLocaleString(undefined, options);
+        }
+
+
+        function updateDataOnPage(data) {
+            console.log('Actualizando datos en la página:', data);
+            document.getElementById('latitud').innerText = data[0];
+            document.getElementById('longitud').innerText = data[1];
+            //document.getElementById('altitud').innerText = data[2];
+            document.getElementById('timestamp').innerText = formatDate(data[3]);
+
+            // Actualiza la ubicación en el mapa
+            const latitud = parseFloat(data[0]);
+            const longitud = parseFloat(data[1]);
+
+            if (!marker) {
+                // Si no hay un marcador existente, crea uno nuevo
+                marker = L.marker([latitud, longitud]).addTo(map);
+            } else {
+                // Si hay un marcador existente, actualiza su ubicación
+                marker.setLatLng([latitud, longitud]);
+            }
+
+            if (previousPoint) {
+                // Crea una nueva polyline desde el punto anterior al punto actual
+                polyline = L.polyline([previousPoint, [latitud, longitud]], { color: 'blue', opacity: opacity, dashArray: '10, 10' }).addTo(map);
+                polylines.push(polyline);
+            }
+
+            // Almacena el punto actual como punto anterior para la próxima polyline
+            previousPoint = [latitud, longitud];
+
+            // Establece la vista del mapa en la nueva ubicación
+            map.setView([latitud, longitud]);
+
+            for (let i = 0; i < polylines.length - 1; i++) {
+                polyline = polylines[i];
+                const currentOpacity = polyline.options.opacity;
+                if (currentOpacity > 0) {
+                    polyline.setStyle({ opacity: currentOpacity - 0.02 });
+                }
+            }
+        }
+
+        
+
+        // Función para borrar las polilíneas
+        function borrarPolilineas() {
+            console.log('Borrando polilíneas...');  
+            for (let i = 0; i < polylines.length; i++) {     
+                polyline = polylines[i];
+                map.removeLayer(polyline);    
+            }       
+        }
+
+
+    </script>
+</body>
+</html>
