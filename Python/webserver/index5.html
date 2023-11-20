@@ -193,6 +193,32 @@
         <!--<h1>MapMyDrive </h1>   -->
        
 
+        <div class="data-columns">
+            <div class="data-column">
+                <img src="logo.jpg">
+            </div>
+            <div class="data-column">
+                <p class="headparam">Latitud:</p>
+                <span id="latitud"></span>
+            </div>
+            
+        
+        
+            <div class="data-column">
+                <p class="headparam">Longitud:</p>
+                <span id="longitud"></span>
+            </div>
+            <div class="data-column">
+                <p class="headparam">Timestamp:</p>
+                <span id="timestamp"></span>
+            </div>
+        </div>
+
+    
+         <!-- Botón para borrar polilíneas -->
+         <button id ="erasePolyline" class="toggleSwitch" onclick="borrarPolilineas()">Borrar Polilíneas</button>
+      
+
         <!-- Agrega un contenedor para el mapa -->
         <div id="map"></div>
     
